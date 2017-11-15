@@ -9,7 +9,6 @@ public class Class {
   private Date class_stopday;
 
   private Integer grade_id;
-
   public Integer getClass_id() {
     return class_id;
   }
