@@ -3,7 +3,6 @@ package test;
 import dao.StudentMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import pojo.Student;
 
 import java.util.List;
 

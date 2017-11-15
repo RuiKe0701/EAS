@@ -3,7 +3,6 @@ package service.impl;
 import dao.StudentMapper;
 
 import org.springframework.stereotype.Service;
-import pojo.Student;
 import service.StudentService;
 
 import javax.annotation.Resource;
