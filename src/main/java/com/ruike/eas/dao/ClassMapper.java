@@ -7,8 +7,8 @@ import java.util.List;
 public interface ClassMapper {
     /**
      * 新增新班级
-     * @param classes
-     * @return
+     * @param classes 班级对象
+     * @return 受影响的行数
      */
     public Integer insertClass(Class  classes);
 

@@ -74,9 +74,11 @@
                         <button class="btn btn-success " type="button"><i class="fa fa-upload"></i>&nbsp;&nbsp;<span class="bold">批量导入</span>
                         </button>
                         <button id="addstudent" class="btn-primary btn" href="studentinfo.html" style="color: white"><i class="fa fa-plus"></i>&nbsp;&nbsp;<span class="bold">添加学员</span></button>
-                        <span>我正在带的班级：&nbsp;&nbsp;<span style="background-color: #5cc0de;padding: 7px;border-radius:5px;color: white">20170807</span>&nbsp;&nbsp;
-                        <span style="background-color: #5cc0de;padding: 7px;border-radius:5px;color: white">20170807</span>&nbsp;&nbsp;
-                        <span style="background-color: #5cc0de;padding: 7px;border-radius:5px;color: white">20170807</span></span>
+                        <span>我正在带的班级：
+                            <c:forEach var="ct" items="${ct}">
+                            &nbsp;&nbsp;<span style="background-color: #5cc0de;padding: 7px;border-radius:5px;color: white">${ct.classes.class_name}<input type="hidden" value="${ct.classes.class_id}"></span>
+                            </c:forEach>
+                        </span>
                     </div>
                     <div role="form" class="form-inline">
                         <div class="form-group">

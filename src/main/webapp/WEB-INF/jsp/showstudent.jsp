@@ -126,7 +126,7 @@
                             <label class="col-sm-2 control-label">地址</label>
 
                             <div class="col-sm-6">
-                                <input type="text" class="form-control "  readonly="readonly" value="sdsds">
+                                <input type="text" class="form-control "  readonly="readonly" value="${stu.stu_address}">
                             </div>
 
                         </div>
