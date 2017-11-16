@@ -1,5 +1,7 @@
 package com.ruike.eas.service;
 
+import com.ruike.eas.pojo.Classteacher;
+
 import java.util.List;
 
 public interface ClassteacherService {
@@ -8,17 +10,18 @@ public interface ClassteacherService {
      * @param classteacher
      * @return
      */
-    public List<ClassteacherService> selectClassteacher(ClassteacherService classteacher);
+
+    public List<Classteacher> selectClassteacher(Classteacher classteacher);
     /**
      * 添加班级老师关系信息
      * @param classteacher
      * @return
      */
-    public Integer inserClassteacher(ClassteacherService classteacher);
+    public Integer inserClassteacher(Classteacher classteacher);
     /**
      * 修改老师班级关系信息
      * @param classteacher
      * @return
      */
-    public Integer update(ClassteacherService classteacher);
+    public Integer update(Classteacher classteacher);
 }
