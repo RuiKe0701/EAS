@@ -1,5 +1,7 @@
 package pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Stu {
@@ -10,6 +12,7 @@ public class Stu {
   private Date stu_birthday;
   private String stu_phone;
   private String stu_address;
+  @DateTimeFormat(pattern="yyyy-MM-dd")
   private Date stu_startday;
   private String stu_parentphone;
   private String stu_carde;
@@ -17,6 +20,7 @@ public class Stu {
   private String stu_email;
   private Integer stu_state;
   private Integer status;
+  @DateTimeFormat(pattern="yyyy-MM-dd")
   private Date crateday;
   private Integer class_id;
 
@@ -57,7 +61,7 @@ public class Stu {
   }
 
   public void setStu_birthday(Date stu_birthday) {
-    this.stu_birthday = stu_birthday;
+    this.stu_birthday = new java.sql.Date(stu_birthday.getTime());
   }
 
   public String getStu_phone() {
@@ -81,7 +85,7 @@ public class Stu {
   }
 
   public void setStu_startday(Date stu_startday) {
-    this.stu_startday = stu_startday;
+    this.stu_startday =new java.sql.Date(stu_startday.getTime());
   }
 
   public String getStu_parentphone() {

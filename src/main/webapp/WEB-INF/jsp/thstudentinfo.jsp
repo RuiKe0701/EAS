@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 
 <head>
@@ -111,6 +112,7 @@
 
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
+
                         <tr>
                             <th>姓名</th>
                             <th>学号</th>
@@ -119,29 +121,29 @@
                             <th>性别</th>
                             <th>电话</th>
                             <th>入学时间</th>
-                            <th>地址</th>
+
                             <th>父母电话</th>
                             <th>操作</th>
 
                         </tr>
                         </thead>
                         <tbody>
+                        <c:forEach var="stus" items="${stulist}">
                         <tr class="gradeX">
-                            <td>真理</td>
-                            <td>10101
-                            </td>
-                            <td>0701</td>
-                            <td class="center">4</td>
-                            <td class="center">男</td>
-                            <td>15751735395</td>
-                            <td class="center">2017-06-05</td>
-                            <td class="">徐州贾汪</td>
-                            <td>15252525225(父亲)</td>
+                            <td>${stus.stu_name}</td>
+                            <td>${stus.stu_no}</td>
+                            <td>${stus.class_id}</td>
+                            <th>${stus.stu_birthday}</th>
+                            <td class="center">${stus.stu_sex}</td>
+                            <td class="center">${stus.stu_phone}</td>
+                            <td>${stus.stu_startday}</td>
+                            <td class="center">${stus.stu_parentphone}</td>
+
                             <td> <div class="btn-group open">
                                 <button data-toggle="dropdown" class="btn btn-warning btn-sm dropdown-toggle" aria-expanded="false">操作 <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="buttons.html#">查看详情</a>
+                                    <li> <input type="hidden" value="${stus.stu_id}"><a class="showstudentinfo">查看详情</a>
                                     </li>
                                     <li><a href="buttons.html#" class="font-bold">修改</a>
                                     </li>
@@ -152,32 +154,8 @@
                             </div>
                             </td>
                         </tr>
-                        <tr class="gradeX">
-                            <td>真理</td>
-                            <td>10101
-                            </td>
-                            <td>0701</td>
-                            <td class="center">4</td>
-                            <td class="center">男</td>
-                            <td>15751735395</td>
-                            <td class="center">2017-06-05</td>
-                            <td class="">徐州贾汪</td>
-                            <td>15252525225(父亲)</td>
-                            <td> <div class="btn-group open">
-                                <button data-toggle="dropdown" class="btn btn-warning btn-sm dropdown-toggle" aria-expanded="false">操作 <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="buttons.html#">查看详情</a>
-                                    </li>
-                                    <li><a href="buttons.html#" class="font-bold">修改</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li><a href="buttons.html#">删除</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            </td>
-                        </tr>
+                        </c:forEach>
+
                         </tbody>
                         <tfoot>
                         <tr>
@@ -188,7 +166,7 @@
                             <th>性别</th>
                             <th>电话</th>
                             <th>入学时间</th>
-                            <th>地址</th>
+
                             <th>父母电话</th>
                             <th>操作</th>
                         </tr>
@@ -222,8 +200,13 @@
         })
         //var i1 = window.frames['iframeId'];搜索
     }
+    function showstudentinfo() {
+        $(".showstudentinfo").click(function () {
+            parent.showstu(1);
+        })
+    }
     $(function () {
-
+        showstudentinfo();
         $("#an").click();
         addstudent();
     })
