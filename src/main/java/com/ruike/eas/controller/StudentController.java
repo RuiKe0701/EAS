@@ -23,7 +23,7 @@ public class StudentController {
     @RequestMapping("/thstudentinfo")
     public String selectstudents(HttpServletRequest request){
         List<Stu> stus=new ArrayList<Stu>();
-        stus=studentService.defaultstudent();
+        stus=studentService.defaultStudent();
         for (Stu stu : stus) {
             System.out.println(stu.getStu_no());
         }
@@ -33,12 +33,10 @@ public class StudentController {
     //展示学生所有基本信息
     @RequestMapping("/showstudent")
     public String showstudent(HttpServletRequest request,Integer stuid,String l){
-        System.out.println(l);
-        System.out.println(stuid);
         Stu stu=new Stu();
         stu.setStu_id(stuid);
         Stu stu1=new Stu();
-        stu1 =studentService.selectstudentbystu(stu);
+        stu1 =studentService.selectStudentByStu(stu);
         if(stu1!=null){
             request.setAttribute("stu",stu1);
             System.out.println(stu1.getStu_name());
