@@ -16,10 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="stu_name != null and stu_name != ''">
 				and st.stu_name like concat("%",#{stu_name},"%")
 			</if>
-			<if test="classes.class_id != null and classes.class_id > 0">
+			<if test="classes != null and classes.class_id != null and classes.class_id > 0">
 				and c.class_id = #{classes.class_id}
 			</if>
-			<if test="classes.class_name != null and classes.class_name != ''">
+			<if test="classes != null and classes.class_name != null and classes.class_name != ''">
 				and c.class_name = #{classes.class_name}
 			</if>
 			<if test="teacherid != null and teacherid > 0">

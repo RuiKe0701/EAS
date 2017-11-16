@@ -40,7 +40,12 @@
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
 </head>
+<style type="text/css">
+    body{
+        zoom: 50%
+    }
 
+</style>h
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -111,10 +116,8 @@
                 </div>
 
                 <div class="ibox-content">
-
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
-
                         <tr>
                             <th>姓名</th>
                             <th>学号</th>
@@ -123,13 +126,11 @@
                             <th>性别</th>
                             <th>电话</th>
                             <th>入学时间</th>
-
                             <th>父母电话</th>
                             <th>操作</th>
-
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="showstu">
                         <c:forEach var="stus" items="${stulist}">
                         <tr class="gradeX">
                             <td>${stus.stu_name}</td>
@@ -157,7 +158,6 @@
                             </td>
                         </tr>
                         </c:forEach>
-
                         </tbody>
                         <tfoot>
                         <tr>
@@ -210,16 +210,47 @@
         })
     }
     //根据条件查询学生信息
-    function selectByStudent(classid,stuname,status) {
-
-
+    function selectByStudent(classname,stuname,status) {
         $.ajax({
             type: "post",
             url: "/thselecstudentbystu",
-            data:{"classid":classid,"stuname":stuname,"sturts":status},
+            data:{"classname":classname,"stuname":stuname,"sturts":status},
             dataType: "json",
             success: function (data) {//将数据转换成json类型，可以把data用alert()输出出来看看到底是什么样的结构
                 alert(data);
+                $("#showstu").html("");
+                var strs;
+                $.each(data, function(i, item) {
+                    alert(item.stu_name)
+                    strs+="<tr class=\"gradeX\">\n" +
+                        "                        <td>"+item.stu_name+"</td>\n" +
+                        "                        <td>"+item.stu_no+"</td>\n" +
+                        "                        <td>"+item.class_id+"</td>\n" +
+                        "                        <th>"+item.stu_birthday+"</th>\n" +
+                        "                        <td class=\"center\">"+item.stu_sex+"</td>\n" +
+                        "                        <td class=\"center\">"+item.stu_phone+"</td>\n" +
+                        "                        <td>"+item.stu_startday+"</td>\n" +
+                        "                        <td class=\"center\">"+item.stu_parentphone+"</td>\n" +
+                        "\n" +
+                        "                        <td> <div class=\"btn-group open\">\n" +
+                        "                        <button data-toggle=\"dropdown\" class=\"btn btn-warning btn-sm dropdown-toggle\" aria-expanded=\"false\">操作 <span class=\"caret\"></span>\n" +
+                        "                        </button>\n" +
+                        "                        <ul class=\"dropdown-menu\">\n" +
+                        "                        <li> <input type=\"hidden\" value="+item.stu_id+"><a class=\"showstudentinfo\">查看详情</a>\n" +
+                        "                        </li>\n" +
+                        "                        <li><a href=\"buttons.html#\" class=\"font-bold\">修改</a>\n" +
+                        "                        </li>\n" +
+                        "                        <li class=\"divider\"></li>\n" +
+                        "                        <li><a href=\"buttons.html#\">删除</a>\n" +
+                        "                        </li>\n" +
+                        "                        </ul>\n" +
+                        "                        </div>\n" +
+                        "                        </td>\n" +
+                        "                        </tr>"
+                })
+                alert(strs)
+                $("#showstu").append(strs);
+                $("#an").click()
             },
             error: function () {
                 alert("系统异常，请稍后重试！");
@@ -249,12 +280,12 @@
                     }
                 }
                 if(sturts!=null){
-                    var classid=$("#th_class_id").val();
-                    if(classid==null||classid==""){
+                    var classname=$("#th_class_id").val();
+                    if(classname==null||classname==""){
                         alert("SORRY!请先输入班级名在进行查询！")
                     }else {
                         var stuname=null;
-                        selectByStudent(classid,stuname,sturts);
+                        selectByStudent(classname,stuname,sturts);
                     }
                 }
             }
@@ -288,8 +319,8 @@
                     if(stuname==null||stuname==""){
                         alert("SORRY!请先输入学员姓名在进行查询！")
                     }else {
-                        var classid=null;
-                        selectByStudent(classid,stuname,sturts);
+                        var classname=null;
+                        selectByStudent(classname,stuname,sturts);
                     }
                 }
             }

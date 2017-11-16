@@ -3,6 +3,7 @@ package com.ruike.eas.controller;
 import com.alibaba.fastjson.JSON;
 import com.ruike.eas.pojo.Class;
 import com.ruike.eas.pojo.Classteacher;
+import com.ruike.eas.pojo.Teacher;
 import com.ruike.eas.service.ClassteacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,20 +69,44 @@ public class StudentController {
     }
     @RequestMapping("/thselecstudentbystu")
     @ResponseBody
-    public void selectStudentByStu(PrintWriter printWriter,Integer classid,String stuname,Integer sturts){
+    public void selectStudentByStu(PrintWriter printWriter,String classname,String stuname,Integer sturts){
         //根据班级名称查询
-        if(classid!=null){
-            String stu="class没毛病"+classid+""+sturts;
-            String jsonString = JSON.toJSONString(stu);
-            printWriter.write(jsonString);
-            printWriter.flush();
-            printWriter.close();
+        if(classname!=null&&classname!=""){
+            List<Stu> stus=new ArrayList<Stu>();
+            Stu stu=new Stu();
+            Class classes=new Class();
+            classes.setClass_name(classname);
+            stu.setClasses(classes);
+            stu.setTeacherid(1);
+            stus=studentService.selectByStudent(stu);
+            if(stus!=null) {
+                String jsonString = JSON.toJSONString(stus);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }else{
+                String jsonString = JSON.toJSONString(0);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }
         }else if(stuname!=null&&stuname!=""){
-            String stu=stuname+"没毛病"+""+sturts;
-            String jsonString = JSON.toJSONString(stu);
-            printWriter.write(jsonString);
-            printWriter.flush();
-            printWriter.close();
+            Stu stu1=new Stu();
+            System.out.println("sss"+stuname);
+            stu1.setStu_name(stuname);
+            List<Stu> stuList=new ArrayList<Stu>();
+            stuList=studentService.selectByStudent(stu1);
+            if(stuList!=null) {
+                String jsonString = JSON.toJSONString(stuList);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }else{
+                    String jsonString = JSON.toJSONString(0);
+                    printWriter.write(jsonString);
+                    printWriter.flush();
+                    printWriter.close();
+                }
         }
 
     }
