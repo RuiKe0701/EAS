@@ -1,6 +1,6 @@
 package com.ruike.eas.dao;
 
-import com.ruike.eas.service.Classteacher;
+import com.ruike.eas.service.ClassteacherService;
 
 import java.util.List;
 
@@ -10,17 +10,17 @@ public interface ClassteacherMapper {
      * @param classteacher
      * @return
      */
-    public List<Classteacher> selectClassteacher(Classteacher classteacher);
+    public List<ClassteacherService> selectClassteacher(ClassteacherService classteacher);
     /**
      * 添加班级老师关系信息
      * @param classteacher
      * @return
      */
-    public Integer inserClassteacher(Classteacher classteacher);
+    public Integer inserClassteacher(ClassteacherService classteacher);
     /**
      * 修改老师班级关系信息
      * @param classteacher
      * @return
      */
-    public Integer update(Classteacher classteacher);
+    public Integer update(ClassteacherService classteacher);
 }

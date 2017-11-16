@@ -1,20 +1,19 @@
 package com.ruike.eas.service.impl;
 
-import com.ruike.eas.service.ClassService;
-import com.ruike.eas.service.Classteacher;
+import com.ruike.eas.service.ClassteacherService;
 
 import java.util.List;
 
-public class ClassteacherServiceImpl implements Classteacher{
-    public List<Classteacher> selectClassteacher(Classteacher classteacher) {
+public class ClassteacherServiceImpl implements ClassteacherService {
+    public List<ClassteacherService> selectClassteacher(ClassteacherService classteacher) {
         return null;
     }
 
-    public Integer inserClassteacher(Classteacher classteacher) {
+    public Integer inserClassteacher(ClassteacherService classteacher) {
         return null;
     }
 
-    public Integer update(Classteacher classteacher) {
+    public Integer update(ClassteacherService classteacher) {
         return null;
     }
 }
