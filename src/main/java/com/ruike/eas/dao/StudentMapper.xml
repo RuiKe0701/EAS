@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.StudentMapper">
-	<select id="defaultstudent" resultType="pojo.Stu">
+<mapper namespace="com.ruike.eas.dao.StudentMapper">
+	<select id="defaultstudent" resultType="com.ruike.eas.pojo.Stu">
 		select stu_id,stu_name,stu_no,stu_birthday,stu_sex,stu_phone,stu_startday,stu_parentphone,class_id from stu
 	</select>
-	<select id="selectstudentbystu" parameterType="pojo.Stu" resultType="pojo.Stu">
+	<select id="selectstudentbystu" parameterType="com.ruike.eas.pojo.Stu" resultType="com.ruike.eas.pojo.Stu">
 		select * from stu WHERE stu_id=${stu_id}
 	</select>
 </mapper>

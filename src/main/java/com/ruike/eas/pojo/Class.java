@@ -1,4 +1,4 @@
-package pojo;
+package com.ruike.eas.pojo;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package pojo;
+package com.ruike.eas.pojo;
 
 public class Teacher {
   private Integer th_id;

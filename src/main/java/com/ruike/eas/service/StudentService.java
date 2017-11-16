@@ -1,6 +1,6 @@
-package service;
+package com.ruike.eas.service;
 
-import pojo.Stu;
+import com.ruike.eas.pojo.Stu;
 
 import java.util.List;
 

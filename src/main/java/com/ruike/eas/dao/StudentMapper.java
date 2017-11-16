@@ -1,6 +1,6 @@
-package dao;
+package com.ruike.eas.dao;
 
-import pojo.Stu;
+import com.ruike.eas.pojo.Stu;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
-package controller;
+package com.ruike.eas.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pojo.Stu;
-import service.StudentService;
+import com.ruike.eas.pojo.Stu;
+import com.ruike.eas.service.StudentService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

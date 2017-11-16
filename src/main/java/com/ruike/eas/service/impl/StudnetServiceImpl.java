@@ -1,13 +1,12 @@
-package service.impl;
+package com.ruike.eas.service.impl;
 
-import dao.StudentMapper;
+import com.ruike.eas.dao.StudentMapper;
 
+import com.ruike.eas.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pojo.Stu;
-import service.StudentService;
+import com.ruike.eas.pojo.Stu;
 
-import javax.annotation.Resource;
 import java.util.List;
 @Service("studentService")
 public class StudnetServiceImpl implements StudentService {
