@@ -23,6 +23,7 @@ public class Stu {
   @DateTimeFormat(pattern="yyyy-MM-dd")
   private Date crateday;
   private Integer class_id;
+  
 
   public Integer getStu_id() {
     return stu_id;
