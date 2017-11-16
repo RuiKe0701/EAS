@@ -9,6 +9,5 @@ public interface StudentService {
 
     public Integer addStu(Stu stu);
 
-
     public Integer updateStuInfo(Stu stu);
 }
