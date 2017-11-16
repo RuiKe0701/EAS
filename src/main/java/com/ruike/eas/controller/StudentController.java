@@ -14,6 +14,7 @@ import java.util.List;
 public class StudentController {
     @Resource
     private StudentService studentService;
+    @Resource
     @RequestMapping("/studentinfo")
     public String studentinfo(){
         return "teacher";
