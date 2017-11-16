@@ -3,5 +3,21 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.ClassteacherMapper">
+    <resultMap id="te" type="com.ruike.eas.pojo.Classteacher">
+        <result column="ct_id" property="ct_id"/>
+        <result column="teacher_id" property="teacher_id"/>
+        <result column="status" property="status"/>
+        <result column="remarks" property="remarks"/>
+        <result column="ct_startday" property="ct_startday"/>
+        <result column="ct_stopday" property="ct_stopday"/>
+        <result column="ct_type" property="ct_type"/>
+        <result column="class_id" property="class_id"/>
+        <association property="classes" column="class_id" javaType="com.ruike.eas.pojo.Class"/>
+    </resultMap>
 
+    <select id="selectClassteacher" parameterType="com.ruike.eas.pojo.Classteacher" resultMap="">
+      SELECT ch.* FROM classteacher ch,class c
+      WHERE ch.class_id = c.class_id
+      and ch.teacher_id = 1 and ch.status=0
+    </select>
 </mapper>

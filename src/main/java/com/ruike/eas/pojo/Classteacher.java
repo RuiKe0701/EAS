@@ -12,6 +12,17 @@ public class Classteacher {
   private Date ct_stopday;
   private Long ct_type;
 
+  private Class classes;//班级实体类
+  public Class getClasses() {
+    return classes;
+  }
+
+  public void setClasses(Class classes) {
+    this.classes = classes;
+  }
+
+
+
   public Integer getCt_id() {
     return ct_id;
   }
