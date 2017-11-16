@@ -7,8 +7,27 @@ public class Class {
   private String class_name;
   private Date class_startday;
   private Date class_stopday;
-
   private Integer grade_id;
+
+  private Integer status;
+  private Integer class_state;
+
+  public Integer getStatus() {
+    return status;
+  }
+
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
+
+  public Integer getClass_state() {
+    return class_state;
+  }
+
+  public void setClass_state(Integer class_state) {
+    this.class_state = class_state;
+  }
+
   public Integer getClass_id() {
     return class_id;
   }

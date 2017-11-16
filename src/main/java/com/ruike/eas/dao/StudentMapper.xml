@@ -9,4 +9,207 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectstudentbystu" parameterType="com.ruike.eas.pojo.Stu" resultType="com.ruike.eas.pojo.Stu">
 		select * from stu WHERE stu_id=${stu_id}
 	</select>
+	<sql id="stu">
+		SELECT st.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.status as classsta,c.class_state FROM stu st,class c,classteacher th
+		<where>
+			st.class_id=c.class_id and c.class_id = th.class_id
+			<if test="stu_name != null and stu_name != ''">
+				and st.stu_name like concat("%",#{stu_name},"%")
+			</if>
+			<if test="classes.class_name != null and classes.class_name != ''">
+				and c.class_name = #{classes.class_name}
+			</if>
+			<if test="teacherid != null and teacherid > 0">
+				and th.teacher_id = #{teacherid}
+			</if>
+			<if test="status != null">
+				and th.status =#{status}
+			</if>
+		</where>
+	</sql>
+	
+	<resultMap id="stuclass" type="com.ruike.eas.pojo.Stu">
+		<result column="stu_id" property="stu_id"/>
+		<result column="stu_name" property="stu_name"/>
+		<result column="stu_no" property="stu_no"/>
+		<result column="stu_sex" property="stu_sex"/>
+		<result column="stu_birthday" property="stu_birthday"/>
+		<result column="stu_phone" property="stu_phone"/>
+		<result column="stu_address" property="stu_address"/>
+		<result column="stu_startday" property="stu_startday"/>
+		<result column="stu_parentphone" property="stu_parentphone"/>
+		<result column="stu_carde" property="stu_carde"/>
+		<result column="stu_education" property="stu_education"/>
+		<result column="stu_email" property="stu_email"/>
+		<result column="stu_state" property="stu_state"/>
+		<result column="status" property="status"/>
+		<result column="crateday" property="crateday"/>
+		<result column="class_id" property="class_id"/>
+		<association property="classes" column="class_id" javaType="com.ruike.eas.pojo.Class">
+			<result column="class_id" property="class_id"/>
+			<result column="class_name" property="class_name"/>
+			<result column="class_startday" property="class_startday"/>
+			<result column="class_stopday" property="class_stopday"/>
+			<result column="grade_id" property="grade_id"/>
+			<result column="classsta" property="status"/>
+			<result column="class_state" property="class_state"/>
+		</association>
+	</resultMap>
+	<select id="selectStudent" parameterType="com.ruike.eas.pojo.Stu" resultMap="stuclass">
+		  SELECT * FROM (<include refid="stu"/>) student
+	</select>
+
+	<sql id="stukey">
+		<trim suffixOverrides=",">
+			<if test="stu_name != null and stu_name != ''">
+				stu_name,
+			</if>
+			<if test="stu_no != null and stu_no != ''">
+				stu_no,
+			</if>
+			<if test="stu_sex != null">
+				stu_sex,
+			</if>
+			<if test="stu_birthday != null and stu_birthday != ''">
+				stu_birthday,
+			</if>
+			<if test="stu_phone != null and stu_phone != ''">
+				stu_phone,
+			</if>
+			<if test="stu_address != null and stu_address != ''">
+				stu_address,
+			</if>
+			<if test="stu_startday != null and stu_startday != ''">
+				stu_startday,
+			</if>
+			<if test="stu_parentphone != null and stu_parentphone != ''">
+				stu_parentphone,
+			</if>
+			<if test="stu_carde != null and stu_carde != ''">
+				stu_carde,
+			</if>
+			<if test="stu_education != null and stu_education != ''">
+				stu_education,
+			</if>
+			<if test="stu_email != null and stu_email != ''">
+				stu_email,
+			</if>
+			<if test="stu_state != null">
+				stu_state,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="crateday != null and crateday != ''">
+				crateday,
+			</if>
+			<if test="class_id != null and class_id != ''">
+				class_id,
+			</if>
+		</trim>
+	</sql>
+
+	<insert id="insertStu" parameterType="com.ruike.eas.pojo.Stu">
+		INSERT INTO stu (<include refid="stukey"/>) VALUES (
+		<trim suffixOverrides=",">
+			<if test="stu_name != null and stu_name != ''">
+				#{stu_name},
+			</if>
+			<if test="stu_no != null and stu_no != ''">
+				#{stu_no},
+			</if>
+			<if test="stu_sex != null">
+				#{stu_sex},
+			</if>
+			<if test="stu_birthday != null and stu_birthday != ''">
+				#{stu_birthday},
+			</if>
+			<if test="stu_phone != null and stu_phone != ''">
+				#{stu_phone},
+			</if>
+			<if test="stu_address != null and stu_address != ''">
+				#{stu_address},
+			</if>
+			<if test="stu_startday != null and stu_startday != ''">
+				#{stu_startday},
+			</if>
+			<if test="stu_parentphone != null and stu_parentphone != ''">
+				#{stu_parentphone},
+			</if>
+			<if test="stu_carde != null and stu_carde != ''">
+				#{stu_carde},
+			</if>
+			<if test="stu_education != null and stu_education != ''">
+				#{stu_education},
+			</if>
+			<if test="stu_email != null and stu_email != ''">
+				#{stu_email},
+			</if>
+			<if test="stu_state != null">
+				#{stu_state},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="crateday != null">
+				#{crateday},
+			</if>
+			<if test="class_id != null and class_id > 0">
+				#{class_id},
+			</if>
+		</trim>
+		)
+	</insert>
+
+	<update id="updateStu" parameterType="com.ruike.eas.pojo.Stu">
+		update stu
+		<set>
+			<if test="stu_name != null and stu_name != ''">
+				stu_name = #{stu_name},
+			</if>
+			<if test="stu_no != null and stu_no != ''">
+				stu_no = #{stu_no},
+			</if>
+			<if test="stu_sex != null">
+				stu_sex = #{stu_sex},
+			</if>
+			<if test="stu_birthday != null and stu_birthday != ''">
+				stu_birthday = #{stu_birthday},
+			</if>
+			<if test="stu_phone != null and stu_phone != ''">
+				stu_phone = #{stu_phone},
+			</if>
+			<if test="stu_address != null and stu_address != ''">
+				stu_address = #{stu_address},
+			</if>
+			<if test="stu_startday != null and stu_startday != ''">
+				stu_startday = #{stu_startday},
+			</if>
+			<if test="stu_parentphone != null and stu_parentphone != ''">
+				stu_parentphone = #{stu_parentphone},
+			</if>
+			<if test="stu_carde != null and stu_carde != ''">
+				stu_carde = #{stu_carde},
+			</if>
+			<if test="stu_education != null and stu_education != ''">
+				stu_education = #{stu_education},
+			</if>
+			<if test="stu_email != null and stu_email != ''">
+				stu_email = #{stu_email},
+			</if>
+			<if test="stu_state != null">
+				stu_state = #{stu_state},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="crateday != null">
+				crateday = #{crateday},
+			</if>
+			<if test="class_id != null and class_id > 0">
+				class_id = #{class_id},
+			</if>
+		</set>
+		WHERE stu_id = #{stu_id}
+	</update>
 </mapper>

@@ -1,8 +1,5 @@
 package com.ruike.eas.controller;
 
-import com.ruike.eas.pojo.Class;
-import com.ruike.eas.pojo.Classteacher;
-import com.ruike.eas.service.ClassteacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ruike.eas.pojo.Stu;
@@ -17,32 +14,20 @@ import java.util.List;
 public class StudentController {
     @Resource
     private StudentService studentService;
-    @Resource
-    private ClassteacherService classteacherService;
 
     @RequestMapping("/studentinfo")
     public String studentinfo(){
         return "teacher";
     }
 
-    /**
-     *
-     * 学生信息初始页面
-     * @param request
-     * @return 返回老师所带领的班级 和默认显示的学生信息
-     */
+    //加载学生基本信息列表/
     @RequestMapping("/thstudentinfo")
     public String selectstudents(HttpServletRequest request){
         List<Stu> stus=new ArrayList<Stu>();
-        //获取默认显示的的学生信息
         stus=studentService.defaultStudent();
-
-        List<Classteacher> classteacherArrayList=new ArrayList<Classteacher>();
-        Classteacher classteachers=new Classteacher();
-        classteachers.setTeacher_id(1);
-        //获取老师正在管理的班级
-         classteacherArrayList=classteacherService.selectClassteacher(classteachers);
-        request.setAttribute("ct",classteacherArrayList);
+        for (Stu stu : stus) {
+            System.out.println(stu.getStu_no());
+        }
         request.setAttribute("stulist",stus);
         return "thstudentinfo";
     }

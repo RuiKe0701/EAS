@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ClassteacherMapper {
     /**
-     * 根据条件查询班级老师
+     * 根据条件查询班级老师表
      * @param classteacher
      * @return
      */

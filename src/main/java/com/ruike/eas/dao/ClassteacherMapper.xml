@@ -5,19 +5,130 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruike.eas.dao.ClassteacherMapper">
     <resultMap id="te" type="com.ruike.eas.pojo.Classteacher">
         <result column="ct_id" property="ct_id"/>
-        <result column="teacher_id" property="teacher_id"/>
         <result column="status" property="status"/>
         <result column="remarks" property="remarks"/>
         <result column="ct_startday" property="ct_startday"/>
         <result column="ct_stopday" property="ct_stopday"/>
         <result column="ct_type" property="ct_type"/>
         <result column="class_id" property="class_id"/>
-        <association property="classes" column="class_id" javaType="com.ruike.eas.pojo.Class"/>
+
+        <result column="teacher_id" property="teacher_id"/>
+        <association property="teacher" column="teacher_id" javaType="com.ruike.eas.pojo.Teacher">
+            <result column="th_id" property="th_id"/>
+            <result column="th_name" property="th_name"/>
+            <result column="th_type" property="th_type"/>
+        </association>
+        <association property="classes" column="class_id" javaType="com.ruike.eas.pojo.Class">
+            <result column="class_id" property="class_id"/>
+            <result column="class_name" property="class_name"/>
+            <result column="class_startday" property="class_startday"/>
+            <result column="class_stopday" property="class_stopday"/>
+            <result column="grade_id" property="grade_id"/>
+            <result column="csta" property="status"/>
+            <result column="class_state" property="class_state"/>
+        </association>
     </resultMap>
 
-    <select id="selectClassteacher" parameterType="com.ruike.eas.pojo.Classteacher" resultMap="">
-      SELECT ch.* FROM classteacher ch,class c
-      WHERE ch.class_id = c.class_id
-      and ch.teacher_id = 1 and ch.status=0
+    <sql id="classte">
+        SELECT ch.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.status as csta,t.* FROM classteacher ch,class c,teacher t
+        <where>
+            ch.class_id = c.class_id
+          <if test="class_id != null and class_id > 0">
+            AND ch.class_id = #{class_id}
+          </if>
+          <if test="teacher_id != null and teacher_id > 0">
+              AND ch.teacher_id = #{teacher_id}
+          </if>
+          <if test="remarks != null and remarksx != ''">
+              AND remarks = #{remarks}
+          </if>
+          <if test="ct_startday != null">
+              AND ct_startday > #{ct_startday}
+          </if>
+          <if test="ct_stopday != null">
+              AND ct_stopday &lt; #{ct_stopday}
+          </if>
+            <if test="classes.status != null">
+                AND c.status = #{classes.status}
+            </if>
+          <if test="ct_type != null">
+              AND ct_type = #{ct_type}
+          </if>
+
+        </where>
+
+    </sql>
+    <select id="selectClassteacher" parameterType="com.ruike.eas.pojo.Classteacher" resultMap="te">
+      select * from (<include refid="classte"/>) cla
     </select>
+
+    <sql id="classkey">
+        <trim suffixOverrides=",">
+            <if test="class_id!=null and class_id > 0">
+                class_id,
+            </if>
+            <if test="teacher_id!=null and teacher_id > 0">
+                teacher_id,
+            </if>
+            <if test="remarks!=null and remarks != ''">
+                remarks,
+            </if>
+            <if test="ct_startday!=null">
+                ct_startday,
+            </if>
+            <if test="ct_type!=null">
+                ct_type,
+            </if>
+            status
+        </trim>
+    </sql>
+
+    <sql id="classvalue">
+        <trim suffixOverrides=",">
+            <if test="class_id!=null and class_id > 0">
+                #{class_id},
+            </if>
+            <if test="teacher_id!=null and teacher_id > 0">
+                #{teacher_id},
+            </if>
+            <if test="remarks!=null and remarks != ''">
+                #{remarks},
+            </if>
+            <if test="ct_startday!=null">
+                #{ct_startday},
+            </if>
+            <if test="ct_type!=null">
+                #{ct_type},
+            </if>
+            #{status}
+        </trim>
+    </sql>
+    <insert id="inserClassteacher" parameterType="com.ruike.eas.pojo.Classteacher">
+      INSERT INTO classteacher(<include refid="classkey"/>) VALUES (<include refid="classvalue"/>);
+    </insert>
+
+    <update id="update" parameterType="com.ruike.eas.pojo.Classteacher">
+        UPDATE classteacher
+        <set>
+            <if test="class_id!=null and class_id > 0">
+                class_id = #{class_id},
+            </if>
+            <if test="teacher_id!=null and teacher_id > 0">
+                teacher_id = #{teacher_id},
+            </if>
+            <if test="remarks!=null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="ct_startday!=null">
+                ct_startday = #{ct_startday},
+            </if>
+            <if test="ct_stopday!=null">
+                ct_stopday = #{ct_stopday},
+            </if>
+            <if test="ct_type!=null">
+                ct_type = #{ct_type},
+            </if>
+        </set>
+        WHERE ct_id = #{ct_id}
+    </update>
 </mapper>

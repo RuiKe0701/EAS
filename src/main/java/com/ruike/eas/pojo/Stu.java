@@ -23,7 +23,7 @@ public class Stu {
   @DateTimeFormat(pattern="yyyy-MM-dd")
   private Date crateday;
   private Integer class_id;
-  
+
 
   public Integer getStu_id() {
     return stu_id;
@@ -151,5 +151,24 @@ public class Stu {
 
   public void setClass_id(Integer class_id) {
     this.class_id = class_id;
+  }
+
+  private Integer teacherid;  //老师id
+  public Integer getTeacherid() {
+    return teacherid;
+  }
+
+  public void setTeacherid(Integer teacherid) {
+    this.teacherid = teacherid;
+  }
+
+  private Class classes;//班级实体类
+
+  public Class getClasses() {
+    return classes;
+  }
+
+  public void setClasses(Class classes) {
+    this.classes = classes;
   }
 }

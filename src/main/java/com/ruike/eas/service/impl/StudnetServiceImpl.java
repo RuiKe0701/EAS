@@ -25,17 +25,17 @@ public class StudnetServiceImpl implements StudentService {
             return null;
         }
         }
-    //根据学生条件进行单个学生的基本信息展示
+    //根据条件查询学生信息
     public List<Stu> selectByStudent(Stu stu) {
-        return null;
+        return studentMapper.selectStudent(stu);
     }
     //添加新学员
     public Integer addStu(Stu stu) {
-        return null;
+        return studentMapper.insertStu(stu);
     }
     //修改学员信息
     public Integer updateStuInfo(Stu stu) {
-        return null;
+        return studentMapper.updateStu(stu);
     }
 }
 
