@@ -1,5 +1,6 @@
 package com.ruike.eas.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.ruike.eas.pojo.Class;
 import com.ruike.eas.pojo.Classteacher;
 import com.ruike.eas.service.ClassteacherService;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ruike.eas.pojo.Stu;
 import com.ruike.eas.service.StudentService;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +66,24 @@ public class StudentController {
     public String thaddstudent(){
         return "thaddstudent";
     }
+    @RequestMapping("/thselecstudentbystu")
+    @ResponseBody
+    public void selectStudentByStu(PrintWriter printWriter,Integer classid,String stuname,Integer sturts){
+        //根据班级名称查询
+        if(classid!=null){
+            String stu="class没毛病"+classid+""+sturts;
+            String jsonString = JSON.toJSONString(stu);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }else if(stuname!=null&&stuname!=""){
+            String stu=stuname+"没毛病"+""+sturts;
+            String jsonString = JSON.toJSONString(stu);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }
 
+    }
 
 }

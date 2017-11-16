@@ -82,27 +82,27 @@
                     </div>
                     <div role="form" class="form-inline">
                         <div class="form-group">
-                            <label for="exampleInputEmail2" class="sr-only">用户名</label>
-                            <input type="email" placeholder="请输入班级名" id="exampleInputEmail2" class="form-control">
-                            <button class="btn btn-primary "  type="button" style="margin-top: 5px;background-color:#5db85d"><i class="fa fa-search"></i>&nbsp;&nbsp;<span class="bold">班级查询</span>
+                            <label for="exampleInputEmail2" class="sr-only">班级名</label>
+                            <input type="number" id="th_class_id" placeholder="请输入班级名" id="exampleInputEmail2" class="form-control">
+                            <button class="btn btn-primary " id="seletclassid" type="button" style="margin-top: 5px;background-color:#5db85d"><i class="fa fa-search"></i>&nbsp;&nbsp;<span class="bold">班级查询</span>
                             </button>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword2" class="sr-only">密码</label>
-                            <input type="password" placeholder="请输入学员名" id="exampleInputPassword2" class="form-control">
-                            <button class="btn btn-primary " type="button" style="margin-top: 5px;background-color:#5db85d"><i class="fa fa-search"></i>&nbsp;&nbsp;<span class="bold">姓名查询</span>
+                            <label  class="sr-only">密码</label>
+                            <input type="text" placeholder="请输入学员名" id="stu_stuname" class="form-control">
+                            <button class="btn btn-primary " id="seletstuname" type="button" style="margin-top: 5px;background-color:#5db85d"><i class="fa fa-search"></i>&nbsp;&nbsp;<span class="bold">姓名查询</span>
                             </button>
                         </div>
 
                         <div class="checkbox checkbox-success">
-                            <input id="checkbox3" type="checkbox">
-                            <label for="checkbox4">
+                            <input type="checkbox" name="sturts" value="0" checked="checked">
+                            <label>
                                 在校
                             </label>
                         </div>
                         <div class="checkbox checkbox-info">
-                            <input id="checkbox4" type="checkbox">
-                            <label for="checkbox4">
+                            <input type="checkbox" name="sturts" value="1">
+                            <label>
                                 离校
                             </label>
                         </div>
@@ -195,6 +195,7 @@
 <script src="js/plugins/pace/pace.min.js"></script>
 
 <script type="text/javascript">
+    //添加学生信息页面跳转
     function addstudent() {
         1.//根据iframe的id获取对象
         $("#addstudent").click(function () {
@@ -202,15 +203,106 @@
         })
         //var i1 = window.frames['iframeId'];搜索
     }
+    //单个展示学生信息页面跳转
     function showstudentinfo() {
         $(".showstudentinfo").click(function () {
             parent.showstu(1);
         })
     }
+    //根据条件查询学生信息
+    function selectByStudent(classid,stuname,status) {
+
+
+        $.ajax({
+            type: "post",
+            url: "/thselecstudentbystu",
+            data:{"classid":classid,"stuname":stuname,"sturts":status},
+            dataType: "json",
+            success: function (data) {//将数据转换成json类型，可以把data用alert()输出出来看看到底是什么样的结构
+                alert(data);
+            },
+            error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+        });
+    }
+    function selectByclassid() {
+        $("#seletclassid").click(function () {
+            var obj=document.getElementsByName('sturts');
+            var s=[];
+            for(var i=0; i<obj.length; i++){
+                if(obj[i].checked){
+                    s[i]=obj[i].value;
+                } //如果选中，将value添加到变量s中
+            }
+            if(s.length==0){
+                alert("请选择状态")
+            }else {
+                var sturts;
+                if(s[0]!=null&&s[0]!=""&&s[1]!=null&&s[1]!=""){
+                    sturts=-1;
+                }else {
+                    if (s[0] != null && s[0] != "") {
+                        sturts = s[0]
+                    } else if (s[1] != null && s[1] != "") {
+                        sturts = s[1]
+                    }
+                }
+                if(sturts!=null){
+                    var classid=$("#th_class_id").val();
+                    if(classid==null||classid==""){
+                        alert("SORRY!请先输入班级名在进行查询！")
+                    }else {
+                        var stuname=null;
+                        selectByStudent(classid,stuname,sturts);
+                    }
+                }
+            }
+
+        })
+    }
+    function selectBystuname() {
+        $("#seletstuname").click(function () {
+            var obj=document.getElementsByName('sturts');
+            var s=[];
+            for(var i=0; i<obj.length; i++){
+                if(obj[i].checked){
+                    s[i]=obj[i].value;
+                } //如果选中，将value添加到变量s中
+            }
+            if(s.length==0){
+                alert("请选择状态")
+            }else {
+                var sturts;
+                if(s[0]!=null&&s[0]!=""&&s[1]!=null&&s[1]!=""){
+                    sturts=-1;
+                }else {
+                    if (s[0]!= null && s[0] != "") {
+                        sturts = s[0]
+                    } else if (s[1] != null && s[1] != "") {
+                        sturts = s[1]
+                    }
+                }
+                if(sturts!=null){
+                    var stuname=$("#stu_stuname").val();
+                    if(stuname==null||stuname==""){
+                        alert("SORRY!请先输入学员姓名在进行查询！")
+                    }else {
+                        var classid=null;
+                        selectByStudent(classid,stuname,sturts);
+                    }
+                }
+            }
+
+        })
+    }
     $(function () {
         showstudentinfo();
+        selectBystuname();
         $("#an").click();
+        selectByclassid();
         addstudent();
+        selctByclassid();
     })
 
 </script>
