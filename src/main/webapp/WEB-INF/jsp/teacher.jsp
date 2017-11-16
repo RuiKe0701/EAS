@@ -91,6 +91,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/thstudentinfo" style="color: white">基本信息档案</a></li>
                         <li><a class="J_menuItem" href="/thaddstudent" id="addstudents" style="color: white;display: none">添加新学员</a></li>
+                        <li><a class="J_menuItem" href="/showstudent.html" id="showstudent" style="color: white;display: none">&nbsp;&nbsp;&nbsp;&nbsp;学员详细信息</a></li>
                         </li>
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
                             <span class="label label-danger pull-right">推荐</span></a>
@@ -669,6 +670,11 @@
 <script type="text/javascript">
     window.addstu = function(){
         $("#addstudents").click();
+    }
+    window.showstu=function (id) {
+        var url='/showstudent?stuid='+id+"&l="+1;
+        $("#showstudent").attr('href',url)
+        $("#showstudent").click();
     }
 
 </script>
