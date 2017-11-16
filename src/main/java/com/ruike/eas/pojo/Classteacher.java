@@ -10,7 +10,8 @@ public class Classteacher {
   private String remarks;
   private Date ct_startday;
   private Date ct_stopday;
-  private Long ct_type;
+  private Integer ct_type;
+
 
   public Integer getCt_id() {
     return ct_id;
@@ -64,15 +65,37 @@ public class Classteacher {
     return ct_stopday;
   }
 
+  public Integer getCt_type() {
+    return ct_type;
+  }
+
+  public void setCt_type(Integer ct_type) {
+    this.ct_type = ct_type;
+  }
+
   public void setCt_stopday(Date ct_stopday) {
     this.ct_stopday = ct_stopday;
   }
 
-  public Long getCt_type() {
-    return ct_type;
+
+
+  private Teacher teacher;//老师实体类
+  public Teacher getTeacher() {
+    return teacher;
   }
 
-  public void setCt_type(Long ct_type) {
-    this.ct_type = ct_type;
+  public void setTeacher(Teacher teacher) {
+    this.teacher = teacher;
   }
+
+  private Class classes;//班级实体类
+  public Class getClasses() {
+    return classes;
+  }
+
+  public void setClasses(Class classes) {
+    this.classes = classes;
+  }
+
+
 }

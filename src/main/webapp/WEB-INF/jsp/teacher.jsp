@@ -22,6 +22,11 @@
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min.css?v=4.0.0" rel="stylesheet">
 </head>
+<style type="text/css">
+    body{
+        zoom:80%
+    }
+</style>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
 <div id="wrapper">
