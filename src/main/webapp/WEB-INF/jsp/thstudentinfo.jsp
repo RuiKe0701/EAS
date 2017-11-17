@@ -42,10 +42,10 @@
 </head>
 <style type="text/css">
     body{
-        zoom: 50%
+        zoom:80%
     }
 
-</style>h
+</style>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -99,15 +99,15 @@
                             </button>
                         </div>
 
-                        <div class="checkbox checkbox-success">
-                            <input type="checkbox" name="sturts" value="0" checked="checked">
-                            <label>
+                        <div class="checkbox checkbox-success" style="zoom:135%">
+                            <input id="zaixiao" type="checkbox" name="sturts" value="0" checked="checked" style="zoom:250%">
+                            <label for="zaixiao">
                                 在校
                             </label>
                         </div>
-                        <div class="checkbox checkbox-info">
-                            <input type="checkbox" name="sturts" value="1">
-                            <label>
+                        <div class="checkbox checkbox-info" style="zoom:130%">
+                            <input id="lixao" type="checkbox" name="sturts" value="1" style="zoom:250%">
+                            <label for="lixao">
                                 离校
                             </label>
                         </div>
