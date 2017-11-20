@@ -1,5 +1,6 @@
 package com.ruike.eas.service;
 
+import com.ruike.eas.pojo.Classstu;
 import com.ruike.eas.pojo.Stu;
 
 import java.util.List;
@@ -40,4 +41,8 @@ public interface StudentService {
      * @return
      */
     public Integer updateStuInfo(Stu stu);
+    /**
+     * 根据学生所在班级查询学生信息
+     */
+    public List<Stu> selectStuByClass(Stu stu);
 }

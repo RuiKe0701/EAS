@@ -81,9 +81,10 @@
 					</span>
                             </div><!-- /input-group -->
                         </div>
-                        <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
-                            <label style="font-size: 12px;font-weight: 100;padding-top: 5px"><input name="sturts" type="checkbox" value="0" checked="checked" />在校</label>
+                        <div class="col-md-3" style="padding-left: 0px;padding-top: 8px">
+                           <label style="font-size: 12px;font-weight: 100"> <input name="sturts" type="checkbox" value="0" checked="checked" />在校</label>
                             <label  style="font-size: 12px;font-weight: 100"><input name="sturts" type="checkbox" value="1" />离校</label>
+
                         </div>
                     </div>
 
@@ -169,7 +170,7 @@
     function addstudent() {
         1.//根据iframe的id获取对象
         $("#addstudent").click(function () {
-            parent.addstu();
+            window.location.href='/thaddstudent';
         })
         //var i1 = window.frames['iframeId'];搜索
     }
@@ -195,43 +196,46 @@
             data:{"classname":classname,"stuname":stuname,"sturts":status},
             dataType: "json",
             success: function (data) {//将数据转换成json类型，可以把data用alert()输出出来看看到底是什么样的结构
+                if(data!=0) {
+                    $("#tables").html("");
+                    var strs = "<table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px\">\n" +
+                        "                        <thead>\n" +
+                        "                        <tr>\n" +
+                        "                            <th>姓名</th>\n" +
+                        "                            <th>学号</th>\n" +
+                        "                            <th>班级</th>\n" +
+                        "                            <th>年龄</th>\n" +
+                        "                            <th>性别</th>\n" +
+                        "                            <th>电话</th>\n" +
+                        "                            <th>入学时间</th>\n" +
+                        "                            <th>父母电话</th>\n" +
+                        "                            <th>操作</th>\n" +
+                        "                        </tr>\n" +
+                        "                        </thead>\n" +
+                        "                        <tbody id=\"showstu\">";
+                    $.each(data, function (i, item) {
 
-                $("#tables").html("");
-                var strs="<table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px\">\n" +
-                    "                        <thead>\n" +
-                    "                        <tr>\n" +
-                    "                            <th>姓名</th>\n" +
-                    "                            <th>学号</th>\n" +
-                    "                            <th>班级</th>\n" +
-                    "                            <th>年龄</th>\n" +
-                    "                            <th>性别</th>\n" +
-                    "                            <th>电话</th>\n" +
-                    "                            <th>入学时间</th>\n" +
-                    "                            <th>父母电话</th>\n" +
-                    "                            <th>操作</th>\n" +
-                    "                        </tr>\n" +
-                    "                        </thead>\n" +
-                    "                        <tbody id=\"showstu\">";
-                $.each(data, function(i, item) {
-
-                    strs+="<tr class=\"gradeX\">\n" +
-                        "                        <td>"+item.stu_name+"</td>\n" +
-                        "                        <td>"+item.stu_no+"</td>\n" +
-                        "                        <td>"+item.class_id+"</td>\n" +
-                        "                        <th>"+item.stu_birthday+"</th>\n" +
-                        "                        <td class=\"center\">"+item.stu_sex+"</td>\n" +
-                        "                        <td class=\"center\">"+item.stu_phone+"</td>\n" +
-                        "                        <td>"+item.stu_startday+"</td>\n" +
-                        "                        <td class=\"center\">"+item.stu_parentphone+"</td>\n" +
-                        "\n" +
-                        "                        <td> <button type=\"button\" class=\"btn btn-primary btn-xs showstudentinfos\">查看详情</button>\n" +
-                        "                        </td>\n" +
-                        "                        </tr>"
-                })
-                strs+="</tbody></table>"
-                $("#tables").append(strs);
-                $('#datatable').dataTable();
-                $("#an").click()
+                        strs += "<tr class=\"gradeX\">\n" +
+                            "                        <td>" + item.stu_name + "</td>\n" +
+                            "                        <td>" + item.stu_no + "</td>\n" +
+                            "                        <td>" + item.class_id + "</td>\n" +
+                            "                        <th>" + item.stu_birthday + "</th>\n" +
+                            "                        <td class=\"center\">" + item.stu_sex + "</td>\n" +
+                            "                        <td class=\"center\">" + item.stu_phone + "</td>\n" +
+                            "                        <td>" + item.stu_startday + "</td>\n" +
+                            "                        <td class=\"center\">" + item.stu_parentphone + "</td>\n" +
+                            "\n" +
+                            "                        <td> <button type=\"button\" class=\"btn btn-primary btn-xs showstudentinfos\">查看详情</button>\n" +
+                            "                        </td>\n" +
+                            "                        </tr>"
+                    })
+                    strs += "</tbody></table>"
+                    $("#tables").append(strs);
+                    $('#datatable').dataTable();
+                    $("#an").click()
+                }else {
+                    alert("您没有访问此班级的权限或该班级未创建")
+                }
             },
             error: function () {
                 alert("系统异常，请稍后重试！");

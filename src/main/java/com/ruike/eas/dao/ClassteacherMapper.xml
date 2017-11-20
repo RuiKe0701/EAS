@@ -48,8 +48,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           <if test="ct_stopday != null">
               AND ct_stopday &lt; #{ct_stopday}
           </if>
-            <if test="classes.status != null">
+            <if test="classes!=null and classes.status != null">
                 AND c.status = #{classes.status}
+            </if>
+            <if test="classes!=null and classes.class_name != null">
+                AND c.class_name = #{classes.class_name}
             </if>
           <if test="ct_type != null">
               AND ct_type = #{ct_type}
@@ -58,10 +61,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
 
     </sql>
+
+
     <select id="selectClassteacher" parameterType="com.ruike.eas.pojo.Classteacher" resultMap="te">
       select * from (<include refid="classte"/>) cla
     </select>
-
     <sql id="classkey">
         <trim suffixOverrides=",">
             <if test="class_id!=null and class_id > 0">

@@ -10,7 +10,7 @@ public interface ClassMapper {
      * @param classes 班级对象
      * @return 受影响的行数
      */
-    public Integer insertClass(Class  classes);
+    public Integer insertClass(Class classes);
 
     /**
      * 带条件查询班级

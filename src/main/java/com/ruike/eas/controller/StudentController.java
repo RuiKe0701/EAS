@@ -72,24 +72,41 @@ public class StudentController {
     public void selectStudentByStu(PrintWriter printWriter,String classname,String stuname,Integer sturts){
         //根据班级名称查询
         if(classname!=null&&classname!=""){
-            List<Stu> stus=new ArrayList<Stu>();
-            Stu stu=new Stu();
-            Class classes=new Class();
-            classes.setClass_name(classname);
-            stu.setClasses(classes);
-            stu.setTeacherid(1);
-            stus=studentService.selectByStudent(stu);
-            if(stus!=null) {
-                String jsonString = JSON.toJSONString(stus);
-                printWriter.write(jsonString);
-                printWriter.flush();
-                printWriter.close();
+            Classteacher classteacher=new Classteacher();
+            classteacher.setTeacher_id(1);
+            Class cla=new Class();
+            cla.setClass_name(classname);
+            classteacher.setClasses(cla);
+            List<Classteacher> classteachers = classteacherService.selectClassteacher(classteacher);
+            int wa=0;
+            if(classteachers!=null&&classteachers.size()>=1){
+                wa=classteachers.get(0).getClasses().getClass_id();
+                System.out.println(wa);
+                Stu stu=new Stu();
+                Class s=new Class();
+                s.setClass_id(wa);
+                stu.setClasses(s);
+                List<Stu> stus= studentService.selectStuByClass(stu);
+                if(stus!=null) {
+                    String jsonString = JSON.toJSONString(stus);
+                    printWriter.write(jsonString);
+                    printWriter.flush();
+                    printWriter.close();
+                }else{
+                    String jsonString = JSON.toJSONString(0);
+                    printWriter.write(jsonString);
+                    printWriter.flush();
+                    printWriter.close();
+                }
             }else{
                 String jsonString = JSON.toJSONString(0);
                 printWriter.write(jsonString);
                 printWriter.flush();
                 printWriter.close();
             }
+
+
+
         }else if(stuname!=null&&stuname!=""){
             Stu stu1=new Stu();
             System.out.println("sss"+stuname);

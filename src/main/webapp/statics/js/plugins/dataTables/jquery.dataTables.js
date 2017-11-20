@@ -13828,6 +13828,8 @@
 	
 
 	// jQuery access
+
+
 	$.fn.dataTable = DataTable;
 
 	// Legacy aliases

@@ -23,7 +23,15 @@ public class Stu {
   @DateTimeFormat(pattern="yyyy-MM-dd")
   private Date crateday;
   private Integer class_id;
+  private Classstu classstu;
 
+  public Classstu getClassstu() {
+    return classstu;
+  }
+
+  public void setClassstu(Classstu classstu) {
+    this.classstu = classstu;
+  }
 
   public Integer getStu_id() {
     return stu_id;

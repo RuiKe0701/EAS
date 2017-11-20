@@ -7,12 +7,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select stu_id,stu_name,stu_no,stu_birthday,stu_sex,stu_phone,stu_startday,stu_parentphone,class_id from stu
 	</select>
 	<select id="selectstudentbystu" parameterType="com.ruike.eas.pojo.Stu" resultType="com.ruike.eas.pojo.Stu">
-		select * from stu WHERE stu_id=${stu_id}
+		select * from stu WHERE stu_id=#{stu_id}
 	</select>
+
 	<sql id="stu">
-		SELECT st.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.status as classsta,c.class_state FROM stu st,class c,classteacher th
+		SELECT st.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.`status` as classsta,c.class_state from stu st,class c, classstu ct
 		<where>
-			st.class_id=c.class_id and c.class_id = th.class_id
+			st.stu_id = ct.stu_id and ct.class_id = c.class_id
 			<if test="stu_name != null and stu_name != ''">
 				and st.stu_name like concat("%",#{stu_name},"%")
 			</if>
@@ -22,15 +23,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="classes != null and classes.class_name != null and classes.class_name != ''">
 				and c.class_name = #{classes.class_name}
 			</if>
-			<if test="teacherid != null and teacherid > 0">
-				and th.teacher_id = #{teacherid}
-			</if>
-			<if test="status != null">
-				and th.status =#{status}
+
+			<if test="stu_state != null">
+				and st.stu_state =#{stu_state}
 			</if>
 		</where>
 	</sql>
-	
+
+	<!--<resultMap id="classstus" type="com.ruike.eas.pojo.Classstu">-->
+		<!--<result column="cs_id" property="stu_id"/>-->
+		<!--<result column="stu_id" property="stu_id"/>-->
+		<!--<result column="class_id" property="class_id"/>-->
+	<!--</resultMap>-->
+
+	<!--<select id="selectStuby">-->
+		<!--select s.* from stu s ,classstu c-->
+		<!--where s.stu_id = c.stu_id and c.class_id=1-->
+	<!--</select>-->
+
 	<resultMap id="stuclass" type="com.ruike.eas.pojo.Stu">
 		<result column="stu_id" property="stu_id"/>
 		<result column="stu_name" property="stu_name"/>
@@ -58,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="class_state" property="class_state"/>
 		</association>
 	</resultMap>
+
 	<select id="selectStudent" parameterType="com.ruike.eas.pojo.Stu" resultMap="stuclass">
 		  SELECT * FROM (<include refid="stu"/>) student
 	</select>
