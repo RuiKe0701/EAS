@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruike.eas.dao.ScoringstandardMapper">
+        <resultMap id="sc" type="com.ruike.eas.pojo.Scoringstandard"></resultMap>
+        <select id="selectAll" parameterType="com.ruike.eas.pojo.Scoringstandard" resultMap="sc">
+                select * from scoringstandard
+                <where>
+                    <if test="ss_name!=null and ss_name!=''">ss_name like ('%', #{ss_name}, '%')</if>
+                </where>
+        </select>
+    <insert id="insert">
+          insert into scoringstandard (ss_name,ss_way,ss_createby,ss_createdate)
+            VALUES(#{ss_name},#{ss_way},#{ss_createby},#{ss_createdate});
+    </insert>
+</mapper>

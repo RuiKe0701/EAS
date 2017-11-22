@@ -121,7 +121,8 @@
                                 <td class="center">${stus.stu_parentphone}</td>
 
                                 <td> <div class="btn-group open">
-                                    <button type="button" class="btn btn-primary btn-xs showstudentinfo">查看详情</button>
+                                    <input type="hidden" value="${stus.stu_id}" class="stuids">
+                                    <button type="button" class="btn btn-primary btn-xs studentinfos">查看详情</button>
                                 </div>
                                 </td>
                             </tr>
@@ -176,16 +177,9 @@
     }
     //单个展示学生信息页面跳转
     function showstudentinfo() {
-        $(".showstudentinfo").on("click",function(){
-            alert("sds")
-            parent.showstu(1);
-        })
-    }
-
-    function showstudentinfos() {
-        $("body").on("click",".studentinfos",function(){
-            alert("sds")
-            parent.showstu(1);
+        $("body").on("click", ".studentinfos", function () {
+            aas=$(this).parent().find(".stuids").val();
+            window.location.href='/showstudents?stuid='+aas;
         })
     }
     //根据条件查询学生信息
@@ -224,8 +218,8 @@
                             "                        <td class=\"center\">" + item.stu_phone + "</td>\n" +
                             "                        <td>" + item.stu_startday + "</td>\n" +
                             "                        <td class=\"center\">" + item.stu_parentphone + "</td>\n" +
-                            "\n" +
-                            "                        <td> <button type=\"button\" class=\"btn btn-primary btn-xs showstudentinfos\">查看详情</button>\n" +
+                            "                        <td><input type=\"hidden\" value="+item.stu_id+" class=\"stuids\">" +
+                            "                        <button type=\"button\" class=\"btn btn-primary btn-xs studentinfos\">查看详情</button>\n" +
                             "                        </td>\n" +
                             "                        </tr>"
                     })

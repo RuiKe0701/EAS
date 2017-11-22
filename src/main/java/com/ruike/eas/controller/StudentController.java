@@ -40,7 +40,6 @@ public class StudentController {
         List<Stu> stus=new ArrayList<Stu>();
         //获取默认显示的的学生信息
         stus=studentService.defaultStudent();
-
         List<Classteacher> classteacherArrayList=new ArrayList<Classteacher>();
         Classteacher classteachers=new Classteacher();
         classteachers.setTeacher_id(1);
@@ -51,8 +50,8 @@ public class StudentController {
         return "thstudentinfo";
     }
     //展示学生所有基本信息
-    @RequestMapping("/showstudent")
-    public String showstudent(HttpServletRequest request,Integer stuid,String l){
+    @RequestMapping("/showstudents")
+    public String showstudent(HttpServletRequest request,Integer stuid){
         Stu stu=new Stu();
         stu.setStu_id(stuid);
         Stu stu1=new Stu();
@@ -67,6 +66,8 @@ public class StudentController {
     public String thaddstudent(){
         return "thaddstudent";
     }
+
+
     @RequestMapping("/thselecstudentbystu")
     @ResponseBody
     public void selectStudentByStu(PrintWriter printWriter,String classname,String stuname,Integer sturts){
