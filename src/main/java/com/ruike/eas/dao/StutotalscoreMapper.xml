@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="stuname" property="stuname"/>
     </resultMap>
     <select id="selectStusts" parameterType="com.ruike.eas.pojo.Stutotalscore" resultMap="stses">
-        SELECT sts.*,st.stu_name as stuname from stutotalscore sts ,stu st
+        SELECT sts.*,st.stu_name as stuname from `stutotalscore` sts ,stu st
         <where>
             sts.stu_id = st.stu_id
             <if test="class_id!=null and class_id>0">
