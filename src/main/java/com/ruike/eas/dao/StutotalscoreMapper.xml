@@ -3,10 +3,36 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.StutotalscoreMapper">
+    <resultMap id="stses" type="com.ruike.eas.pojo.Stutotalscore">
+        <result column="stuname" property="stuname"/>
+    </resultMap>
+    <select id="selectStusts" parameterType="com.ruike.eas.pojo.Stutotalscore" resultMap="stses">
+        SELECT sts.*,st.stu_name as stuname from stutotalscore sts ,stu st
+        <where>
+            sts.stu_id = st.stu_id
+            <if test="class_id!=null and class_id>0">
+                and sts.class_id = #{class_id}
+            </if>
+        </where>
+    </select>
 
-    <insert id="insertClassatd" useGeneratedKeys="true" keyProperty="sts_id" parameterType="com.ruike.eas.pojo.Stutotalscore">
-        insert into classattendance(sts_id,stu_id,stu_totalscore,class_id)
-        values(#{sts_id},#{stu_id},#{stu_totalscore},#{class_id})
+    <insert id="insertStustses" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into stutotalscore(stu_id,stu_totalscore,class_id)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.stu_id},#{item.stu_totalscore},#{item.class_id})
+        </foreach>
     </insert>
+
+    <update id="updatestusts" parameterType="java.util.List">
+
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update stutotalscore
+            <set>
+                stu_totalscore=${item.stu_totalscore}
+            </set>
+            where sts_id = ${item.sts_id}
+        </foreach>
+    </update>
 
 </mapper>

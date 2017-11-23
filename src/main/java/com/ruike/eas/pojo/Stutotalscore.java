@@ -17,6 +17,18 @@ public class Stutotalscore implements Serializable {
     学生综合分数
      */
     private Integer stu_totalscore;
+    /*
+    学生姓名
+     */
+    private String stuname;
+
+    public String getStuname() {
+        return stuname;
+    }
+
+    public void setStuname(String stuname) {
+        this.stuname = stuname;
+    }
 
     public Integer getSts_id() {
         return sts_id;
