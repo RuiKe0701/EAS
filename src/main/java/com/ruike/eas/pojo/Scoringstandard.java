@@ -1,14 +1,48 @@
 package com.ruike.eas.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Scoringstandard implements Serializable{
     private Integer ss_id;
     private String ss_name;
+    private Integer ss_fraction;
     private Integer ss_way;
     private Integer ss_createby;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date ss_createdate;
+    private Integer ss_type;
+    private String teachername;
+
+    public Integer getSs_fraction() {
+        return ss_fraction;
+    }
+
+    public void setSs_fraction(Integer ss_fraction) {
+        this.ss_fraction = ss_fraction;
+    }
+
+
+
+    public String getTeachername() {
+        return teachername;
+    }
+
+    public void setTeachername(String teachername) {
+        this.teachername = teachername;
+    }
+
+    public Integer getSs_type() {
+        return ss_type;
+    }
+
+    public void setSs_type(Integer ss_type) {
+        this.ss_type = ss_type;
+    }
+
+
 
     public Integer getSs_id() {
         return ss_id;
@@ -47,6 +81,6 @@ public class Scoringstandard implements Serializable{
     }
 
     public void setSs_createdate(Date ss_createdate) {
-        this.ss_createdate = ss_createdate;
+        this.ss_createdate = new java.sql.Date(ss_createdate.getTime());
     }
 }

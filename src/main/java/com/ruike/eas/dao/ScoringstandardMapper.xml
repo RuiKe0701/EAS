@@ -3,15 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.ScoringstandardMapper">
-        <resultMap id="sc" type="com.ruike.eas.pojo.Scoringstandard"></resultMap>
+        <resultMap id="sc" type="com.ruike.eas.pojo.Scoringstandard">
+            <result column="teachername" property="teachername"/>
+        </resultMap>
         <select id="selectAll" parameterType="com.ruike.eas.pojo.Scoringstandard" resultMap="sc">
-                select * from scoringstandard
+            select s.*,t.th_name as teachername from scoringstandard as s ,teacher as t
                 <where>
-                    <if test="ss_name!=null and ss_name!=''">ss_name like ('%', #{ss_name}, '%')</if>
+                    t.th_id=s.ss_createby
+                    <if test="ss_name!=null and ss_name!=''">
+                      and s.ss_name like concat('%', #{ss_name}, '%')
+                    </if>
                 </where>
         </select>
+
     <insert id="insert">
-          insert into scoringstandard (ss_name,ss_way,ss_createby,ss_createdate)
-            VALUES(#{ss_name},#{ss_way},#{ss_createby},#{ss_createdate});
+          insert into scoringstandard (ss_name,ss_fraction,ss_way,ss_createby,ss_createdate,ss_type)
+            VALUES(#{ss_name},#{ss_fraction},#{ss_way},#{ss_createby},#{ss_createdate},#{ss_type});
     </insert>
 </mapper>

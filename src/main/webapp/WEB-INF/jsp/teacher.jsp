@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-
 <html>
 
 <head>
@@ -15,14 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>H+ 后台主题UI框架 - 主页</title>
+    <title>教务管理系统</title>
 
-    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
-
-    <!--[if lt IE 8]>
-    <meta http-equiv="refresh" content="0;ie.html" />
-    <![endif]-->
 
     <link rel="shortcut icon" href="favicon.ico">
     <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
@@ -48,7 +41,7 @@
                                 <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
                                 </span>
                         </a>
-                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs" style="color: #2f4050">
                             <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
                             </li>
                             <li><a class="J_menuItem" href="profile.html">个人资料</a>
@@ -98,21 +91,15 @@
                     <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员档案管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/thstudentinfo" style="color: white">基本信息档案</a></li>
-                        <li><a class="J_menuItem" href="/thaddstudent" id="addstudents" style="color: white;display: none">添加新学员</a></li>
-                        <li><a class="J_menuItem" href="/showstudent.html" id="showstudent" style="color: white;display: none">&nbsp;&nbsp;&nbsp;&nbsp;学员详细信息</a></li>
+                        <li><a class="J_menuItem" href="/scoringstandardinfo" id="addstud">评分管理</a></li>
                         </li>
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
                             <span class="label label-danger pull-right">推荐</span></a>
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">工具 </span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_builder.html">表单构建器</a>
-                        </li>
-                    </ul>
-                </li>
+
+
 
             </ul>
         </div>
@@ -227,7 +214,7 @@
             <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
             </button>
             <div class="btn-group roll-nav roll-right">
-                <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
+                <button class="dropdown J_tabClose" data-toggle="dropdown">关闭<span class="caret"></span>
 
                 </button>
                 <ul role="menu" class="dropdown-menu dropdown-menu-right">
@@ -240,11 +227,12 @@
                     </li>
                 </ul>
             </div>
-            <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+            <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> </a>
         </div>
         <div class="row J_mainContent" id="content-main">
-            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_v2.html?v=4.0" frameborder="0" data-id="index_v2.html" seamless></iframe>
+            <iframe class="J_iframe" name="iframe0" id="myframe" width="100%" height="100%" src="index_v2.html?v=4.0" frameborder="0" data-id="index_v2.html" seamless></iframe>
         </div>
+
         <div class="footer">
             <div class="pull-right">&copy; 2014-2015 <a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>
             </div>
@@ -659,6 +647,7 @@
 
         </a>
     </div>
+    <input type="text" id="ss" value="1111">
 </div>
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap.min.js?v=3.3.5"></script>
@@ -668,6 +657,17 @@
 <script src="js/hplus.min.js?v=4.0.0"></script>
 <script type="text/javascript" src="js/contabs.min.js"></script>
 <script src="js/plugins/pace/pace.min.js"></script>
+<script type="text/javascript">
+    window.addstu = function(){
+        $("#addstudents").click();
+    }
+    window.showstu=function (id) {
+        var url='/showstudent?stuid='+id+"&l="+1;
+        $("#showstudent").attr('href',url)
+        $("#showstudent").click();
+    }
+
+</script>
 </body>
 
 </html>
