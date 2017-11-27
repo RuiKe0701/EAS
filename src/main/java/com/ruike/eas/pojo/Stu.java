@@ -70,7 +70,7 @@ public class Stu {
   }
 
   public void setStu_birthday(Date stu_birthday) {
-    this.stu_birthday = new java.sql.Date(stu_birthday.getTime());
+    this.stu_birthday = stu_birthday;
   }
 
   public String getStu_phone() {
@@ -94,7 +94,7 @@ public class Stu {
   }
 
   public void setStu_startday(Date stu_startday) {
-    this.stu_startday =new java.sql.Date(stu_startday.getTime());
+    this.stu_startday =stu_startday;
   }
 
   public String getStu_parentphone() {

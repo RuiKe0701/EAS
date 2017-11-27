@@ -15,4 +15,7 @@ public interface StudentMapper {
     public Integer insertStu(Stu stu);
 
     public Integer updateStu(Stu stu);
+
+
+    public Integer insertByBatchByStu(List<Stu> stus);
 }

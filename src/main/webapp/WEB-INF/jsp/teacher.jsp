@@ -98,9 +98,10 @@
                     <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员档案管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/thstudentinfo" style="color: white">基本信息档案</a></li>
-                        <li><a class="J_menuItem" href="/thaddstudent" id="addstudents" style="color: white;display: none">添加新学员</a></li>
-                        <li><a class="J_menuItem" href="/showstudent.html" id="showstudent" style="color: white;display: none">&nbsp;&nbsp;&nbsp;&nbsp;学员详细信息</a></li>
-                        </li>
+                        <li><a class="J_menuItem" href="/showclasst" id="addstudents" style="color: white;">班级老师</a></li>
+                        <%--<li><a class="J_menuItem" href="/showstudent.html" id="showstudent" style="color: white;display: none">&nbsp;&nbsp;&nbsp;&nbsp;学员详细信息</a></li>--%>
+                        <%--</li>--%>
+                        <li><a class="J_menuItem" href="/jump" id="addclassstu" style="color: white;">创建班级</a></li>
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
                             <span class="label label-danger pull-right">推荐</span></a>
                         </li>

@@ -8,9 +8,8 @@ public class Class {
   private Date class_startday;
   private Date class_stopday;
   private Integer grade_id;
-
   private Integer status;
-  private Integer class_state;
+  private Integer class_state;//班级是否结业
 
   public Integer getStatus() {
     return status;

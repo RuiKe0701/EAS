@@ -45,4 +45,11 @@ public interface StudentService {
      * 根据学生所在班级查询学生信息
      */
     public List<Stu> selectStuByClass(Stu stu);
+
+    /**
+     * 批量添加学生
+     * @param stus 学生集合
+     * @return 插入的带id的学生集合
+     */
+    public List<Stu> addAllStudnet(List<Stu> stus);
 }

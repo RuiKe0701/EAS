@@ -28,7 +28,12 @@
 
     <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 </head>
+<style type="text/css">
+    body{
+        zoom:80%
+    }
 
+</style>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
 
