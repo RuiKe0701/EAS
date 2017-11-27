@@ -21,6 +21,30 @@ public class Stutotalscore implements Serializable {
     学生姓名
      */
     private String stuname;
+    /*
+    学生性别
+     */
+    private Integer sex;
+    /*
+    学生学号
+     */
+    private String stuno;
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getStuno() {
+        return stuno;
+    }
+
+    public void setStuno(String stuno) {
+        this.stuno = stuno;
+    }
 
     public String getStuname() {
         return stuname;

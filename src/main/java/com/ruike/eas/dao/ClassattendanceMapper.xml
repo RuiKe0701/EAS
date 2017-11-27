@@ -8,5 +8,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into classattendance(cad_number,cad_name,cad_rate,cad_date,class_id)
         values(#{cad_number},#{cad_name},#{cad_rate},#{cad_date},#{class_id})
     </insert>
+    <select id="selectClassatd" resultType="com.ruike.eas.pojo.Classattendance" >
+       select * from classattendance
+        <where>
+            <if test="class_id!=null">
+                and class_id = #{class_id}
+            </if>
+        </where>
+    </select>
 
+
+    <select id="selectnewClassatd"  resultType="com.ruike.eas.pojo.Classattendance">
+            select * from classattendance where class_id=#{class_id}
+            order by cad_number DESC limit 0,1
+    </select>
 </mapper>

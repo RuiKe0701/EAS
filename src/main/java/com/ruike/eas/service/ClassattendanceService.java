@@ -1,10 +1,10 @@
-package com.ruike.eas.dao;
+package com.ruike.eas.service;
 
 import com.ruike.eas.pojo.Classattendance;
 
 import java.util.List;
 
-public interface ClassattendanceMapper {
+public interface ClassattendanceService {
     public Integer insertClassatd(Classattendance classattendance);
     public List<Classattendance> selectClassatd(Classattendance classattendance);
     /*

@@ -13,6 +13,9 @@
                     <if test="ss_name!=null and ss_name!=''">
                       and s.ss_name like concat('%', #{ss_name}, '%')
                     </if>
+                    <if test="ss_type!=null">
+                      and s.ss_type = #{ss_type}
+                    </if>
                 </where>
         </select>
 

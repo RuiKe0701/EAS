@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.StuattendanceMapper">
 
-    <insert id="insertStuatds" useGeneratedKeys="true" parameterType="java.util.List">
+    <insert id="insertStuatds" useGeneratedKeys="true" keyProperty="sad_id" parameterType="java.util.List">
         insert into stuattendance(stu_id,ss_id,sad_recorddate,cad_id,class_id)
         values
         <foreach collection="list" item="item" index="index" separator="," >
