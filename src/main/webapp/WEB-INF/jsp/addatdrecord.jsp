@@ -113,7 +113,6 @@
 
                 </div>
 
-                <button class="btn-xs" id="tijiao">sss</button>
             </div>
 
             <div class="panel-heading" style="height: 30px;font-size: 2px">
