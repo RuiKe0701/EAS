@@ -129,4 +129,8 @@ public class StudentController {
 
     }
 
+    @RequestMapping("/ddd")
+    public String dianming(){
+        return  "aa";
+    }
 }
