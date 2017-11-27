@@ -92,6 +92,9 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/thstudentinfo" style="color: white">基本信息档案</a></li>
                         <li><a class="J_menuItem" href="/scoringstandardinfo" id="addstud">评分管理</a></li>
+
+                        <li><a class="J_menuItem" href="/jump" id="s">学员批量导入</a></li>
+                        <li><a class="J_menuItem" href="/showclasst" id="sss">班级老师管理</a></li>
                         <li><a class="J_menuItem" href="/ddd" >评分管理</a></li>
                         </li>
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
