@@ -1,5 +1,5 @@
 package com.ruike.eas.pojo;
-
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Classteacher {
@@ -97,5 +97,16 @@ public class Classteacher {
     this.classes = classes;
   }
 
-
+  public String getCt_startdays(){
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    String format = sdf.format(this.getCt_startday());
+    return format;
+  }
+  public String getCt_stopdays(){
+    if (this.getCt_stopday()!= null){
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      return sdf.format(this.getCt_stopday());
+    }
+    return null;
+  }
 }

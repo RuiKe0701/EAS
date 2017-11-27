@@ -16,10 +16,10 @@ public class ClassteacherServiceImpl implements ClassteacherService {
     }
 
     public Integer inserClassteacher(Classteacher classteacher) {
-        return null;
+        return classteacherMapper.inserClassteacher(classteacher);
     }
 
     public Integer update(Classteacher classteacher) {
-        return null;
+        return classteacherMapper.update(classteacher);
     }
 }

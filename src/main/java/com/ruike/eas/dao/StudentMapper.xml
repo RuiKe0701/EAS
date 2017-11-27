@@ -23,7 +23,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="classes != null and classes.class_name != null and classes.class_name != ''">
 				and c.class_name = #{classes.class_name}
 			</if>
-
 			<if test="stu_state != null">
 				and st.stu_state =#{stu_state}
 			</if>
@@ -226,4 +225,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</set>
 		WHERE stu_id = #{stu_id}
 	</update>
+
+	<insert id="insertByBatchByStu"  useGeneratedKeys="true" keyProperty="stu_id">
+		INSERT INTO stu (stu_name,stu_no,stu_sex,stu_birthday,stu_phone,stu_address,stu_startday,stu_parentphone,stu_carde,stu_education,stu_email,stu_state,status,crateday,class_id) VALUES
+	<foreach item="item" index="index" collection="list" separator=",">
+		(<trim suffixOverrides=",">
+			<if test="item.stu_name != null and item.stu_name != ''">
+				#{item.stu_name},
+			</if>
+			<if test="item.stu_no != null and item.stu_no != ''">
+				#{item.stu_no},
+			</if>
+			<if test="item.stu_sex != null">
+				#{item.stu_sex},
+			</if>
+			<if test="item.stu_birthday != null">
+				#{item.stu_birthday},
+			</if>
+			<if test="item.stu_phone != null and item.stu_phone != ''">
+				#{item.stu_phone},
+			</if>
+			<if test="item.stu_address != null and item.stu_address != ''">
+				#{item.stu_address},
+			</if>
+			<if test="item.stu_startday != null">
+				#{item.stu_startday},
+			</if>
+			<if test="item.stu_parentphone != null and item.stu_parentphone != ''">
+				#{item.stu_parentphone},
+			</if>
+			<if test="item.stu_carde != null and item.stu_carde != ''">
+				#{item.stu_carde},
+			</if>
+			<if test="item.stu_education != null and item.stu_education != ''">
+				#{item.stu_education},
+			</if>
+			<if test="item.stu_email != null and item.stu_email != ''">
+				#{item.stu_email},
+			</if>
+			<if test="item.stu_state != null">
+				#{item.stu_state},
+			</if>
+			<if test="item.status != null">
+				#{item.status},
+			</if>
+			<if test="item.crateday != null">
+				#{item.crateday},
+			</if>
+			<if test="item.class_id != null and item.class_id > 0">
+				#{item.class_id},
+			</if>
+		</trim>)
+		</foreach>
+	</insert>
 </mapper>

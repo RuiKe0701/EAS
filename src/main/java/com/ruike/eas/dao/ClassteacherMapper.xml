@@ -32,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="classte">
         SELECT ch.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.status as csta,t.* FROM classteacher ch,class c,teacher t
         <where>
-            ch.class_id = c.class_id
-          <if test="class_id != null and class_id > 0">
+            ch.class_id = c.class_id and t.th_id = ch.teacher_id
+            <if test="class_id != null and class_id > 0">
             AND ch.class_id = #{class_id}
           </if>
           <if test="teacher_id != null and teacher_id > 0">
@@ -51,11 +51,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="classes!=null and classes.status != null">
                 AND c.status = #{classes.status}
             </if>
+            <if test="classes!=null and classes.class_state != null">
+                AND c.class_status = #{classes.class_state}
+            </if>
             <if test="classes!=null and classes.class_name != null">
                 AND c.class_name = #{classes.class_name}
             </if>
           <if test="ct_type != null">
               AND ct_type = #{ct_type}
+          </if>
+          <if test="status != null">
+              and ch.status = #{status}
           </if>
 
         </where>

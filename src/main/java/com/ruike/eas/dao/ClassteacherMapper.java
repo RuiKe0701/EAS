@@ -11,7 +11,6 @@ public interface ClassteacherMapper {
      * @param classteacher
      * @return
      */
-
     public List<Classteacher> selectClassteacher(Classteacher classteacher);
     /**
      * 添加班级老师关系信息

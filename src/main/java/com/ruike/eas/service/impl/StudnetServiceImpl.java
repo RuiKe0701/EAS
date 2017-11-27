@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruike.eas.pojo.Stu;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service("studentService")
 public class StudnetServiceImpl implements StudentService {
     @Autowired
     private  StudentMapper studentMapper;
+
     @Autowired
     private ClassteacherMapper classteacherMapper;
 
@@ -44,6 +46,18 @@ public class StudnetServiceImpl implements StudentService {
     //根据班级查询学员信息
     public List<Stu> selectStuByClass(Stu stu) {
         return studentMapper.selectStudent(stu);
+    }
+
+    public List<Stu> addAllStudnet(List<Stu> stus) {
+
+        int a=studentMapper.insertByBatchByStu(stus);
+        if (a>0){
+            for (Stu stu : stus) {
+                int as=stu.getStu_id();
+                System.out.println(as);
+            }
+        }
+        return stus;
     }
 }
 
