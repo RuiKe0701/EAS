@@ -11,7 +11,15 @@ public class Classteacher {
   private Date ct_startday;
   private Date ct_stopday;
   private Integer ct_type;
+private String classname;
 
+  public String getClassname() {
+    return classname;
+  }
+
+  public void setClassname(String classname) {
+    this.classname = classname;
+  }
 
   public Integer getCt_id() {
     return ct_id;

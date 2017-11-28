@@ -42,7 +42,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>添加新的学员信息 <a href="javascript:history.back(-1)">点击返回</a></h5>
+                    <h5>添加新的学员信息 <a href="" id="fanhui">点击返回</a></h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -106,6 +106,11 @@
             postImg();
         });
     });
+    function fanhui() {
+        $("#fanhui").click(function () {
+            window.history.back();
+        })
+    }
     function postImg(){
         var option = {
             url : '/addcstu',
