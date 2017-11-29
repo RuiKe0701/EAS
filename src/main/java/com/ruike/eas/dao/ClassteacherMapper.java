@@ -24,4 +24,9 @@ public interface ClassteacherMapper {
      * @return
      */
     public Integer update(Classteacher classteacher);
+
+    /*
+    根据老师查询老师正在带的班级
+     */
+    public List<Classteacher> selectclassbytecaherid(Classteacher classteacher);
 }
