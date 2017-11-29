@@ -11,6 +11,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             (#{item.stu_id},#{item.ss_id},#{item.sad_recorddate},#{item.cad_id},#{item.class_id})
         </foreach>
     </insert>
+    <resultMap id="sss" type="com.ruike.eas.pojo.Stuattendance">
+        <result property="caozuo" column="caozuo"/>
+        <result property="fen" column="fen"/>
+        <result property="ssname" column="ssname"/>
+        <result property="stuname" column="stuname"/>
+    </resultMap>
+    <select id="stuattendancesbystuatd" resultMap="sss">
+        select s.*,ssd.ss_way as caozuo,ssd.ss_fraction as fen,ssd.ss_name as ssname,a.stu_name as stuname from  stuattendance as s ,scoringstandard as ssd,stu as a
+        where   ssd.ss_id =s.ss_id and a.stu_id =s.stu_id
+        <if test="class_id!=null">
+            and s.class_id=#{class_id}
+        </if>
+        <if test="stu_id!=null">
+            and s.stu_id=#{stu_id}
+        </if>
+        <if test="cad_id!=null">
+            and cad_id=#{cad_id}
+        </if>
+    </select>
 
 
 

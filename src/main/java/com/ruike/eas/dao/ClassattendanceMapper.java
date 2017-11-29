@@ -11,4 +11,8 @@ public interface ClassattendanceMapper {
     根据班级查询出班级最近一次的点名
      */
     public Classattendance selectnewClassatd(Classattendance classattendance);
+    /*
+    根据班级查询班级考勤情况
+     */
+    public List<Classattendance> selectClassatdbyclassatd(Classattendance classattendance);
 }

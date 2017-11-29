@@ -22,4 +22,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             select * from classattendance where class_id=#{class_id}
             order by cad_number DESC limit 0,1
     </select>
+    <resultMap id="catd" type="com.ruike.eas.pojo.Classattendance">
+        <result column="classname" property="classname"/>
+    </resultMap>
+    <select id="selectClassatdbyclassatd" resultMap="catd">
+        select c.* , cs.class_name as classname from classattendance as c,class as cs
+        <where>
+            cs.class_id = c.class_id
+            <if test="class_id !=null">
+                and c.class_id=#{class_id}
+            </if>
+        </where>
+
+    </select>
 </mapper>

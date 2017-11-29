@@ -28,6 +28,43 @@ public class Stuattendance implements Serializable{
     /*
     班级主键
      */
+    private Integer fen;
+    private Integer caozuo;
+    private String ssname;
+    private String stuname;
+
+    public String getStuname() {
+        return stuname;
+    }
+
+    public void setStuname(String stuname) {
+        this.stuname = stuname;
+    }
+
+    public Integer getFen() {
+        return fen;
+    }
+
+    public void setFen(Integer fen) {
+        this.fen = fen;
+    }
+
+    public Integer getCaozuo() {
+        return caozuo;
+    }
+
+    public void setCaozuo(Integer caozuo) {
+        this.caozuo = caozuo;
+    }
+
+    public String getSsname() {
+        return ssname;
+    }
+
+    public void setSsname(String ssname) {
+        this.ssname = ssname;
+    }
+
     private Integer class_id;
 
     public Integer getClass_id() {

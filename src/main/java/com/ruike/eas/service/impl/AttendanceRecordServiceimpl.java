@@ -1,13 +1,7 @@
 package com.ruike.eas.service.impl;
 
-import com.ruike.eas.dao.ClassattendanceMapper;
-import com.ruike.eas.dao.ScoringstandardMapper;
-import com.ruike.eas.dao.StuattendanceMapper;
-import com.ruike.eas.dao.StutotalscoreMapper;
-import com.ruike.eas.pojo.Classattendance;
-import com.ruike.eas.pojo.Scoringstandard;
-import com.ruike.eas.pojo.Stuattendance;
-import com.ruike.eas.pojo.Stutotalscore;
+import com.ruike.eas.dao.*;
+import com.ruike.eas.pojo.*;
 import com.ruike.eas.service.AttendanceRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +18,8 @@ public class AttendanceRecordServiceimpl implements AttendanceRecordService{
     private StuattendanceMapper stuattendanceMapper;
     @Autowired
     private StutotalscoreMapper stutotalscoreMapper;
+    @Autowired
+    private ClassteacherMapper classteacherMapper;
 
 
     public Integer addatdrecord(List<Stuattendance> stuattendances, List<Stutotalscore> stutotalscores, Classattendance classattendance) {
@@ -45,5 +41,17 @@ public class AttendanceRecordServiceimpl implements AttendanceRecordService{
         }else{
             return 0;
         }
+    }
+
+    public List<Classteacher> classteacherlist(Classteacher classteacher) {
+        return classteacherMapper.selectclassbytecaherid(classteacher);
+    }
+
+    public List<Classattendance> selectClassttend(Classattendance classattendance) {
+        return classattendanceMapper.selectClassatdbyclassatd(classattendance);
+    }
+
+    public List<Stuattendance> selectstuatdlist(Stuattendance stuattendance) {
+        return stuattendanceMapper.stuattendancesbystuatd(stuattendance);
     }
 }

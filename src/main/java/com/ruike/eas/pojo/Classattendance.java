@@ -25,7 +25,18 @@ public class Classattendance implements Serializable {
     /*班级班级点名班级id 外键
      */
     private Integer class_id;
+    /*
+    班级名称
+     */
+    private String classname;
 
+    public String getClassname() {
+        return classname;
+    }
+
+    public void setClassname(String classname) {
+        this.classname = classname;
+    }
 
     public Integer getCad_id() {
         return cad_id;
