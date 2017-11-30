@@ -1,0 +1,714 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Administrator
+  Date: 2017/11/30 0030
+  Time: 15:25
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Float-Admin</title>
+
+    <!-- Common plugins -->
+    <link href="table/css/bootstrap.min.css" rel="stylesheet">
+    <link href="table/css/simple-line-icons.css" rel="stylesheet">
+    <link href="table/css/font-awesome.min.css" rel="stylesheet">
+    <link href="table/css/pace.css" rel="stylesheet"><link href="table/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="table/css/nanoscroller.css">
+    <link rel="stylesheet" href="table/css/metismenu.min.css">
+    <!-- dataTables -->
+    <link href="table/css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="table/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--template css-->
+    <link href="table/css/sweet-alert.css" rel="stylesheet">
+
+    <link href="css/animate.min.css" rel="stylesheet">
+
+    <link href="table/css/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+
+    <script src="table/js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+
+    <link href="css/style.min.css?v=4.0.0" rel="stylesheet">
+    <![endif]-->
+</head>
+<style type="text/css">
+
+    .ltselect{
+        background-color: #5cc0de;border: 0;border-radius: 3px;color: white;height: 22px;width:50px;
+    }
+    .ltsop{
+        background-color: white;color: #2A2E36
+    }
+</style>
+
+<body class="gray-bg" >
+
+
+
+<!--main content start-->
+<section style="width: 96.8%;margin-left: 1.6%;margin-top: 1.6%">
+
+
+
+    <!--page header start-->
+
+    <!--page header end-->
+
+
+    <!--start page content-->
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content mailbox-content">
+                    <div class="file-manager">
+                        <a class="btn btn-block compose-mail" style="background-color: white ;color: #2A2E36;border: 1px solid gainsboro" href="mail_compose.html">新增考勤记录</a>
+                        <div class="space-25"></div>
+                        <div style="background-color: white;padding-left: 10px;padding-right: 10px;border: solid 0.1px gainsboro;border-top: 0px">
+                            <div class="row" style="padding-left: 30px;padding-right: 30px">
+                                <div class="col-md-12" style="padding-left:0px;padding-top: 30px;padding-bottom: 5px;border-bottom: 1px solid gainsboro">
+                                    <div style="">
+                                        <div class="col-md-4" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 0px;padding-top: 5px"><i class="fa fa-tag" style="color: #ed5666"></i> 请选择班级：</div>
+                                        <div class="col-md-5" style="padding-left: 0px">  <select class="btn-indigo" id="atdclass" style="height:26px;padding-left: 0px;color: white;border-radius: 5px">
+                                            <c:forEach items="${classteacherList}" var="ct">
+                                                <option style="background-color: white;color: darkslategray" value="${ct.class_id}">${ct.classname}</option>
+                                            </c:forEach>
+                                        </select></div>
+                                    </div>
+                                </div>
+
+                                <input class="" id="atdno" type="hidden" value="${attendancenumber}">
+
+                                <div class="col-md-12" style="padding-left:0px;padding-top: 20px;padding-bottom: 5px;border-bottom: 1px solid gainsboro">
+                                    <div style="">
+                                        <div class="col-md-4" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 0px;padding-top: 5px"><i class="fa fa-tag" style="color: #5cc0de"></i> 考 勤 日 期 ：</div>
+                                        <div class="col-md-7" style="padding-left: 0px">
+                                            <input id="kaoqindate" value="2017-07-01" type="date" style="width:100%;height: 26px;font-size: 12px;padding-left: 8px" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" style="padding-left:0px;padding-top: 20px;padding-bottom: 5px;border-bottom: 1px solid gainsboro">
+                                    <div style="">
+                                        <div class="col-md-4" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 0px;padding-top: 5px"><i class="fa fa-tag" style="color: #5db85d"></i> 班级考勤名：</div>
+                                        <div class="col-md-7" style="padding-left: 0px">
+                                            <input id="kaoqinname" type="text" style="width:100%;height: 26px;font-size: 12px;padding-left: 8px;border: 0.1px solid cadetblue" placeholder="/请输入考勤名">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding-left:0px;padding-top: 20px;padding-bottom: 5px;border-bottom: 1px solid gainsboro">
+                                    <div style="">
+                                        <div class="col-md-4" style=""><button  class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" id="startkao">开始考勤</button></div>
+                                        <div class="col-md-7" style="padding-left: 0px">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12" style="padding-left:0px;padding-top: 20px;padding-bottom: 5px;border-bottom: 1px solid gainsboro">&nbsp;</div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-8">
+            <div class="" style="background-color: white;border: 0.1px solid gainsboro">
+                <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 0px;">
+                    <h>请假记录管理</h>
+                </div>
+                <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
+                    <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
+                        <select style="background-color: #7c86cb;height: 26px;color: white;border-radius: 5px" id="myclass" onchange="selectmyclass(this.value)">
+                            <c:forEach items="${classteacherList}" var="ct">
+                                <option style="background-color: white;color: darkslategray" value="${ct.class_id}">${ct.classname}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+
+
+
+
+                    <div class="col-md-3" style="padding-left: 0px;padding-top: 8px">
+                        <div class="input-group">
+                            <input type="text"  id="classname" class="form-control"style="height: 26.5px;font-size:12px" placeholder="请输入班级名">
+                            <span class="input-group-btn">
+						<button class="btn btn-primary btn-xs"  id="seletclassname" type="button">
+							班级查询
+						</button>
+					</span>
+
+                        </div><!-- /input-group -->
+                    </div>
+
+
+                </div>
+
+                <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 8px;">
+                    <div class="col-md-12" style="border-bottom: 1px solid silver"></div>
+                </div>
+                <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="border-radius: 5px">
+                    <div class="modal-dialog"  style="border-radius: 5px">
+                        <div class="modal-content animated bounceInRight"  style="border-radius: 5px">
+                            <div class="modal-header">
+
+                                <h3 class="modal-title" id="name">20170701班第27次考勤情况</h3>
+                                <small class="font-bold">
+                                </small>
+                            </div>
+                            <div class="modal-body" style="padding:16px;padding-top: 0px;padding-bottom: 0px" id="modalbody">
+                                <div class="row">
+
+                                    <div class="panel-body " id="tables" style="background-color: white">
+                                        <div >
+                                            <table id="datatables" class="table table-striped dt-responsive nowrap" style="border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro">
+                                                <thead>
+                                                <tr>
+
+                                                    <th>姓名</th>
+                                                    <th>学号</th>
+                                                    <th>评分</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tr class="ldivwai">
+
+                                                    <td>副学研<input type="hidden" value="3" class="stuid">
+                                                        <input type="hidden" value="80" class="stutotalscore"> </td>
+                                                    <td><span class="label label-warning">2020</span></td>
+                                                    <td><div><select class="ltselect">
+                                                        <option class="ltsop" value="1">正常</option>
+                                                        <option class="ltsop" value="2">请假</option>
+                                                        <option class="ltsop" value="3">迟到</option>
+                                                        <option class="ltsop" value="4">旷课</option>
+                                                        <option class="ltsop" value="5">待定</option>
+                                                    </select></div></td>
+                                                </tr>
+
+                                                <tr class="ldivwai">
+
+                                                    <td>zqk<input type="hidden" value="3" class="stuid">
+                                                        <input type="hidden" value="80" class="stutotalscore"></td>
+                                                    <td><span class="label label-info">正常</span></td>
+                                                    <td><div><select class="ltselect">
+                                                        <option class="ltsop" value="1">正常</option>
+                                                        <option class="ltsop" value="2">请假</option>
+                                                        <option class="ltsop" value="3">迟到</option>
+                                                        <option class="ltsop" value="4">旷课</option>
+                                                        <option class="ltsop" value="5">待定</option>
+                                                    </select></div></td>
+                                                </tr>
+
+                                                <tr class="ldivwai">
+
+                                                    <td>笑你快<input type="hidden" value="3" class="stuid">
+                                                        <input type="hidden" value="80" class="stutotalscore"></td>
+                                                    <td><span class="label label-info">请假</span></td>
+                                                    <td><div><select class="ltselect">
+                                                        <option class="ltsop" value="1">正常</option>
+                                                        <option class="ltsop" value="2">请假</option>
+                                                        <option class="ltsop" value="3">迟到</option>
+                                                        <option class="ltsop" value="4">旷课</option>
+                                                        <option class="ltsop" value="5">待定</option>
+                                                    </select></div></td>
+                                                </tr>
+
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="guanbi" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary" id="tijiao">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body " id="tabless">
+                    <div id="classatd">
+                        <table id="datatable" class="table table-striped dt-responsive nowrap" style="border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro">
+                            <thead>
+                            <tr>
+                                <th>班级名</th>
+                                <th>日期</th>
+                                <th>出勤统计名</th>
+                                <th>次数</th>
+                                <th>出勤率</th>
+
+                                <th>操作</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody id="showstu">
+
+
+                            <c:forEach items="${classattendances}" var="catd">
+                                <tr class="gradeX">
+                                    <td >${catd.classname}</td>
+                                    <td>${catd.cad_date}</td>
+                                    <td>${catd.cad_name}</td>
+                                    <td>${catd.cad_number}</td>
+                                    <td>${catd.cad_rate}%</td>
+                                    <td class="center">
+                                        <input value="${catd.cad_id}" type="hidden" class="cadid">
+                                        <button class="xiangqing btn-success btn btn-xs"  type="button" style="padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white" onclick="xiangqing(${catd.cad_id})"  data-toggle="modal" data-target="#myModal">查看</button></td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--end row-->
+
+    <!--end page content-->
+
+
+    <!--Start footer-->
+
+    <!--end footer-->
+
+</section>
+<!--end main content-->
+
+
+
+<!--Common plugins-->
+<script src="table/js/jquery.min.js"></script>
+<script src="table/js/bootstrap.min.js"></script>
+<script src="table/js/pace.min.js"></script><script src="table/js/jasny-bootstrap.min.js"></script>
+<script src="table/js/jquery.slimscroll.min.js"></script>
+<script src="table/js/jquery.nanoscroller.min.js"></script>
+<script src="table/js/metismenu.min.js"></script>
+<script src="table/js/float-custom.js"></script>
+
+<!-- Datatables-->
+<script src="table/js/jquery.datatables.min.js"></script>
+<script src="table/js/datatables.responsive.min.js"></script>
+
+<script src="table/js/sweet-alert.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#datatable').dataTable();
+
+        $('#datatables').dataTable();
+    });
+
+</script>
+<script type="text/javascript">
+    function  atdclass() {
+        $("#atdclass").change(function () {
+            selectnumber();
+        })
+    }
+    function selectnumber() {
+        var classid=$("#atdclass").val();
+        $.ajax({
+            type: "post",
+            url: "/addatdgetno",
+            data:{"classid":classid},
+            dataType: "json",
+            success: function (data) {
+                alert(data);
+                $("#atdno").val(data);
+                var aaa=parseInt(data)+1;
+                var bbb=$("#atdclass").find("option:selected").text()
+                var ccc=bbb+"班第"+aaa+"次考勤记录"
+                $("#kaoqinname").val(ccc);
+            },
+            error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+        })
+    }
+    function seletclassname() {
+        $('#seletclassname').click(function () {
+            var startday=$("#startday").val();
+            var stopday=$("#stopday").val();
+            var classid=null;
+            var classname=$("#classname").val();
+            if(classname==""){
+                swal({
+                    title: "",
+                    text: "SORRY!您的班级名请填写完整",
+                    type: "error",
+                    showCancelButton: true,
+                    cancelButtonClass: 'btn-secondary',
+                    confirmButtonClass: 'btn-danger',
+                    confirmButtonText: '确定!'
+                });
+            }else {
+
+
+                selectclassatd(classid,startday,stopday,classname)
+            }
+        })
+    }
+    function showstudentinfos() {
+        $(".showstudentinfos").on("click",function(){
+
+        });
+
+    }
+    //根据条件查询学生信息
+
+    function huoquxuesheng(){
+        $("#startkao").click(function () {
+            var classid=$("#atdclass").val();
+            $("#modalbody").html("");
+
+            $.ajax({
+                type: "post",
+                url: "/addatdrecord",
+                data:{"classid":classid},
+                dataType: "json",
+                success: function (data) {
+                    var str="<div class=\"row\">\n" +
+                        "                                    <div class=\"panel-body \" id=\"tables\" style=\"background-color: white\">\n" +
+                        "                                        <div >\n" +
+                        "                                            <table id=\"datatables\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                        "                                                <thead>\n" +
+                        "                                                <tr>\n" +
+                        "                                                    <th style=\"text-align: center\">姓名</th>\n" +
+                        "                                                    <th style=\"text-align: center\">出勤</th>\n" +
+                        "                                                    <th style=\"text-align: center\">评分</th>\n" +
+                        "                                                </tr>\n" +
+                        "                                                </thead>\n" +
+                        "                                                <tbody>\n"
+                    $.each(data, function (i, item) {
+                        str+="<tr class=\"ldivwai\">"
+                        str+="<td style=\"text-align: center\"> <span class=\"label label-info\">"+item.stuname+"</span><input type=\"hidden\" value="+item.stu_id+" class=\"stuid\">\n" +
+                            "                                <input type=\"hidden\" value="+item.sts_id+" class=\"stsid\">\n" +
+                            "                                    <input type=\"hidden\" value="+item.stu_totalscore+" class=\"stutotalscore\"></td>"
+                        str+="<td style=\"text-align: center\"> "+item.stuno+"</td>";
+                        str+="<td style=\"text-align: center\"><div><select class=\"ltselect\" >\n"
+                            $.each(pingfens, function (i, item) {
+                                str+="<option class=\"ltsop\" value="+item.ss_id+">"+item.ss_name+"</option>\n"
+                            })
+
+                        str+="</select></div></td></tr>";
+                    })
+                    str+="               </tbody>\n" +
+                        "                                            </table>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>"
+                    $("#modalbody").append(str);
+
+                },
+                error: function () {
+                    alert("系统异常，请稍后重试！");
+                }
+            })
+        })
+    }
+    function  xiangqing(xiangqing) {
+
+        var cadid=xiangqing;
+
+
+        $("#modalbody").html("");
+
+        $.ajax({
+            type: "post",
+            url: "/dostuattendancerecord",
+            data:{"cadid":cadid},
+            dataType: "json",
+            success: function (data) {
+                var str="<div class=\"row\">\n" +
+                    "                                    <div class=\"panel-body \" id=\"tables\" style=\"background-color: white\">\n" +
+                    "                                        <div >\n" +
+                    "                                            <table id=\"datatables\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                    "                                                <thead>\n" +
+                    "                                                <tr>\n" +
+                    "                                                    <th>姓名</th>\n" +
+                    "                                                    <th>出勤</th>\n" +
+                    "                                                    <th>评分</th>\n" +
+                    "                                                </tr>\n" +
+                    "                                                </thead>\n" +
+                    "                                                <tbody>\n"
+                $.each(data, function (i, item) {
+                    str+="<tr>"
+                    var caozuo="";
+                    if(item.caozuo==1){
+                        caozuo="+"+item.fen;
+                    }else if(item.caozuo==0){
+                        caozuo="-"+item.fen;
+                    }
+                    str+="<td>"+item.stuname+"</td>"
+                    if(item.ss_id==1){
+                        str+="  <td><span class=\"label label-info\">"+item.ssname+"</span></td>"
+                    }else if(item.ss_id==2){
+
+                        str+="  <td><span class=\"label label-success\">"+item.ssname+"</span></td>"
+                    }else if(item.ss_id==3){
+                        str+=" <td><span class=\"label label-primary\">"+item.ssname+"</span></td>"
+                    }else if(item.ss_id==4){
+                        str+=" <td><span class=\"label label-warning\">"+item.ssname+"</span></td>"
+                    }
+                    str+="<td>"+caozuo+"</td>";
+                    str+="</tr>"
+                })
+                str+="               </tbody>\n" +
+                    "                                            </table>\n" +
+                    "                                        </div>\n" +
+                    "                                    </div>\n" +
+                    "                                </div>"
+                $("#modalbody").append(str);
+                $('#datatables').dataTable();
+            },
+            error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+        })
+
+
+    }
+    function selectmyclass(classid) {
+        var ss=classid
+        var startday=null;
+        var stopday=null;
+        var classname=null;
+        selectclassatd(classid,startday,stopday,classname)
+    }
+    function selectclassatd(classid,startday,stopday,classname) {
+
+        $.ajax({
+            type: "post",
+            url: "/doselectclassatdss",
+            data:{"classsid":classid,"startday":startday,"stopday":stopday,"classname":classname},
+            dataType: "json",
+            success: function (data) {
+                $("#classatd").html("");
+                var str=" <table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                    "                            <thead>\n" +
+                    "                            <tr>\n" +
+                    "                                <th>班级名</th>\n" +
+                    "                                <th>日期</th>\n" +
+                    "                                <th>出勤统计名</th>\n" +
+                    "                                <th>次数</th>\n" +
+                    "                                <th>出勤率</th>\n" +
+                    "                                <th>操作</th>\n" +
+                    "                            </tr>\n" +
+                    "                            </thead>\n" +
+                    "                            <tbody id=\"showstu\">\n"
+                $.each(data, function (i, item) {
+
+                    str+="   <tr>   <td>"+item.classname+"</td>\n" +
+                        "                                    <td>"+item.cad_date+"</td>\n" +
+                        "                                    <td>"+item.cad_name+"</td>\n" +
+                        "                                    <td>"+item.cad_number+"</td>"
+                    if(item.cad_rate>=80){
+                        str+="  <td><span class=\"label label-info\">"+item.cad_rate+"</span></td>"
+                    }else if((item.cad_rate>=60)){
+                        str+="  <td><span class=\"label label-success\">"+item.cad_rate+"</span></td>"
+                    }else if((item.cad_rate<=60)){
+                        str+="  <td><span class=\"label label-warning\">"+item.cad_rate+"</span></td>"
+                    }
+                    str+=" <td class=\"center\">\n" +
+                        "                                        <input value=\""+item.cad_id+"\" type=\"hidden\" class=\"cadid\">\n" +
+                        "                                        <button class=\"xiangqing btn-success btn btn-xs\"  type=\"button\" style=\"padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white\" onclick=\"xiangqing("+item.cad_id+")\"  data-toggle=\"modal\" data-target=\"#myModal\">查看</button></td>\n" +
+                        "                                </tr>";
+
+                })
+                str+=" </tbody> </table>"
+
+
+                $("#classatd").append(str);
+                $('#datatable').dataTable();
+            },
+            error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+        })
+        var sss=""
+    }
+    function changeForm() {
+        $("body").on("change", ".ltselect", function () {
+            valss=$(this).val()
+            if(valss==1){
+                $(this).css({"background-color":"#5cc0de"});
+            }else if(valss==2){
+                $(this).css({"background-color":"#5db85d"});
+            }else if(valss==3){
+                $(this).css({"background-color":"#1d7bc6"});
+            }else if(valss==4){
+                $(this).css({"background-color":"#f8ac5a"});
+            }else if(valss==5){
+                $(this).css({"background-color":"#ed5666"});
+            }
+        })
+    }
+    function shengchengkaoqingming() {
+        var aaa=parseInt($("#atdno").val())+1;
+        var bbb=$("#atdclass").find("option:selected").text()
+        var ccc=bbb+"班第"+aaa+"次考勤记录"
+        $("#kaoqinname").val(ccc);
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+
+        $("#kaoqindate").val(currentdate);
+    }
+    var myMap = new Map();
+    var pingfens;
+    function pingfenhuoqu() {
+        $.ajax({
+            type: "post",
+            url: "/getscorings",
+            dataType: "json",
+            success: function (data) {
+                pingfens=data;
+                $.each(data, function (i, item) {
+                    var ping = new Object();
+                    ping.id =item.ss_id;
+                    ping.fen=item.ss_fraction;
+                    ping.caozuo=item.ss_way;
+                    myMap[ping.id]=ping;
+                })
+            },
+            error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+        })
+    }
+
+    function tijaos() {
+        $("#tijiao").click(function () {
+            //学生出勤记录
+            var stuattendancelist= new Array();
+            var classids=$("#atdclass").val();
+            var cadnumber=parseInt($("#atdno").val())+1;
+            var els =$(".ldivwai")
+            //学生分数变更
+            var stutotalscorelist=new Array();
+            var zhengchang=0;
+            var quanbu=0;
+            $(".ldivwai").each(function(index,data){
+                //学生考勤记录
+                var kaoqin =$(data).find(".ltselect").val();
+                var stuid=$(data).find(".stuid").val();
+                var stsid=$(data).find(".stsid").val();
+
+                quanbu+=1;
+                if(kaoqin==1){
+                    zhengchang+=1;
+                }
+                //添加学生考勤记录到集合
+                var object = new Object();
+                object.stu_id = stuid;
+                object.ss_id =kaoqin;
+                object.class_id=classids;
+                stuattendancelist.push(object);
+                //学生分数信息
+                var stutotalscore=$(data).find(".stutotalscore").val();
+                var stuScoreobject = new Object();
+                var a=myMap[kaoqin]
+                var score=0;
+                if(a.caozuo==1){
+                    score=parseInt(stutotalscore)+parseInt(a.fen);
+                }else if(a.caozuo==0){
+                    score=stutotalscore-a.fen
+                }
+                stuScoreobject.sts_id = stsid;
+                stuScoreobject.stu_totalscore =score;
+                stutotalscorelist.push(stuScoreobject);
+            });
+            var stuattendancelists=JSON.stringify(stuattendancelist);
+            var studentScoreList=JSON.stringify(stutotalscorelist)
+            var kaoqindates=$("#kaoqindate").val();
+            var chuqinglv=((zhengchang/quanbu).toFixed(2)*100);
+
+            $.ajax({
+                type: "post",
+                url: "/doinsetadt",
+                data:{
+                    "stuattendancelists": stuattendancelists,
+                    "studentScoreList": studentScoreList,
+                    "classids": classids,
+                    "chuqinglv": chuqinglv,
+                    "cadnumber":cadnumber,
+                    "kaoqindate":kaoqindates
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data>0){
+                        $("#guanbi").click();
+                        selectnumber();
+                        swal({
+                            title: "Sussess！",
+                            text: "恭喜添加成功！本班本次出勤率为"+chuqinglv+"%",
+                            type: "success",
+                            showCancelButton: true,
+                            cancelButtonClass: 'btn-secondary ',
+                            confirmButtonClass: 'btn-success  ',
+                            confirmButtonText: '确定'
+                        });
+
+                    }else {
+                        alert("sorry!系统出错")
+                    }
+                },
+                error: function () {
+                    alert("系统异常，请稍后重试！");
+                }
+            })
+        })
+
+    }
+
+    $(function () {
+        atdclass();
+        shengchengkaoqingming();
+        huoquxuesheng();
+        seletclassname();
+        pingfenhuoqu();
+        changeForm()
+        tijaos()
+        showstudentinfos();
+        $("body").on("click",".showstudentinfos",function(){
+            alert("sds")
+            parent.showstu(1);
+        })
+    })
+
+</script>
+
+</body>
+</html>

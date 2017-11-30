@@ -32,7 +32,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="class_id !=null">
                 and c.class_id=#{class_id}
             </if>
+            <if test="startday !=null">
+                and c.cad_date &gt;= #{startday}
+            </if>
+            <if test="stopday !=null">
+                and c.cad_date &lt;= #{stopday}
+            </if>
         </where>
-
     </select>
 </mapper>

@@ -25,5 +25,7 @@ public interface ClassService {
      * @return
      */
     public Integer updateClass(Class classes);
-
+    /*
+    根据 班级 和 老师 查 询该老师是否拥有该班级访问权
+     */
 }

@@ -96,6 +96,7 @@
                         <li><a class="J_menuItem" href="/attendancerecord" id="sww">班级考勤管理</a></li>
                         <li><a class="J_menuItem" href="/jump" id="s">学员批量导入</a></li>
                         <li><a class="J_menuItem" href="/addatdrecord" id="s2">学员考勤卡</a></li>
+                        <li><a class="J_menuItem" href="/addatd" >学员考勤卡</a></li>
                         <li><a class="J_menuItem" href="/showclasst" id="sss">班级老师管理</a></li>
                         <li><a class="J_menuItem" href="/ddd" >评分管理</a></li>
                         </li>

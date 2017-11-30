@@ -98,7 +98,7 @@
                                     <span sty>姓名：</span><span>${stsl.stuname}</span></span></td></tr>
                             <tr style="height:16px;font-size: 12px "><td><span >学号：</span><span>${stsl.stuno}</span></td></tr>
                             <tr style="height:22px;font-size: 13px "><td>
-                                <div><select class="ltselect">
+                                <div><select class="ltselect" onchange="changeForm(this.value)">
                                     <c:forEach var="ssdl" items="${scoringstandardList}">
                                     <option class="ltsop" value="${ssdl.ss_id}">${ssdl.ss_name}</option>
                                     </c:forEach>
@@ -241,7 +241,7 @@
 
             alert(zhengchang+""+quanbu)
 
-            var chuqinglv=((zhengchang/quanbu).toFixed(2)*100)+"%";
+            var chuqinglv=((zhengchang/quanbu).toFixed(2)*100);
             alert("本班本次出勤率为"+chuqinglv+"%")
             $.ajax({
                 type: "post",
@@ -256,7 +256,7 @@
                 dataType: "json",
                 success: function (data) {
                     if (data>0){
-                        alert("恭喜添加成功！本班本次出勤率为"+chuqinglv)
+                        alert("恭喜添加成功！本班本次出勤率为"+chuqinglv+"%")
                     }else {
                         alert("sorry!系统出错")
                     }

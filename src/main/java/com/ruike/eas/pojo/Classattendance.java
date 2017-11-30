@@ -1,5 +1,8 @@
 package com.ruike.eas.pojo;
 
+import com.ruike.eas.util.DateUtil;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,6 +24,7 @@ public class Classattendance implements Serializable {
     private String cad_name;
     /*班级点名日期
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date cad_date;
     /*班级班级点名班级id 外键
      */
@@ -29,6 +33,32 @@ public class Classattendance implements Serializable {
     班级名称
      */
     private String classname;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date startday;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date stopday;
+
+    public Date getStartday() {
+        return startday;
+    }
+
+    public void setStartday(Date startday) {
+        this.startday = startday;
+    }
+    public void setStartdays(String startdays) {
+        this.startday = DateUtil.dateFormat(startdays,"yyyy-MM-dd");
+    }
+    public Date getStopday() {
+        return stopday;
+    }
+
+    public void setStopday(Date stopday) {
+        this.stopday = stopday;
+    }
+
+    public void setStopdays(String stopdays) {
+        this.stopday = DateUtil.dateFormat(stopdays,"yyyy-MM-dd");
+    }
 
     public String getClassname() {
         return classname;
@@ -76,6 +106,9 @@ public class Classattendance implements Serializable {
 
     public void setCad_date(Date cad_date) {
         this.cad_date = cad_date;
+    }
+    public void setCad_dates(String  cad_dates) {
+        this.cad_date = DateUtil.dateFormat(cad_dates,"yyyy-MM-dd");
     }
 
     public Integer getClass_id() {

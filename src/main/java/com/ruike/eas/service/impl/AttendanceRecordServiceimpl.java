@@ -26,10 +26,11 @@ public class AttendanceRecordServiceimpl implements AttendanceRecordService{
         Integer classatd=classattendanceMapper.insertClassatd(classattendance);
         if(classatd>0){
             Integer cadid=classattendance.getCad_id();
+            Date date=classattendance.getCad_date();
             System.out.println(cadid);
             for (Stuattendance stuattendance : stuattendances) {
                 stuattendance.setCad_id(cadid);
-                stuattendance.setSad_recorddate(new Date());
+                stuattendance.setSad_recorddate(date);
             }
             Integer ss=stuattendanceMapper.insertStuatds(stuattendances);
             Integer aa=stutotalscoreMapper.updatestusts(stutotalscores);

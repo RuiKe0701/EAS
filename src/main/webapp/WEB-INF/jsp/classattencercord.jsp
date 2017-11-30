@@ -28,6 +28,7 @@
     <link href="table/css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
     <link href="table/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
     <!--template css-->
+    <link href="table/css/sweet-alert.css" rel="stylesheet">
 
     <link href="css/animate.min.css" rel="stylesheet">
 
@@ -77,7 +78,7 @@
                     <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
 
                         <div class="input-group date" style="padding-left: 0px;">
-                            <input type="date" class="form-control" style="height: 24.5px;font-size:12px;float:left;">
+                            <input type="date" id="startday" class="form-control" style="height: 24.5px;font-size:12px;float:left;">
                             <span class=" input-group-addon " style="height: 23.5px;font-size:12px;background-color: white">开始日期 </span>
                         </div>
 
@@ -85,7 +86,7 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
                         <div class="input-group date" style="padding-left: 0px;">
-                            <input type="date" class="form-control" style="height: 24.5px;font-size:12px;float:left;">
+                            <input type="date" id="stopday" class="form-control" style="height: 24.5px;font-size:12px;float:left;">
                             <span class=" input-group-addon " style="height: 23.5px;font-size:12px;background-color: white">结束日期 </span>
                         </div>
                     </div>
@@ -96,9 +97,9 @@
 
                     <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
                         <div class="input-group">
-                            <input type="text"  id="stu_stuname" class="form-control"style="height: 26.5px;font-size:12px" placeholder="请输入班级名">
+                            <input type="text"  id="classname" class="form-control"style="height: 26.5px;font-size:12px" placeholder="请输入班级名">
                             <span class="input-group-btn">
-						<button class="btn btn-primary btn-xs"  id="seletstuname" type="button">
+						<button class="btn btn-primary btn-xs"  id="seletclassname" type="button">
 							班级查询
 						</button>
 					</span>
@@ -154,15 +155,16 @@
                     </div>
                 </div>
                 <div class="panel-body " id="tabless">
-                    <div >
+                    <div id="classatd">
                         <table id="datatable" class="table table-striped dt-responsive nowrap" style="border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro">
                             <thead>
                             <tr>
                                 <th>班级名</th>
                                 <th>日期</th>
-                                <th>出勤率</th>
                                 <th>出勤统计名</th>
                                 <th>次数</th>
+                                <th>出勤率</th>
+
                                 <th>操作</th>
 
 
@@ -175,9 +177,9 @@
                                 <tr class="gradeX">
                                     <td>${catd.classname}</td>
                                     <td>${catd.cad_date}</td>
-                                    <td>${catd.cad_rate}</td>
                                     <td>${catd.cad_name}</td>
-                                    <td class="center">${catd.cad_number}</td>
+                                    <td>${catd.cad_number}</td>
+                                    <td>${catd.cad_rate}%</td>
                                     <td class="center">
                                         <input value="${catd.cad_id}" type="hidden" class="cadid">
                                         <button class="xiangqing btn-success btn btn-xs"  type="button" style="padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white" onclick="xiangqing(${catd.cad_id})"  data-toggle="modal" data-target="#myModal">查看</button></td>
@@ -217,6 +219,8 @@
 <!-- Datatables-->
 <script src="table/js/jquery.datatables.min.js"></script>
 <script src="table/js/datatables.responsive.min.js"></script>
+
+<script src="table/js/sweet-alert.min.js"></script>
 <script>
 
     $(document).ready(function () {
@@ -242,10 +246,32 @@
             parent.showstu(1);
         })
     }
+    function seletclassname() {
+        $('#seletclassname').click(function () {
+            var startday=$("#startday").val();
+            var stopday=$("#stopday").val();
+            var classid=null;
+            var classname=$("#classname").val();
+            if(classname==""){
+                swal({
+                    title: "",
+                    text: "SORRY!您的班级名请填写完整",
+                    type: "error",
+                    showCancelButton: true,
+                    cancelButtonClass: 'btn-secondary',
+                    confirmButtonClass: 'btn-danger',
+                    confirmButtonText: '确定!'
+                });
+            }else {
 
+
+                selectclassatd(classid,startday,stopday,classname)
+            }
+        })
+    }
     function showstudentinfos() {
         $(".showstudentinfos").on("click",function(){
-            alert("sd")
+
         });
 
     }
@@ -255,9 +281,10 @@
     function  xiangqing(xiangqing) {
 
             var cadid=xiangqing;
-            alert(cadid)
+
+
             $("#modalbody").html("");
-            alert("ss")
+
             $.ajax({
                 type: "post",
                 url: "/dostuattendancerecord",
@@ -315,22 +342,68 @@
     }
     function selectmyclass(classid) {
         var ss=classid
-      alert(ss)
+        var startday=null;
+        var stopday=null;
+        var classname=null;
+        selectclassatd(classid,startday,stopday,classname)
     }
-        function selectclassatd() {
+        function selectclassatd(classid,startday,stopday,classname) {
+
             $.ajax({
                 type: "post",
-                url: "/dostuattendancerecord",
-                data:{"cadid":cadid},
+                url: "/doselectclassatdss",
+                data:{"classsid":classid,"startday":startday,"stopday":stopday,"classname":classname},
                 dataType: "json",
                 success: function (data) {
+                    $("#classatd").html("");
+                   var str=" <table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                       "                            <thead>\n" +
+                       "                            <tr>\n" +
+                       "                                <th>班级名</th>\n" +
+                       "                                <th>日期</th>\n" +
+                       "                                <th>出勤统计名</th>\n" +
+                       "                                <th>次数</th>\n" +
+                       "                                <th>出勤率</th>\n" +
+                       "                                <th>操作</th>\n" +
+                       "                            </tr>\n" +
+                       "                            </thead>\n" +
+                       "                            <tbody id=\"showstu\">\n"
+                    $.each(data, function (i, item) {
+
+                        str+="   <tr>   <td>"+item.classname+"</td>\n" +
+                            "                                    <td>"+item.cad_date+"</td>\n" +
+                            "                                    <td>"+item.cad_name+"</td>\n" +
+                            "                                    <td>"+item.cad_number+"</td>"
+                            if(item.cad_rate>=80){
+                                str+="  <td><span class=\"label label-info\">"+item.cad_rate+"</span></td>"
+                            }else if((item.cad_rate>=60)){
+                                str+="  <td><span class=\"label label-success\">"+item.cad_rate+"</span></td>"
+                            }else if((item.cad_rate<=60)){
+                                str+="  <td><span class=\"label label-warning\">"+item.cad_rate+"</span></td>"
+                            }
+                            str+=" <td class=\"center\">\n" +
+                                "                                        <input value=\""+item.cad_id+"\" type=\"hidden\" class=\"cadid\">\n" +
+                                "                                        <button class=\"xiangqing btn-success btn btn-xs\"  type=\"button\" style=\"padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white\" onclick=\"xiangqing("+item.cad_id+")\"  data-toggle=\"modal\" data-target=\"#myModal\">查看</button></td>\n" +
+                                "                                </tr>";
+
+                    })
+                    str+=" </tbody> </table>"
+
+
+                    $("#classatd").append(str);
+                    $('#datatable').dataTable();
+                },
+                error: function () {
+                    alert("系统异常，请稍后重试！");
                 }
                 })
+            var sss=""
         }
 
     $(function () {
         showstudentinfo();
         addstudent();
+        seletclassname();
         showstudentinfos();
         $("body").on("click",".showstudentinfos",function(){
             alert("sds")
