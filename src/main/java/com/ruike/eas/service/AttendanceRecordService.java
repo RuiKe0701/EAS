@@ -5,7 +5,7 @@ import com.ruike.eas.pojo.*;
 import java.util.List;
 
 public interface AttendanceRecordService {
-    public Integer addatdrecord(List<Stuattendance> stuattendances, List<Stutotalscore> stutotalscores, Classattendance classattendance);
+    public Integer addatdrecord(List<Stuattendance> stuattendances, List<Stutotalscore> stutotalscores, Classattendance classattendance,List<Stuleave> stuleaveList);
     //根据老师id 获取老师所带班级的名字
     public List<Classteacher> classteacherlist(Classteacher classteacher);
     //根据班级id查询班级考勤情况

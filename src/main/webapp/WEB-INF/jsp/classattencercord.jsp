@@ -355,6 +355,16 @@
                 data:{"classsid":classid,"startday":startday,"stopday":stopday,"classname":classname},
                 dataType: "json",
                 success: function (data) {
+                    if(data==0){
+                        swal({
+                            title: "",
+                            text: "SORRY!您没有权限访问该班级或该班级未创建！",
+                            type: "error",
+                            showCancelButton: true,
+                            cancelButtonClass: 'btn-secondary',
+                            confirmButtonClass: 'btn-danger',
+                            confirmButtonText: '确定!'
+                        });}else {
                     $("#classatd").html("");
                    var str=" <table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
                        "                            <thead>\n" +
@@ -391,7 +401,7 @@
 
 
                     $("#classatd").append(str);
-                    $('#datatable').dataTable();
+                    $('#datatable').dataTable();}
                 },
                 error: function () {
                     alert("系统异常，请稍后重试！");

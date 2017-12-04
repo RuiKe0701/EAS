@@ -16,32 +16,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Float-Admin</title>
-
-    <!-- Common plugins -->
     <link href="table/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Common plugins -->
     <link href="table/css/simple-line-icons.css" rel="stylesheet">
     <link href="table/css/font-awesome.min.css" rel="stylesheet">
     <link href="table/css/pace.css" rel="stylesheet"><link href="table/css/jasny-bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="table/css/nanoscroller.css">
     <link rel="stylesheet" href="table/css/metismenu.min.css">
-    <!-- dataTables -->
+    <!--&lt;!&ndash; dataTables &ndash;&gt;-->
     <link href="table/css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
     <link href="table/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
     <!--template css-->
-    <link href="table/css/sweet-alert.css" rel="stylesheet">
-
-    <link href="css/animate.min.css" rel="stylesheet">
-
     <link href="table/css/style.css" rel="stylesheet">
+    <link href="table/css/sweet-alert.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
 
     <script src="table/js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
 
-    <link href="css/style.min.css?v=4.0.0" rel="stylesheet">
-    <![endif]-->
+
+    <base target="_blank">
+    <link rel="stylesheet" href="select/dist/css/bootstrap-select.css">
+
 </head>
 <style type="text/css">
 
@@ -95,7 +92,7 @@
                                     <div style="">
                                         <div class="col-md-4" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 0px;padding-top: 5px"><i class="fa fa-tag" style="color: #5cc0de"></i> 考 勤 日 期 ：</div>
                                         <div class="col-md-7" style="padding-left: 0px">
-                                            <input id="kaoqindate" value="2017-07-01" type="date" style="width:100%;height: 26px;font-size: 12px;padding-left: 8px" placeholder="">
+                                            <input id="kaoqindate"  type="date" style="width:100%;height: 26px;font-size: 12px;padding-left: 8px" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -110,11 +107,16 @@
                                 </div>
                                 <div class="col-md-12" style="padding-left:0px;padding-top: 20px;padding-bottom: 5px;border-bottom: 1px solid gainsboro">
                                     <div style="">
-                                        <div class="col-md-4" style=""><button  class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" id="startkao">开始考勤</button></div>
+                                        <div class="col-md-4" style=""><button  class="btn btn-success btn-xs"  id="startkao">开始考勤</button></div>
+                                        <button style="display: none" id="kaishi" data-toggle="modal" data-target="#myModal"></button>
                                         <div class="col-md-7" style="padding-left: 0px">
 
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-12" style="padding-left:0px;padding-top: 20px;padding-bottom: 5px;border-bottom: 1px solid gainsboro"><div style="font-size:14px;padding-left:10px;padding-right:10px;width: 100%;background-color: #d9edf7;border-radius: 3px;padding: 5px;border: 0px" >
+                                    <p id="stuleaveinfos" style="padding-left:10px;padding-right:10px"></p>
+                                </div>
                                 </div>
 
 
@@ -134,8 +136,103 @@
                     <h>请假记录管理</h>
                 </div>
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
+
+                    <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
+                        <button class="btn-xs btn btn-primary" data-toggle="modal" data-target="#myModal2" id="addstuleave">新增请假</button>
+                    </div>
+
+                    <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" style="border-radius: 5px">
+                            <div class="modal-content animated flipInY" style="border-radius: 5px">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">学员请假记录</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-md-3" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 5px"><i class="fa fa-tag" style="color: #ed5666"></i> 请选择班级：</div>
+                                        <div class="col-md-5" style="padding-left: 15px">  <select class="btn-indigo" id="leaveclass" style="height:26px;padding-left: 0px;color: white;border-radius: 5px">
+                                            <c:forEach items="${classteacherList}" var="ct">
+                                                <option style="background-color: white;color: darkslategray" value="${ct.class_id}">${ct.classname}</option>
+                                            </c:forEach>
+                                        </select></div>
+                                    </div>
+
+                                    <div class="row" style="margin-top: 5px">
+                                            <div class="col-sm-3"></div>
+                                        <div class="col-md-3" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 8px"><i class="fa fa-tag" style="color: #24c6c8"></i> 请选择学员：</div>
+                                        <div class="col-md-3" style="padding-top: 2px;padding-left: 15px" id="selectstu">
+                                            <select class="btn-success" id="leavestu" style="height:26px;width:84.1px;padding-left: 0px;color: white;border-radius: 5px">
+                                                    <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+                                                <option style="background-color: white;color: darkslategray" value="1">正秦昆</option>
+
+                                            </select></div>
+                                            </div>
+
+
+                                    <div class="row" style="padding-top: 15px">
+                                        <div class="col-lg-3"></div>
+                                        <div class="col-md-3" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 2px"><i class="fa fa-tag" style="color: #5cc0de"></i> 考 勤 日 期 ：</div>
+                                        <div class="col-md-4" style="padding-left: 15px">
+                                            <input id="leavedate"  type="date" style="width:100%;height: 26px;font-size: 12px;padding-left: 8px" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-md-3" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 10px"><i class="fa fa-tag" style="color: #f8ac5a"></i> 备注 / 原因：</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3"></div>
+                                        <div class="col-md-6" style="padding-top: 2px;padding-left: 15px">
+                                            <textarea style="height: 60px" id="yuanyin"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary">保存s</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
-                        <select style="background-color: #7c86cb;height: 26px;color: white;border-radius: 5px" id="myclass" onchange="selectmyclass(this.value)">
+                        <select style="background-color: #7c86cb;height: 26px;color: white;border-radius: 5px" id="myclass">
                             <c:forEach items="${classteacherList}" var="ct">
                                 <option style="background-color: white;color: darkslategray" value="${ct.class_id}">${ct.classname}</option>
                             </c:forEach>
@@ -252,11 +349,9 @@
                             <thead>
                             <tr>
                                 <th>班级名</th>
+                                <th>姓名</th>
+                                <th>备注/原因</th>
                                 <th>日期</th>
-                                <th>出勤统计名</th>
-                                <th>次数</th>
-                                <th>出勤率</th>
-
                                 <th>操作</th>
 
 
@@ -265,16 +360,16 @@
                             <tbody id="showstu">
 
 
-                            <c:forEach items="${classattendances}" var="catd">
+                            <c:forEach items="${stuleaveList}" var="sl">
                                 <tr class="gradeX">
-                                    <td >${catd.classname}</td>
-                                    <td>${catd.cad_date}</td>
-                                    <td>${catd.cad_name}</td>
-                                    <td>${catd.cad_number}</td>
-                                    <td>${catd.cad_rate}%</td>
+                                    <td >${sl.classname}</td>
+                                    <td>${sl.stuname}</td>
+
+                                    <td>${sl.stuleave_remarks}&nbsp;<span class="label label-warning">默认</span></td>
+                                    <td>${sl.stuleave_days}</td>
                                     <td class="center">
-                                        <input value="${catd.cad_id}" type="hidden" class="cadid">
-                                        <button class="xiangqing btn-success btn btn-xs"  type="button" style="padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white" onclick="xiangqing(${catd.cad_id})"  data-toggle="modal" data-target="#myModal">查看</button></td>
+                                        <input value="${sl.stuleave_id}" type="hidden" class="cadid">
+                                        <button class="xiangqing btn-success btn btn-xs"  type="button" style="padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white" onclick=""  data-toggle="modal" data-target="#myModal">查看</button></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -313,6 +408,10 @@
 <script src="table/js/datatables.responsive.min.js"></script>
 
 <script src="table/js/sweet-alert.min.js"></script>
+
+<script src="js/bootstrap-select.js"></script>
+
+<script src="select/js/bootstrap-select.js"></script>
 <script>
 
     $(document).ready(function () {
@@ -323,11 +422,155 @@
 
 </script>
 <script type="text/javascript">
+    //根据班级id获取该班级学员信息
+    function xinzengkao() {
+        $("#")
+    }
+    function selectstuinfobyleaveclassid() {
+        $("#leaveclass").change(function () {
+            var classid=$("#leaveclass").val();
+            huoquxueyuan(classid);
+        })
+    }
+//获取请假学员
+    function addstuleave() {
+        $("#addstuleave").click(function () {
+            var classid=$("#leaveclass").val();
+            huoquxueyuan(classid);
+        })
+    }
+    function huoquxueyuan(classid) {
+        $.ajax({
+            type: "post",
+            url: "/selectstubyclassid",
+            data:{"classid":classid},
+            dataType: "json",
+            success: function (data) {
+                $("#leavestu").html("");
+                var str="";
+                $.each(data, function (i, item) {
+                    str+="                        <option style=\"background-color: white;color: darkslategray\" value="+item.stu_id+">"+item.stu_name+"</option>\n"
+                })
+                $("#leavestu").append(str)
+            }, error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+    })
+
+    }
     function  atdclass() {
         $("#atdclass").change(function () {
             selectnumber();
+            selectatdleave();
         })
     }
+    function selectstuleavebymyclass() {
+        $("#myclass").change(function () {
+            var stuleaves=new Object();
+            stuleaves.class_id=$("#myclass").val();
+            var stuleave=JSON.stringify(stuleaves)
+            selectstuleavebystu(stuleave);
+        })
+    }
+    //根据条件查询请假学员
+    function selectstuleavebystu(stuleaves) {
+        $.ajax({
+            type: "post",
+            url: "/selectstuleavebystu",
+            data:{"stuleaves":stuleaves},
+            dataType: "json",
+            success: function (data) {
+                if(data==1){
+                    swal({
+                        title: "",
+                        text: "SORRY!您没有权限访问该班级或该班级未创建！",
+                        type: "error",
+                        showCancelButton: true,
+                        cancelButtonClass: 'btn-secondary',
+                        confirmButtonClass: 'btn-danger',
+                        confirmButtonText: '确定!'
+                    });}else {
+                    $("#classatd").html("");
+                    var str = " <table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                        "                            <thead>\n" +
+                        "                            <tr>\n" +
+                        "                                <th>班级名</th>\n" +
+                        "                                <th>姓名</th>\n" +
+                        "                                <th>备注/原因</th>\n" +
+                        "                                <th>日期</th>\n" +
+                        "                                <th>操作</th>\n" +
+                        "                            </tr>\n" +
+                        "                            </thead>\n" +
+                        "                            <tbody id=\"showstu\">";
+                    $.each(data, function (i, item) {
+                        var c = ""
+                        if (item.stuleave_state == 1) {
+                            c += "<span class=\"label label-warning\">默认</span>";
+                        } else {
+                            c += "";
+                        }
+                        str += "                              <tr class=\"gradeX\">\n" +
+                            "                                    <td >" + item.classname + "</td>\n" +
+                            "                                    <td>" + item.stuname + "</td>\n" +
+                            "                                    <td>" + item.stuleave_remarks + "&nbsp;" + c + "</td>\n" +
+                            "                                    <td>" + item.stuleave_days + "</td>\n" +
+                            "                                    <td class=\"center\">\n" +
+                            "                                        <input value=" + item.stuleave_id + " type=\"hidden\" class=\"cadid\">\n" +
+                            "                                        <button class=\"xiangqing btn-success btn btn-xs\"  type=\"button\" style=\"padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white\" onclick=\"\"  data-toggle=\"modal\" data-target=\"#myModal\">查看</button></td>\n" +
+                            "                                </tr>\n" +
+                            "  "
+                    })
+                    str += "  </tbody></table>"
+                    $("#classatd").append(str);
+                    $('#datatable').dataTable();
+                }
+            },
+            error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+        })
+    }
+    //考勤日期更变
+    function kaoqingdatechange() {
+        $("#kaoqindate").change(function () {
+            selectatdleave();
+        })
+    }
+
+    var stuleave=new Array();
+    var stuleaveinfo="";
+    //查询考勤请假学院
+    function selectatdleave() {
+        var classid=$("#atdclass").val()
+        var classname=$("#atdclass").find("option:selected").text()
+        var kaoqingdate=$("#kaoqindate").val();
+
+        $.ajax({
+            type: "post",
+            url: "/getclassleave",
+            data:{"classid":classid,"kaoqingdate":kaoqingdate},
+            dataType: "json",
+            success: function (data) {
+                if(data==2){
+                    stuleaveinfo=classname+"班"+kaoqingdate+"日暂无请假人员"
+                    $("#stuleaveinfos").html(stuleaveinfo);
+                }else if(data ==0){
+                }else{
+                    stuleaveinfo=stuleaveinfo=classname+"班"+kaoqingdate+"日请假人员有："
+                    $.each(data, function (i, item) {
+                        stuleave.push(item.stu_id);
+                        stuleaveinfo+=item.stuname+",";
+
+                        $("#stuleaveinfos").html(stuleaveinfo);
+                    })
+                }
+            },
+            error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+        })
+    }
+    //查询班级考勤次数
     function selectnumber() {
         var classid=$("#atdclass").val();
         $.ajax({
@@ -336,7 +579,6 @@
             data:{"classid":classid},
             dataType: "json",
             success: function (data) {
-                alert(data);
                 $("#atdno").val(data);
                 var aaa=parseInt(data)+1;
                 var bbb=$("#atdclass").find("option:selected").text()
@@ -347,13 +589,11 @@
                 alert("系统异常，请稍后重试！");
             }
         })
+
     }
+    //根据班级名称查询请假记录
     function seletclassname() {
         $('#seletclassname').click(function () {
-            var startday=$("#startday").val();
-            var stopday=$("#stopday").val();
-            var classid=null;
-            var classname=$("#classname").val();
             if(classname==""){
                 swal({
                     title: "",
@@ -365,12 +605,14 @@
                     confirmButtonText: '确定!'
                 });
             }else {
-
-
-                selectclassatd(classid,startday,stopday,classname)
+                var stuleaves=new Object();
+                stuleaves.classname=$("#classname").val();
+                var stuleave=JSON.stringify(stuleaves)
+                selectstuleavebystu(stuleave);
             }
         })
     }
+    //
     function showstudentinfos() {
         $(".showstudentinfos").on("click",function(){
 
@@ -378,55 +620,70 @@
 
     }
     //根据条件查询学生信息
-
     function huoquxuesheng(){
         $("#startkao").click(function () {
             var classid=$("#atdclass").val();
             $("#modalbody").html("");
-
-            $.ajax({
-                type: "post",
-                url: "/addatdrecord",
-                data:{"classid":classid},
-                dataType: "json",
-                success: function (data) {
-                    var str="<div class=\"row\">\n" +
-                        "                                    <div class=\"panel-body \" id=\"tables\" style=\"background-color: white\">\n" +
-                        "                                        <div >\n" +
-                        "                                            <table id=\"datatables\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
-                        "                                                <thead>\n" +
-                        "                                                <tr>\n" +
-                        "                                                    <th style=\"text-align: center\">姓名</th>\n" +
-                        "                                                    <th style=\"text-align: center\">出勤</th>\n" +
-                        "                                                    <th style=\"text-align: center\">评分</th>\n" +
-                        "                                                </tr>\n" +
-                        "                                                </thead>\n" +
-                        "                                                <tbody>\n"
-                    $.each(data, function (i, item) {
-                        str+="<tr class=\"ldivwai\">"
-                        str+="<td style=\"text-align: center\"> <span class=\"label label-info\">"+item.stuname+"</span><input type=\"hidden\" value="+item.stu_id+" class=\"stuid\">\n" +
-                            "                                <input type=\"hidden\" value="+item.sts_id+" class=\"stsid\">\n" +
-                            "                                    <input type=\"hidden\" value="+item.stu_totalscore+" class=\"stutotalscore\"></td>"
-                        str+="<td style=\"text-align: center\"> "+item.stuno+"</td>";
-                        str+="<td style=\"text-align: center\"><div><select class=\"ltselect\" >\n"
+            if(classid==-1){
+                swal({
+                    title: "Sorry!",
+                    text: "对不起！您目前没有正在带的班级",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonClass: 'btn-secondary ',
+                    confirmButtonClass: 'btn-warning  ',
+                    confirmButtonText: '确定!'
+                });
+            }else {
+                $("#kaishi").click();
+                $.ajax({
+                    type: "post",
+                    url: "/addatdrecord",
+                    data:{"classid":classid},
+                    dataType: "json",
+                    success: function (data) {
+                        var str="<div class=\"row\">\n" +
+                            "                                    <div class=\"panel-body \" id=\"tables\" style=\"background-color: white\">     <div class=\"col-md-12\" style=\"padding-left:0px;padding-top: 0px;padding-bottom: 5px;\"><div style=\"font-size:14px;padding-left:10px;padding-right:10px;width: 100%;background-color: #d9edf7;border-radius: 3px;padding: 5px;border: 0px\" >\n" +
+                            "                                    <p id=\"stuleaveinfos\" style=\"padding-left:10px;padding-right:10px\">"+stuleaveinfo+"</p>\n" +
+                            "                                </div>\n" +
+                            "                                </div>\n" +
+                            "                                        <div >\n" +
+                            "                                            <table id=\"datatables\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                            "                                                <thead>\n" +
+                            "                                                <tr>\n" +
+                            "                                                    <th style=\"text-align: center\">姓名</th>\n" +
+                            "                                                    <th style=\"text-align: center\">学号</th>\n" +
+                            "                                                    <th style=\"text-align: center\">出勤</th>\n" +
+                            "                                                </tr>\n" +
+                            "                                                </thead>\n" +
+                            "                                                <tbody>\n"
+                        $.each(data, function (i, item) {
+                            str+="<tr class=\"ldivwai\">"
+                            str+="<td style=\"text-align: center\"> <span class=\"label label-info \">"+item.stuname+"</span><input type=\"hidden\" value="+item.stu_id+" class=\"stuid\"><input type=\"hidden\" value="+item.stuname+" class=\"stunames\">\n" +
+                                "                                <input type=\"hidden\" value="+item.sts_id+" class=\"stsid\">\n" +
+                                "                                    <input type=\"hidden\" value="+item.stu_totalscore+" class=\"stutotalscore\"></td>"
+                            str+="<td style=\"text-align: center\"> "+item.stuno+"</td>";
+                            str+="<td style=\"text-align: center\"><div><select class=\"ltselect\" >\n"
                             $.each(pingfens, function (i, item) {
                                 str+="<option class=\"ltsop\" value="+item.ss_id+">"+item.ss_name+"</option>\n"
                             })
 
-                        str+="</select></div></td></tr>";
-                    })
-                    str+="               </tbody>\n" +
-                        "                                            </table>\n" +
-                        "                                        </div>\n" +
-                        "                                    </div>\n" +
-                        "                                </div>"
-                    $("#modalbody").append(str);
+                            str+="</select></div></td></tr>";
+                        })
+                        str+="               </tbody>\n" +
+                            "                                            </table>\n" +
+                            "                                        </div>\n" +
+                            "                                    </div>\n" +
+                            "                                </div>"
+                        $("#modalbody").append(str);
 
-                },
-                error: function () {
-                    alert("系统异常，请稍后重试！");
-                }
-            })
+                    },
+                    error: function () {
+                        alert("系统异常，请稍后重试！");
+                    }
+                })
+            }
+
         })
     }
     function  xiangqing(xiangqing) {
@@ -491,13 +748,8 @@
 
 
     }
-    function selectmyclass(classid) {
-        var ss=classid
-        var startday=null;
-        var stopday=null;
-        var classname=null;
-        selectclassatd(classid,startday,stopday,classname)
-    }
+
+
     function selectclassatd(classid,startday,stopday,classname) {
 
         $.ajax({
@@ -566,6 +818,10 @@
             }
         })
     }
+    function  tianjiaqingjia() {
+
+    }
+    //生成考勤名当前日期等初始辅助工具
     function shengchengkaoqingming() {
         var aaa=parseInt($("#atdno").val())+1;
         var bbb=$("#atdclass").find("option:selected").text()
@@ -583,11 +839,12 @@
             strDate = "0" + strDate;
         }
         var currentdate = year + seperator1 + month + seperator1 + strDate;
-
+        $("#leavedate").val(currentdate);
         $("#kaoqindate").val(currentdate);
     }
     var myMap = new Map();
     var pingfens;
+    //评分标准获取
     function pingfenhuoqu() {
         $.ajax({
             type: "post",
@@ -608,10 +865,12 @@
             }
         })
     }
-
+    //提交考勤结果
     function tijaos() {
         $("#tijiao").click(function () {
             //学生出勤记录
+            var kaoqindates=$("#kaoqindate").val();
+            var stuleaveList=new Array();
             var stuattendancelist= new Array();
             var classids=$("#atdclass").val();
             var cadnumber=parseInt($("#atdno").val())+1;
@@ -625,13 +884,32 @@
                 var kaoqin =$(data).find(".ltselect").val();
                 var stuid=$(data).find(".stuid").val();
                 var stsid=$(data).find(".stsid").val();
-
+                var stuname=$(data).find(".stunames").val();
+                if(kaoqin==2){
+                    var count=0;
+                    for (var i=0;i<=stuleave.length;i++){
+                        if(stuid==stuleave[i]){
+                            count =1;
+                        }
+                    }
+                    if(count!=1){
+                        var objectl = new Object();
+                        objectl.stuname=stuname
+                        objectl.stu_id = stuid;
+                        objectl.stuleave_remarks ="请假";
+                        objectl.stuleave_state=1;
+                        objectl.class_id=classids;
+                        alert(stuname);
+                        stuleaveList.push(objectl);
+                    }
+                }
                 quanbu+=1;
                 if(kaoqin==1){
                     zhengchang+=1;
                 }
                 //添加学生考勤记录到集合
                 var object = new Object();
+
                 object.stu_id = stuid;
                 object.ss_id =kaoqin;
                 object.class_id=classids;
@@ -651,51 +929,65 @@
                 stutotalscorelist.push(stuScoreobject);
             });
             var stuattendancelists=JSON.stringify(stuattendancelist);
-            var studentScoreList=JSON.stringify(stutotalscorelist)
-            var kaoqindates=$("#kaoqindate").val();
+            var studentScoreList=JSON.stringify(stutotalscorelist);
+            var leaveLists=JSON.stringify(stuleaveList);
             var chuqinglv=((zhengchang/quanbu).toFixed(2)*100);
+            var classatdname=$("#kaoqinname").val();
 
-            $.ajax({
-                type: "post",
-                url: "/doinsetadt",
-                data:{
-                    "stuattendancelists": stuattendancelists,
-                    "studentScoreList": studentScoreList,
-                    "classids": classids,
-                    "chuqinglv": chuqinglv,
-                    "cadnumber":cadnumber,
-                    "kaoqindate":kaoqindates
-                },
-                dataType: "json",
-                success: function (data) {
-                    if (data>0){
-                        $("#guanbi").click();
-                        selectnumber();
-                        swal({
-                            title: "Sussess！",
-                            text: "恭喜添加成功！本班本次出勤率为"+chuqinglv+"%",
-                            type: "success",
-                            showCancelButton: true,
-                            cancelButtonClass: 'btn-secondary ',
-                            confirmButtonClass: 'btn-success  ',
-                            confirmButtonText: '确定'
-                        });
+                $.ajax({
+                    type: "post",
+                    url: "/doinsetadt",
+                    data:{
+                        "stuattendancelists": stuattendancelists,
+                        "studentScoreList": studentScoreList,
+                        "leaveLists":leaveLists,
+                        "classids": classids,
+                        "chuqinglv": chuqinglv,
+                        "cadnumber":cadnumber,
+                        "kaoqindate":kaoqindates,
+                        "classatdname":classatdname,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data==1){
+                            $("#guanbi").click();
+                            selectnumber();
+                            selectatdleave();
+                            swal({
+                                title: "Sussess！",
+                                text: "恭喜添加成功！本班本次出勤率为"+chuqinglv+"%",
+                                type: "success",
+                                showCancelButton: true,
+                                cancelButtonClass: 'btn-secondary ',
+                                confirmButtonClass: 'btn-success  ',
+                                confirmButtonText: '确定'
+                            });
 
-                    }else {
-                        alert("sorry!系统出错")
+                        }else if (data==3){
+                            alert("222222222222222222")
+                        }else{
+                            alert("sorry!系统出错")
+                        }
+                    },
+                    error: function () {
+                        alert("系统异常，请稍后重试！");
                     }
-                },
-                error: function () {
-                    alert("系统异常，请稍后重试！");
-                }
-            })
+                })
+
+
         })
 
     }
 
     $(function () {
-        atdclass();
+        selectstuleavebymyclass();
         shengchengkaoqingming();
+        addstuleave();
+        kaoqingdatechange();
+        selectatdleave();
+        atdclass();
+        selectstuinfobyleaveclassid();
+        seletclassname();
         huoquxuesheng();
         seletclassname();
         pingfenhuoqu();

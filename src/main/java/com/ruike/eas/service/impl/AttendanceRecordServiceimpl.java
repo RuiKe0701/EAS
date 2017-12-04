@@ -20,9 +20,10 @@ public class AttendanceRecordServiceimpl implements AttendanceRecordService{
     private StutotalscoreMapper stutotalscoreMapper;
     @Autowired
     private ClassteacherMapper classteacherMapper;
+    @Autowired
+    private LeaveMapper leaveMapper;
 
-
-    public Integer addatdrecord(List<Stuattendance> stuattendances, List<Stutotalscore> stutotalscores, Classattendance classattendance) {
+    public Integer addatdrecord(List<Stuattendance> stuattendances, List<Stutotalscore> stutotalscores, Classattendance classattendance,List<Stuleave> stuleaveList) {
         Integer classatd=classattendanceMapper.insertClassatd(classattendance);
         if(classatd>0){
             Integer cadid=classattendance.getCad_id();
@@ -32,9 +33,18 @@ public class AttendanceRecordServiceimpl implements AttendanceRecordService{
                 stuattendance.setCad_id(cadid);
                 stuattendance.setSad_recorddate(date);
             }
+            Integer bb=0;
+            if(stuleaveList!=null&&stuleaveList.size()>0){
+                for (Stuleave stuleave : stuleaveList) {
+                    stuleave.setStuleave_day(date);
+                }
+                bb=leaveMapper.insertleave(stuleaveList);
+            }else{
+                bb=1;
+            }
             Integer ss=stuattendanceMapper.insertStuatds(stuattendances);
             Integer aa=stutotalscoreMapper.updatestusts(stutotalscores);
-            if(ss>0&&aa>0){
+            if(ss>0&&aa>0&&bb>0){
                 return 1;
             }else{
                 return 0;

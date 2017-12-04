@@ -59,27 +59,7 @@
                 </div>
                 <div class="panel-heading" style="padding-left:0px;padding-right:0px;padding-top: 5px;padding-bottom: 5px;margin-bottom: 5px">
                     <div class="col-md-12" style="border: 1px solid gainsboro;padding-bottom: 5px;">
-
-                        <div style="float: left;margin-right: 10px;margin-top: 10px;border: 3px solid #5cc0de">
-                            <table   style="height:80px;width: 230px;display: table;float: left">
-                                <tr>
-                                    <td rowspan="6" style="width:78px;height: 80px">
-                                        <img src="ss/55.PNG" style="margin-left:3px;width:70px;height: 70px;border-radius:50px;border: solid 3px #5db85d;">
-                                    </td>
-                                </tr>
-                                <tr style="height:9px "><td></td></tr>
-                                <tr style="height:22px "><td>姓名：付雪眼</td></tr>
-                                <tr style="height:22px "><td>请假：未请假</td></tr>
-                                <tr style="height:22px "><td>
-                                    <div><select class="btn-success" style="background-color: #5cc0de;border: 0;border-radius: 3px;color: white;height: 22px;width: 88px">
-                                        <option style="background-color: white;color: #2A2E36">请假</option>
-                                        <option style="background-color: white;color: #2A2E36">迟到</option>
-                                        <option style="background-color: white;color: #2A2E36">旷课</option>
-                                    </select></div>
-                                </td></tr>
-                                <tr style="height:9px "><td></td></tr>
-                            </table>
-                        </div>
+                        <button id="ssssss"> ssss</button>
 
 
                     </div>
@@ -150,6 +130,45 @@
             parent.showstu(1);
         })
     }
+    var str="<div class=\"ldivwai\">\n" +
+        "                <table  class=\"ltable\">\n" +
+        "                    <tr>\n" +
+        "                        <td rowspan=\"6\" style=\"width:78px;height: 80px\">\n" +
+        "                            <img src=\"ss/559.PNG\" style=\"margin-left:3px;margin-right:7px;width:70px;height: 70px;border-radius:50px;border: solid 3px #5db85d;\">\n" +
+        "                        </td>\n" +
+        "                    </tr>\n" +
+        "                    <tr style=\"height:12px \"><td></td></tr>\n" +
+        "                    <tr style=\"height:16px;font-size: 13px\"><td><span style=\"border-bottom: 0.1px solid gainsboro;padding-bottom: 3px\">\n" +
+        "                                    <input type=\"hidden\" value=\"1\" class=\"stuid\">\n" +
+        "                                    <input type=\"hidden\" value=\"80\" class=\"stutotalscore\">\n" +
+        "                                    <span sty>姓名：</span><span>${stu.stu_name}</span></span></td></tr>\n" +
+        "                    <tr style=\"height:16px;font-size: 12px \"><td><span >学号：</span><span>${stu.stu_no}</span></td></tr>\n" +
+        "                    <tr style=\"height:22px;font-size: 13px \"><td>\n" +
+        "                        <div>\n" +
+        "                            <input type=\"hidden\"  value=\"${stu.stu_id}\">\n" +
+        "                            <select class=\"ltselect\">\n" +
+        "                                <option class=\"ltsop\" value=\"1\">升班</option>\n" +
+        "                                <option class=\"ltsop\" value=\"2\">离校</option>\n" +
+        "                            </select>\n" +
+        "                        </div>\n" +
+        "                    </td></tr>\n" +
+        "                    <tr style=\"height:9px \"><td></td></tr>\n" +
+        "                </table>\n" +
+        "            </div>\n"
+    function aaaaaa() {
+        $("#ssssss").click(function () {
+            alert("sss")
+            var a=[1,2,3]
+            var b=1;
+            for (var i=0;i<=a.length;i++){
+                if(b==a[i]){
+                    alert("ssssssssss")
+                }
+            }
+
+        })
+
+        }
 
     function showstudentinfos() {
         $(".showstudentinfos").on("click",function(){
@@ -279,6 +298,7 @@
         })
     }
     $(function () {
+        aaaaaa();
         showstudentinfo();
         selectBystuname();
         $("#an").click();

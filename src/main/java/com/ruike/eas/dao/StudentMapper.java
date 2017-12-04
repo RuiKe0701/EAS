@@ -16,6 +16,8 @@ public interface StudentMapper {
 
     public Integer updateStu(Stu stu);
 
+    //根据班级id查学生
+    public List<Stu> selectStuclassid(Stu stu);
 
     public Integer insertByBatchByStu(List<Stu> stus);
 }

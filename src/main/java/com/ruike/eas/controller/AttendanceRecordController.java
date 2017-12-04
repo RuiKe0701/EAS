@@ -82,8 +82,12 @@ public class AttendanceRecordController {
                     printWriter.write(jsonString);
                     printWriter.flush();
                     printWriter.close();
+                }else {
+                    String jsonString = JSON.toJSONString(0);
+                    printWriter.write(jsonString);
+                    printWriter.flush();
+                    printWriter.close();
                 }
-
         }else if(classsid!=null) {
             classattendance.setClass_id(classsid);
             List<Classattendance> classattendanceList = attendanceRecordService.selectClassttend(classattendance);

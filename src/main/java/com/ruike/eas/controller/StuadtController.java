@@ -1,12 +1,11 @@
 package com.ruike.eas.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.ruike.eas.pojo.*;
-import com.ruike.eas.service.AttendanceRecordService;
-import com.ruike.eas.service.ClassattendanceService;
-import com.ruike.eas.service.ScoringstandardService;
-import com.ruike.eas.service.StutotalscoreService;
+import com.ruike.eas.pojo.Class;
+import com.ruike.eas.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,7 +13,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -27,6 +25,10 @@ public class StuadtController {
     private ClassattendanceService classattendanceService;
     @Resource
     private AttendanceRecordService attendanceRecordService;
+    @Resource
+    private LeaveService leaveService;
+    @Resource
+    private ClassteacherService classteacherService;
     /*进入新增考勤记录页面
      */
     @RequestMapping("/addatd")
@@ -36,17 +38,85 @@ public class StuadtController {
         List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
         int a =0;
         Integer attendancenumber=0;
-        if(classteacherList.size()>0){
+        List<Stuleave> stuleaveList=new ArrayList<Stuleave>();
+        if(classteacherList!=null&&classteacherList.size()>0){
             a=classteacherList.get(0).getClass_id();
+            Stuleave stuleave=new Stuleave();
+            stuleave.setClass_id(a);
+            stuleaveList=leaveService.selectByleave(stuleave);
+
             Classattendance classattendance=new Classattendance();
             Classattendance classattendance1=new Classattendance();
             classattendance1.setClass_id(a);
             classattendance=classattendanceService.selectnewClassatd(classattendance1);
             attendancenumber=classattendance.getCad_number();
+
+        }else{
+            classteacherList=new ArrayList<Classteacher>();
+            Classteacher classteacher1=new Classteacher();
+            classteacher1.setClass_id(-1);
+            classteacher1.setClassname("暂无班级");
+            classteacherList.add(classteacher1);
         }
         request.setAttribute("attendancenumber",attendancenumber);
         request.setAttribute("classteacherList",classteacherList);
+        request.setAttribute("stuleaveList",stuleaveList);
         return "addatd";
+    }
+    /*
+    根据班级id查到需要请假的学生
+     */
+    @RequestMapping("/selectstubyclassid")
+    public void selecstu(Integer classid,PrintWriter printWriter){
+        List<Stu> stus=new ArrayList<Stu>();
+        Stu stu=new Stu();
+        stu.setClass_id(classid);
+        stus=leaveService.selectstubyclassid(stu);
+        String jsonString = JSON.toJSONString(stus);
+        printWriter.write(jsonString);
+        printWriter.flush();
+        printWriter.close();
+
+    }
+    /*
+    根据学生请假条件查询请假学生
+    */
+    @RequestMapping("/selectstuleavebystu")
+    public void selectstuleavebystu(String stuleaves,PrintWriter printWriter){
+        Stuleave stuleave= JSON.parseObject(stuleaves,Stuleave.class);
+        System.out.println(stuleave.getClass_id()+""+stuleave.getClassname());
+        List<Stuleave> stuleaveList=new ArrayList<Stuleave>();
+        if(stuleave.getClassname()!=null&&stuleave.getClassname()!=""){
+            System.out.println(stuleave.getClassname());
+            Classteacher classteacher=new Classteacher();
+            classteacher.setTeacher_id(1);
+            Class cla=new Class();
+            cla.setClass_name(stuleave.getClassname());
+            classteacher.setClasses(cla);
+            List<Classteacher> classteachers = classteacherService.selectClassteacher(classteacher);
+            int wa=0;
+            if(classteachers.size()>0){
+                Stuleave stuleave1=new Stuleave();
+                wa=classteachers.get(0).getClasses().getClass_id();
+                stuleave1.setClass_id(wa);
+                stuleaveList = leaveService.selectByleave(stuleave1);
+                String jsonString = JSON.toJSONString(stuleaveList);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }else {
+                String jsonString = JSON.toJSONString(1);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }
+        }else if(stuleave.getClass_id()!=null){
+            stuleaveList = leaveService.selectByleave(stuleave);
+            String jsonString = JSON.toJSONString(stuleaveList);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }
     }
     @RequestMapping("/addatdgetno")
     public void Getnumber(PrintWriter printWriter,Integer classid){
@@ -88,6 +158,31 @@ public class StuadtController {
     }
 
 
+    @RequestMapping("/getclassleave")
+    public void getclassleave(Integer classid,String kaoqingdate,PrintWriter printWriter){
+        if(classid!=null&&classid>0&&kaoqingdate!=null){     Stuleave stuleave=new Stuleave();
+            stuleave.setClass_id(classid);
+            stuleave.setStuleave_days(kaoqingdate);
+            List<Stuleave> stuleaveList=leaveService.selectByleave(stuleave);
+            if(stuleaveList!=null&&stuleaveList.size()>0){
+                String jsonString = JSON.toJSONString(stuleaveList);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }else{
+                System.out.println("再无请假");
+                String jsonString = JSON.toJSONString(2);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }
+        }else {
+            String jsonString = JSON.toJSONString(0);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }
+    }
     @RequestMapping("/getscorings")
     public void GetScortings(PrintWriter printWriter){
         List<Scoringstandard> scoringstandardList=new ArrayList<Scoringstandard>();
@@ -100,24 +195,25 @@ public class StuadtController {
         printWriter.close();
 }
 @RequestMapping("/doinsetadt")
-public void Doaddatdrecore(String chuqinglv,Integer classids,Integer cadnumber,
+public void Doaddatdrecore(String chuqinglv,Integer classids,Integer cadnumber,String leaveLists,String classatdname,
                            String stuattendancelists,String studentScoreList,String kaoqindate,  PrintWriter printWriter){
     ArrayList<Stuattendance> stuattendancelist =  JSON.parseObject(stuattendancelists, new TypeReference<ArrayList<Stuattendance>>(){});
     ArrayList<Stutotalscore> StutotalscoreList =  JSON.parseObject(studentScoreList, new TypeReference<ArrayList<Stutotalscore>>(){});
+    ArrayList<Stuleave> stuleaveArrayList =  JSON.parseObject(leaveLists, new TypeReference<ArrayList<Stuleave>>(){});
     if(chuqinglv!=null&&classids!=null&& cadnumber!=null){
         Classattendance classattendance=new Classattendance();
         classattendance.setCad_number(cadnumber);
         classattendance.setClass_id(classids);
         classattendance.setCad_rate(chuqinglv);
         classattendance.setCad_dates(kaoqindate);
-        classattendance.setCad_name("哈哈哈哈");
+        classattendance.setCad_name(classatdname);
         if(stuattendancelist!=null&&StutotalscoreList!=null){
-            Integer a=attendanceRecordService.addatdrecord(stuattendancelist,StutotalscoreList,classattendance);
+            Integer a=attendanceRecordService.addatdrecord(stuattendancelist,StutotalscoreList,classattendance,stuleaveArrayList);
             if(a>0){
-                String jsonString = JSON.toJSONString(1);
-                printWriter.write(jsonString);
-                printWriter.flush();
-                printWriter.close();
+                        String jsonString = JSON.toJSONString(1);
+                        printWriter.write(jsonString);
+                        printWriter.flush();
+                        printWriter.close();
             }
         }
     }else {
