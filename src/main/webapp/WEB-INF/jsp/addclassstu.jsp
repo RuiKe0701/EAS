@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -64,9 +65,13 @@
                 <div class="ibox-content">
                     <form id="cteacher" class="form-horizontal" >
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">班级名(即开班日期)</label>
+                            <label class="col-sm-2 control-label">选择班级</label>
                             <div class="input-group col-sm-6 date">
-                                <input type="date" id="class_startday" name="class_startday" class="form-control" value="2014-11-11">
+                                <select name="class_id" class="form-control" >
+                                    <c:forEach items="${requestScope.classes}" var="ct">
+                                        <option value="${ct.class_id}">${ct.class_name}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <%--分隔线--%>
@@ -94,7 +99,6 @@
     </div>
 </div>
 
-
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap.min.js?v=3.3.5"></script>
 <script src="js/content.min.js?v=1.0.0"></script>
@@ -117,11 +121,16 @@
             type : 'POST',
         //  dataType : 'json',
             headers : {"ClientCallMode" : "ajax"}, //添加请求头部
-            success : function(XMLHttpRequest, textStatus, errorThrown){
-                console.log(XMLHttpRequest);
-                console.log(textStatus);
-                console.log(errorThrown);
-                console.log("前端输出上传成功");
+            success : function(data){
+                if (data == -1){
+                    alert("excel数据错误");
+                }else if (data == -2){
+                    alert("添加班级失败");
+                }else if (data == 1){
+                    alert("添加成功");
+                }else if (data == 0){
+                    alert("班级学生添加失败");
+                }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.log(XMLHttpRequest);

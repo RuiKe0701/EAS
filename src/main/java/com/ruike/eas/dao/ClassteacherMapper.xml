@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 AND c.status = #{classes.status}
             </if>
             <if test="classes!=null and classes.class_state != null">
-                AND c.class_status = #{classes.class_state}
+                AND c.class_state = #{classes.class_state}
             </if>
             <if test="classes!=null and classes.class_name != null">
                 AND c.class_name = #{classes.class_name}
@@ -63,12 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           <if test="status != null">
               and ch.status = #{status}
           </if>
-
         </where>
-
     </sql>
-
-
     <select id="selectClassteacher" parameterType="com.ruike.eas.pojo.Classteacher" resultMap="te">
       select * from (<include refid="classte"/>) cla
     </select>
@@ -119,7 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <update id="update" parameterType="com.ruike.eas.pojo.Classteacher">
         UPDATE classteacher
-        <set>
+        <trim prefix="set" suffixOverrides=",">
             <if test="class_id!=null and class_id > 0">
                 class_id = #{class_id},
             </if>
@@ -138,8 +134,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ct_type!=null">
                 ct_type = #{ct_type},
             </if>
-        </set>
-        WHERE ct_id = #{ct_id}
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </trim>
+        <where>
+            <if test="ct_id != null and ct_id > 0">
+                ct_id = #{ct_id}
+            </if>
+            <if test="ct_stopday != null">
+               AND class_id = #{class_id} AND ct_stopday is NULL
+            </if>
+        </where>
     </update>
 
     <resultMap id="csth" type="com.ruike.eas.pojo.Classteacher">

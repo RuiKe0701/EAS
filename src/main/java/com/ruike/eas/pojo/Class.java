@@ -1,10 +1,13 @@
 package com.ruike.eas.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Class {
   private Integer class_id;
   private String class_name;
+  @DateTimeFormat(pattern="yyyy-MM-dd")
   private Date class_startday;
   private Date class_stopday;
   private Integer grade_id;

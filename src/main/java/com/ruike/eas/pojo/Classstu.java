@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Classstu implements Serializable{
     private Integer sc_id;
     private Integer stu_id;
-
+    private Integer class_id;
     public Integer getSc_id() {
         return sc_id;
     }
@@ -30,5 +30,5 @@ public class Classstu implements Serializable{
         this.class_id = class_id;
     }
 
-    private Integer class_id;
+
 }

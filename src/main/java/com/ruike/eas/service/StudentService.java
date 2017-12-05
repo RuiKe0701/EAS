@@ -47,9 +47,16 @@ public interface StudentService {
     public List<Stu> selectStuByClass(Stu stu);
 
     /**
-     * 批量添加学生
+     * 批量添加学生并分配给班级
      * @param stus 学生集合
      * @return 插入的带id的学生集合
      */
-    public List<Stu> addAllStudnet(List<Stu> stus);
+    public Integer addAllStudnet(List<Stu> stus);
+
+    /**
+     * 添加一名学生档案并分配班级
+     * @param stu 学生对象
+     * @return 受影响行数
+     */
+    public Integer addStuAndClass(Stu stu);
 }

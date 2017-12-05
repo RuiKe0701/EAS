@@ -222,7 +222,9 @@
             data:{'classname':classname,'status':status},
             datatype:"json",
             success: function (data) {
+                var aaa=eval(data);
                 $("#tables").html("");
+                $("#pageclassid").val(aaa[0].class_id)
                 var strs="<table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\"\n" +
                     "                           style=\"border-top: solid 1px gainsboro;margin-top: 5px\">\n" +
                     "                        <thead>\n" +
@@ -238,7 +240,7 @@
                     "                        </tr>\n" +
                     "                        </thead>\n" +
                     "                        <tbody id=\"showstu\">";
-                var aaa=eval(data);
+
                 if (aaa != 0) {
                     $.each(aaa, function (i, item) {
                         var typename = "";

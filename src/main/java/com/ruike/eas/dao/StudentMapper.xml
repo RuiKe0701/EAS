@@ -86,7 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="stu_sex != null">
 				stu_sex,
 			</if>
-			<if test="stu_birthday != null and stu_birthday != ''">
+			<if test="stu_birthday != null">
 				stu_birthday,
 			</if>
 			<if test="stu_phone != null and stu_phone != ''">
@@ -95,7 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="stu_address != null and stu_address != ''">
 				stu_address,
 			</if>
-			<if test="stu_startday != null and stu_startday != ''">
+			<if test="stu_startday != null">
 				stu_startday,
 			</if>
 			<if test="stu_parentphone != null and stu_parentphone != ''">
@@ -116,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="status != null">
 				status,
 			</if>
-			<if test="crateday != null and crateday != ''">
+			<if test="crateday != null">
 				crateday,
 			</if>
 			<if test="class_id != null and class_id != ''">
@@ -125,7 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 	</sql>
 
-	<insert id="insertStu" parameterType="com.ruike.eas.pojo.Stu">
+	<insert id="insertStu" useGeneratedKeys="true" keyProperty="stu_id" parameterType="com.ruike.eas.pojo.Stu">
 		INSERT INTO stu (<include refid="stukey"/>) VALUES (
 		<trim suffixOverrides=",">
 			<if test="stu_name != null and stu_name != ''">
@@ -137,7 +137,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="stu_sex != null">
 				#{stu_sex},
 			</if>
-			<if test="stu_birthday != null and stu_birthday != ''">
+			<if test="stu_birthday != null">
 				#{stu_birthday},
 			</if>
 			<if test="stu_phone != null and stu_phone != ''">
@@ -146,7 +146,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="stu_address != null and stu_address != ''">
 				#{stu_address},
 			</if>
-			<if test="stu_startday != null and stu_startday != ''">
+			<if test="stu_startday != null">
 				#{stu_startday},
 			</if>
 			<if test="stu_parentphone != null and stu_parentphone != ''">
@@ -179,7 +179,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="updateStu" parameterType="com.ruike.eas.pojo.Stu">
 		update stu
-		<set>
+		<trim prefix="set" suffixOverrides=",">
 			<if test="stu_name != null and stu_name != ''">
 				stu_name = #{stu_name},
 			</if>
@@ -225,7 +225,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="class_id != null and class_id > 0">
 				class_id = #{class_id},
 			</if>
-		</set>
+		</trim>
 		WHERE stu_id = #{stu_id}
 	</update>
 

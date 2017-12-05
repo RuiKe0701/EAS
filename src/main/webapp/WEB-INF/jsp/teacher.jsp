@@ -100,6 +100,10 @@
                         <li><a class="J_menuItem" href="/showclasst" id="sss">班级老师管理</a></li>
                         <li><a class="J_menuItem" href="/ddd" >评分管理</a></li>
                         </li>
+                        <li><a class="J_menuItem" href="/jumpupgraded" >学生升班</a></li>
+                        </li>
+                        <li><a class="J_menuItem" href="/tiaoaddclass" >添加班级</a></li>
+                        </li>
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
                             <span class="label label-danger pull-right">推荐</span></a>
                         </li>

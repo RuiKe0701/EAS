@@ -81,7 +81,7 @@
                             </div>
                             <label class="col-sm-2 control-label">出生日期</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control "  readonly="readonly" value="${stu.stu_birthday}">
+                                <input type="text" class="form-control "  readonly="readonly" value="${stu.stu_birthdays}">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -92,7 +92,7 @@
                             </div>
                             <label class="col-sm-2 control-label">入学日期</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control "  readonly="readonly" value="${stu.stu_startday}">
+                                <input type="text" class="form-control "  readonly="readonly" value="${stu.stu_startdays}">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>

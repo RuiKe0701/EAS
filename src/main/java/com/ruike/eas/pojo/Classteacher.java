@@ -1,5 +1,7 @@
 package com.ruike.eas.pojo;
-import java.text.SimpleDateFormat;
+import com.ruike.eas.util.DateUtil;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Classteacher {
@@ -8,10 +10,11 @@ public class Classteacher {
   private Integer teacher_id;
   private Integer status;
   private String remarks;
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private Date ct_startday;
   private Date ct_stopday;
   private Integer ct_type;
-private String classname;
+  private String classname;
 
   public String getClassname() {
     return classname;
@@ -106,14 +109,12 @@ private String classname;
   }
 
   public String getCt_startdays(){
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    String format = sdf.format(this.getCt_startday());
+    String format = DateUtil.dateFormat(this.getCt_startday(),"yyyy-MM-dd");
     return format;
   }
   public String getCt_stopdays(){
     if (this.getCt_stopday()!= null){
-      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-      return sdf.format(this.getCt_stopday());
+      return DateUtil.dateFormat(this.getCt_stopday(),"yyyy-MM-dd");
     }
     return null;
   }

@@ -1,13 +1,12 @@
 package com.ruike.eas.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ruike.eas.pojo.*;
 import com.ruike.eas.pojo.Class;
-import com.ruike.eas.pojo.Classteacher;
-import com.ruike.eas.pojo.Teacher;
 import com.ruike.eas.service.ClassteacherService;
+import com.ruike.eas.util.DateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.ruike.eas.pojo.Stu;
 import com.ruike.eas.service.StudentService;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -42,9 +42,11 @@ public class StudentController {
         stus=studentService.defaultStudent();
         List<Classteacher> classteacherArrayList=new ArrayList<Classteacher>();
         Classteacher classteachers=new Classteacher();
+        //放入老师id 暂时没有登陆所以用1#########################################################
+        classteachers.setStatus(0);
         classteachers.setTeacher_id(1);
         //获取老师正在管理的班级
-         classteacherArrayList=classteacherService.selectClassteacher(classteachers);
+        classteacherArrayList=classteacherService.selectClassteacher(classteachers);
         request.setAttribute("ct",classteacherArrayList);
         request.setAttribute("stulist",stus);
         return "thstudentinfo";
@@ -105,9 +107,6 @@ public class StudentController {
                 printWriter.flush();
                 printWriter.close();
             }
-
-
-
         }else if(stuname!=null&&stuname!=""){
             Stu stu1=new Stu();
             System.out.println("sss"+stuname);
@@ -124,13 +123,62 @@ public class StudentController {
                     printWriter.write(jsonString);
                     printWriter.flush();
                     printWriter.close();
-                }
+            }
         }
-
     }
 
     @RequestMapping("/ddd")
     public String dianming(){
         return  "aa";
+    }
+
+    @RequestMapping("/addstuinfo")
+    @ResponseBody
+    public void addStudentInfo(PrintWriter printWriter,Stu stu,String stu_birthdays,String stu_startdays){
+        //因前台date问题所以单独接收日期转换并放入对应属性
+        stu.setStu_birthday(DateUtil.dateFormat(stu_birthdays,"yyyy-MM-dd"));
+        stu.setStu_startday(DateUtil.dateFormat(stu_startdays,"yyyy-MM-dd"));
+        stu.setStatus(0);
+        stu.setStu_state(0);
+        stu.setCrateday(new Date());
+        //执行单独添加一名学生到档案并分配到对应班级
+        Integer count = studentService.addStuAndClass(stu);
+        printWriter.print(count);
+        printWriter.flush();
+        printWriter.close();
+    }
+
+    @RequestMapping("/showclassstuinfo")
+    @ResponseBody
+    public void showClassStuInfo(String classid ,PrintWriter printWriter){
+        if(classid!=null && !classid.equals("")){
+            Classteacher classteacher=new Classteacher();
+            //#############################登陆的老师id
+            classteacher.setTeacher_id(1);
+            classteacher.setStatus(0);
+            classteacher.setClass_id(Integer.parseInt(classid));
+            Class cla=new Class();
+            cla.setClass_state(0);
+            classteacher.setClasses(cla);
+            List<Classteacher> classteachers = classteacherService.selectClassteacher(classteacher);
+            if(classteachers!=null && classteachers.size()>=1) {
+                Integer wa = classteachers.get(0).getClasses().getClass_id();
+                System.out.println(wa);
+                Stu stu = new Stu();
+                Class s = new Class();
+                s.setClass_id(wa);
+                stu.setClasses(s);
+                List<Stu> stus = studentService.selectStuByClass(stu);
+                if (stus != null) {
+                    String jsonString = JSON.toJSONString(stus);
+                    printWriter.write(jsonString);
+                } else {
+                    String jsonString = JSON.toJSONString(0);
+                    printWriter.write(jsonString);
+                }
+                printWriter.flush();
+                printWriter.close();
+            }
+        }
     }
 }

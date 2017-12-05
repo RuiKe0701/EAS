@@ -99,6 +99,14 @@
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">开始时间</label>
+                            <div class="col-sm-6">
+                                <input style="height: 34px" type="date" name="ct_startday">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">填写备注</label>
                             <div class="col-sm-6">
