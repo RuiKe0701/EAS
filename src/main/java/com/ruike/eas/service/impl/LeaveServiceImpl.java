@@ -28,4 +28,10 @@ public class LeaveServiceImpl implements LeaveService {
     public List<Stu> selectstubyclassid(Stu stu) {
         return studentMapper.selectStuclassid(stu);
     }
+
+    public Integer updateleave(Stuleave stuleave) {
+        return leaveMapper.updateleave(stuleave);
+    }
+
+
 }

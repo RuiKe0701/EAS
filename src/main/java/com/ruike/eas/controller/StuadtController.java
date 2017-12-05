@@ -64,6 +64,35 @@ public class StuadtController {
         return "addatd";
     }
     /*
+    学生请假信息更改
+     */
+    @RequestMapping("/updateleave")
+    public void updateleave(PrintWriter printWriter,Integer stuleaveid,String leaveremark){
+        if(stuleaveid!=null&&leaveremark!=null){
+            Stuleave stuleave=new Stuleave();
+            stuleave.setStuleave_id(stuleaveid);
+            stuleave.setStuleave_remarks(leaveremark);
+            stuleave.setStuleave_state(0);
+            Integer aa=leaveService.updateleave(stuleave);
+            if(aa>0){
+                String jsonString = JSON.toJSONString(1);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }else {
+                String jsonString = JSON.toJSONString(0);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }
+        }else {
+            String jsonString = JSON.toJSONString(0);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }
+    }
+    /*
     根据班级id查到需要请假的学生
      */
     @RequestMapping("/selectstubyclassid")
@@ -183,6 +212,60 @@ public class StuadtController {
             printWriter.close();
         }
     }
+    /*
+    根据请假id 查询请假学生信息
+     */
+    @RequestMapping("/selectstubystuleaveid")
+    public void Selectstuleave(Integer stuleaveid,PrintWriter printWriter){
+        if(stuleaveid!=null){
+            Stuleave stuleave=new Stuleave();
+            stuleave.setStuleave_id(stuleaveid);
+            List<Stuleave> stuleaveList=leaveService.selectByleave(stuleave);
+            if(stuleaveList!=null&&stuleaveList.size()>0){
+                Stuleave stuleave1=stuleaveList.get(0);
+                String jsonString = JSON.toJSONString(stuleave1);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }else {
+                String jsonString = JSON.toJSONString(1);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }
+        }else {
+            String jsonString = JSON.toJSONString(0);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }
+    }
+    /*
+    进行学生的请假添加
+     */
+    @RequestMapping("/insertstuleave")
+    public void Insertstuleave(PrintWriter printWriter ,String stuleaves) {
+        Stuleave stuleave= JSON.parseObject(stuleaves,Stuleave.class);
+        List<Stuleave> stuleaveList=new ArrayList<Stuleave>();
+        stuleaveList.add(stuleave);
+        Integer a=leaveService.insertleave(stuleaveList);
+        if (a>0){
+            String jsonString = JSON.toJSONString(1);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+
+        }else {
+            String jsonString = JSON.toJSONString(0);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+
+        }
+    }
+    /*
+    获取学生成绩信息
+     */
     @RequestMapping("/getscorings")
     public void GetScortings(PrintWriter printWriter){
         List<Scoringstandard> scoringstandardList=new ArrayList<Scoringstandard>();
@@ -194,6 +277,9 @@ public class StuadtController {
         printWriter.flush();
         printWriter.close();
 }
+/*
+进行学院全部新增
+ */
 @RequestMapping("/doinsetadt")
 public void Doaddatdrecore(String chuqinglv,Integer classids,Integer cadnumber,String leaveLists,String classatdname,
                            String stuattendancelists,String studentScoreList,String kaoqindate,  PrintWriter printWriter){

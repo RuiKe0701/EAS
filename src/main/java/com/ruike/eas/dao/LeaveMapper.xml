@@ -24,11 +24,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="class_id!=null and class_id>0">
              and sl.class_id=#{class_id}
             </if>
+            <if test="stuleave_id!=null">
+            and sl.stuleave_id=#{stuleave_id}
+            </if>
         </where>
-
+        ORDER BY stuleave_day DESC
 
     </select>
 
 
+    <update id="updateleave">
+        update stuleave set stuleave_state=#{stuleave_state},stuleave_remarks=#{stuleave_remarks} where stuleave_id =#{stuleave_id}
+    </update>
 
 </mapper>

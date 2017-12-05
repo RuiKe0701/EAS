@@ -52,8 +52,6 @@
 
 <body class="gray-bg" >
 
-
-
 <!--main content start-->
 <section style="width: 96.8%;margin-left: 1.6%;margin-top: 1.6%">
 
@@ -138,9 +136,61 @@
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
 
                     <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
-                        <button class="btn-xs btn btn-primary" data-toggle="modal" data-target="#myModal2" id="addstuleave">新增请假</button>
+                        <button class="btn-xs btn btn-primary"  id="addstuleave">新增请假</button>
+                        <button type="" style="display: none" id="addstuleave2" data-toggle="modal" data-target="#myModal2"></button>
+
                     </div>
 
+                    <div class="modal inmodal" id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" style="border-radius: 5px">
+                            <div class="modal-content animated flipInY" style="border-radius: 5px">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">修改请假信息</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="row">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-md-3" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 5px"><i class="fa fa-tag" style="color: #ed5666"></i> 学 员 班 级 ：</div>
+                                        <div class="col-md-5" style="padding-left: 15px">    <input type="" style="height: 26px;border-radius:5px;padding-left:10px;background-color: lightgrey;border: 0px" readonly="readonly" id="leaveclassname" value="20170701">
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top: 10px">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-md-3" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 8px"><i class="fa fa-tag" style="color: #24c6c8"></i> 请 假 学 员 ：</div>
+                                        <div class="col-md-3" style="padding-top: 5px;padding-left: 15px" >
+                                            <input type="" readonly="readonly" value="郑庆坤" style="height: 26px;border-radius:5px;padding-left:10px;background-color: lightgrey;border: 0px" id="leavestuname">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row" style="padding-top: 15px">
+                                        <div class="col-lg-3"></div>
+                                        <div class="col-md-3" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 2px"><i class="fa fa-tag" style="color: #5cc0de"></i> 考 勤 日 期 ：</div>
+                                        <div class="col-md-4" style="padding-left: 15px">
+                                            <input  readonly="readonly" id="leavedays"  type="date" style="border-radius:5px;background-color: lightgrey;border: 0px;width:100%;height: 26px;font-size: 12px;padding-left: 8px" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-md-3" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 10px"><i class="fa fa-tag" style="color: #f8ac5a"></i> 备注 / 原因：</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3"></div>
+                                        <div class="col-md-6" style="padding-top: 2px;padding-left: 15px">
+                                            <textarea style="height: 60px" id="leaveremark"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" >
+                                    <button type="button" class="btn btn-white" data-dismiss="modal" id="guanupdate">关闭</button>
+                                    <input value="" type="hidden" id="leaveupdateid">
+                                    <button type="button" id="updateleave" class="btn btn-primary">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" style="border-radius: 5px">
                             <div class="modal-content animated flipInY" style="border-radius: 5px">
@@ -148,6 +198,7 @@
                                     <h4 class="modal-title">学员请假记录</h4>
                                 </div>
                                 <div class="modal-body">
+                                    <div>
                                     <div class="row">
                                         <div class="col-sm-3"></div>
                                         <div class="col-md-3" style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 5px"><i class="fa fa-tag" style="color: #ed5666"></i> 请选择班级：</div>
@@ -224,13 +275,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-                                    <button type="button" class="btn btn-primary">保存s</button>
+                                </div>
+                                <div class="modal-footer" id="dibu">
+                                    <button type="button" class="btn btn-white" data-dismiss="modal" id="guanadd">关闭</button>
+                                    <input value="" type="hidden" id="leaveleaveid">
+                                    <button type="button" id="baochustuleave" class="btn btn-primary">保存</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
                         <select style="background-color: #7c86cb;height: 26px;color: white;border-radius: 5px" id="myclass">
                             <c:forEach items="${classteacherList}" var="ct">
@@ -272,7 +326,6 @@
                             </div>
                             <div class="modal-body" style="padding:16px;padding-top: 0px;padding-bottom: 0px" id="modalbody">
                                 <div class="row">
-
                                     <div class="panel-body " id="tables" style="background-color: white">
                                         <div >
                                             <table id="datatables" class="table table-striped dt-responsive nowrap" style="border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro">
@@ -362,14 +415,20 @@
 
                             <c:forEach items="${stuleaveList}" var="sl">
                                 <tr class="gradeX">
-                                    <td >${sl.classname}</td>
-                                    <td>${sl.stuname}</td>
+                                    <td class="leaveclassnamexian">${sl.classname}</td>
+                                    <td class="leavestunamexian">${sl.stuname}</td>
+                                    <c:if test="${sl.stuleave_state==1}">
+                                        <td class="leaveremarksxian"><span>${sl.stuleave_remarks}</span>&nbsp;<span class="label label-warning">默认</span></td>
+                                    </c:if>
+                                    <c:if test="${sl.stuleave_state==0}">
+                                        <td class="leaveremarksxian">${sl.stuleave_remarks}&nbsp;</td>
+                                    </c:if>
 
-                                    <td>${sl.stuleave_remarks}&nbsp;<span class="label label-warning">默认</span></td>
-                                    <td>${sl.stuleave_days}</td>
+                                    <td claas="leavedayxian">${sl.stuleave_days}</td>
                                     <td class="center">
-                                        <input value="${sl.stuleave_id}" type="hidden" class="cadid">
-                                        <button class="xiangqing btn-success btn btn-xs"  type="button" style="padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white" onclick=""  data-toggle="modal" data-target="#myModal">查看</button></td>
+                                        <input value="${sl.stuleave_id}" type="hidden" class="leaveidxian">
+                                        <button class="btn-success btn btn-xs xiugai"   type="button" style="padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white" >修改</button>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -381,7 +440,7 @@
             </div>
         </div>
     </div><!--end row-->
-
+    <button type="" data-toggle="modal" data-target="#myModal3" id="xiugaixian" style="display: none"></button>
     <!--end page content-->
 
 
@@ -416,16 +475,134 @@
 
     $(document).ready(function () {
         $('#datatable').dataTable();
-
         $('#datatables').dataTable();
     });
 
 </script>
 <script type="text/javascript">
-    //根据班级id获取该班级学员信息
-    function xinzengkao() {
-        $("#")
+    //保存修改请假信息
+    function xiugaibaocun() {
+        $("#updateleave").click(function () {
+            var leaveremark=$("#leaveremark").val();
+            var leaveupdateid=$("#leaveupdateid").val();
+            if(leaveremark==""){
+                $("#guanupdate").click();
+                swal({
+                    title: "",
+                    text: "备注/原因不能为空！请填写完整！",
+                    type: "info",
+                    showCancelButton: false,
+                    cancelButtonClass: 'btn-secondary ',
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "填写",
+                    cancelButtonText: "No, cancel plx!",
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $("#xiugaixian").click();
+                    }
+                });
+            }else {
+                $.ajax({
+                    type: "post",
+                    url: "/updateleave",
+                    data:{"stuleaveid":leaveupdateid,
+                            "leaveremark":leaveremark},
+                    dataType: "json",
+                    success: function (data) {
+                        if(data==1){
+                            $("#guanupdate").click();
+                            swal({
+                                title: "Success",
+                                text: "恭喜！修改成功！请刷新后查看！",
+                                type: "success",
+                                showCancelButton: false,
+                                cancelButtonClass: 'btn-secondary ',
+                                confirmButtonClass: 'btn-success  ',
+                                confirmButtonText: '确定!'
+                            });
+
+                        }else if(data==0){
+                            $("#guanupdate").click();
+                            swal({
+                                title: "Sorry!",
+                                text: "SORRY!系统延迟！请稍后再试！",
+                                type: "error",
+                                showCancelButton:false,
+                                cancelButtonClass: 'btn-secondary',
+                                confirmButtonClass: 'btn-danger',
+                                confirmButtonText: '确定!'
+                            });
+                        }
+                    }, error: function () {
+                        alert("系统异常，请稍后重试！");
+                    }
+                })
+            }
+        })
     }
+    function  baocunstuleave() {
+        $("#baochustuleave").click(function () {
+            if($("#yuanyin").val()==""){
+                $("#guanadd").click();
+                swal({
+                    title: "",
+                    text: "备注/原因不能为空！请填写完整！",
+                    type: "info",
+                    showCancelButton: false,
+                    cancelButtonClass: 'btn-secondary ',
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "填写",
+                    cancelButtonText: "No, cancel plx!",
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $("#addstuleave2").click();
+                    }
+                });
+            }else {
+                var stuleave=new Object();
+                stuleave.class_id=$("#leaveclass").val();
+                stuleave.stu_id=$("#leavestu").val();
+                stuleave.stuleave_day=$("#leavedate").val();
+                stuleave.stuleave_remarks=$("#yuanyin").val();
+                stuleave.stuleave_state=0;
+                var stuleaves=JSON.stringify(stuleave)
+                $.ajax({
+                    type: "post",
+                    url: "/insertstuleave",
+                    data:{"stuleaves":stuleaves},
+                    dataType: "json",
+                    success: function (data) {
+                            if(data==1){
+                                $("#guanadd").click();
+                                swal({
+                                    title: "Success",
+                                    text: "恭喜！修改成功！请刷新后查看！",
+                                    type: "success",
+                                    showCancelButton: false,
+                                    cancelButtonClass: 'btn-secondary ',
+                                    confirmButtonClass: 'btn-success  ',
+                                    confirmButtonText: '确定!'
+                                });
+                            }else if(data==0){
+                                $("#guanadd").click();
+                                swal({
+                                    title: "Sorry!",
+                                    text: "SORRY!系统延迟！请稍后再试！",
+                                    type: "error",
+                                    showCancelButton:false,
+                                    cancelButtonClass: 'btn-secondary',
+                                    confirmButtonClass: 'btn-danger',
+                                    confirmButtonText: '确定!'
+                                });
+                            }
+                    }, error: function () {
+                    alert("系统异常，请稍后重试！");
+                }
+            })
+            }
+        })
+    }
+    //根据班级id获取该班级学员信息
     function selectstuinfobyleaveclassid() {
         $("#leaveclass").change(function () {
             var classid=$("#leaveclass").val();
@@ -435,6 +612,7 @@
 //获取请假学员
     function addstuleave() {
         $("#addstuleave").click(function () {
+            $("#addstuleave2").click();
             var classid=$("#leaveclass").val();
             huoquxueyuan(classid);
         })
@@ -515,9 +693,9 @@
                             "                                    <td>" + item.stuleave_remarks + "&nbsp;" + c + "</td>\n" +
                             "                                    <td>" + item.stuleave_days + "</td>\n" +
                             "                                    <td class=\"center\">\n" +
-                            "                                        <input value=" + item.stuleave_id + " type=\"hidden\" class=\"cadid\">\n" +
-                            "                                        <button class=\"xiangqing btn-success btn btn-xs\"  type=\"button\" style=\"padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white\" onclick=\"\"  data-toggle=\"modal\" data-target=\"#myModal\">查看</button></td>\n" +
-                            "                                </tr>\n" +
+                            "                                        <input value=" + item.stuleave_id + " type=\"hidden\" class=\"leaveidxian\">\n" +
+                            "                    <button class=\"btn-success btn btn-xs xiugai\"   type=\"button\" style=\"padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white\" >修改</button>\n" +
+                            "                 </tr>\n" +
                             "  "
                     })
                     str += "  </tbody></table>"
@@ -536,7 +714,6 @@
             selectatdleave();
         })
     }
-
     var stuleave=new Array();
     var stuleaveinfo="";
     //查询考勤请假学院
@@ -686,122 +863,6 @@
 
         })
     }
-    function  xiangqing(xiangqing) {
-
-        var cadid=xiangqing;
-
-
-        $("#modalbody").html("");
-
-        $.ajax({
-            type: "post",
-            url: "/dostuattendancerecord",
-            data:{"cadid":cadid},
-            dataType: "json",
-            success: function (data) {
-                var str="<div class=\"row\">\n" +
-                    "                                    <div class=\"panel-body \" id=\"tables\" style=\"background-color: white\">\n" +
-                    "                                        <div >\n" +
-                    "                                            <table id=\"datatables\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
-                    "                                                <thead>\n" +
-                    "                                                <tr>\n" +
-                    "                                                    <th>姓名</th>\n" +
-                    "                                                    <th>出勤</th>\n" +
-                    "                                                    <th>评分</th>\n" +
-                    "                                                </tr>\n" +
-                    "                                                </thead>\n" +
-                    "                                                <tbody>\n"
-                $.each(data, function (i, item) {
-                    str+="<tr>"
-                    var caozuo="";
-                    if(item.caozuo==1){
-                        caozuo="+"+item.fen;
-                    }else if(item.caozuo==0){
-                        caozuo="-"+item.fen;
-                    }
-                    str+="<td>"+item.stuname+"</td>"
-                    if(item.ss_id==1){
-                        str+="  <td><span class=\"label label-info\">"+item.ssname+"</span></td>"
-                    }else if(item.ss_id==2){
-
-                        str+="  <td><span class=\"label label-success\">"+item.ssname+"</span></td>"
-                    }else if(item.ss_id==3){
-                        str+=" <td><span class=\"label label-primary\">"+item.ssname+"</span></td>"
-                    }else if(item.ss_id==4){
-                        str+=" <td><span class=\"label label-warning\">"+item.ssname+"</span></td>"
-                    }
-                    str+="<td>"+caozuo+"</td>";
-                    str+="</tr>"
-                })
-                str+="               </tbody>\n" +
-                    "                                            </table>\n" +
-                    "                                        </div>\n" +
-                    "                                    </div>\n" +
-                    "                                </div>"
-                $("#modalbody").append(str);
-                $('#datatables').dataTable();
-            },
-            error: function () {
-                alert("系统异常，请稍后重试！");
-            }
-        })
-
-
-    }
-
-
-    function selectclassatd(classid,startday,stopday,classname) {
-
-        $.ajax({
-            type: "post",
-            url: "/doselectclassatdss",
-            data:{"classsid":classid,"startday":startday,"stopday":stopday,"classname":classname},
-            dataType: "json",
-            success: function (data) {
-                $("#classatd").html("");
-                var str=" <table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
-                    "                            <thead>\n" +
-                    "                            <tr>\n" +
-                    "                                <th>班级名</th>\n" +
-                    "                                <th>日期</th>\n" +
-                    "                                <th>出勤统计名</th>\n" +
-                    "                                <th>次数</th>\n" +
-                    "                                <th>出勤率</th>\n" +
-                    "                                <th>操作</th>\n" +
-                    "                            </tr>\n" +
-                    "                            </thead>\n" +
-                    "                            <tbody id=\"showstu\">\n"
-                $.each(data, function (i, item) {
-
-                    str+="   <tr>   <td>"+item.classname+"</td>\n" +
-                        "                                    <td>"+item.cad_date+"</td>\n" +
-                        "                                    <td>"+item.cad_name+"</td>\n" +
-                        "                                    <td>"+item.cad_number+"</td>"
-                    if(item.cad_rate>=80){
-                        str+="  <td><span class=\"label label-info\">"+item.cad_rate+"</span></td>"
-                    }else if((item.cad_rate>=60)){
-                        str+="  <td><span class=\"label label-success\">"+item.cad_rate+"</span></td>"
-                    }else if((item.cad_rate<=60)){
-                        str+="  <td><span class=\"label label-warning\">"+item.cad_rate+"</span></td>"
-                    }
-                    str+=" <td class=\"center\">\n" +
-                        "                                        <input value=\""+item.cad_id+"\" type=\"hidden\" class=\"cadid\">\n" +
-                        "                                        <button class=\"xiangqing btn-success btn btn-xs\"  type=\"button\" style=\"padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white\" onclick=\"xiangqing("+item.cad_id+")\"  data-toggle=\"modal\" data-target=\"#myModal\">查看</button></td>\n" +
-                        "                                </tr>";
-
-                })
-                str+=" </tbody> </table>"
-
-
-                $("#classatd").append(str);
-                $('#datatable').dataTable();
-            },
-            error: function () {
-                alert("系统异常，请稍后重试！");
-            }
-        })
-        var sss=""
-    }
     function changeForm() {
         $("body").on("change", ".ltselect", function () {
             valss=$(this).val()
@@ -817,9 +878,6 @@
                 $(this).css({"background-color":"#ed5666"});
             }
         })
-    }
-    function  tianjiaqingjia() {
-
     }
     //生成考勤名当前日期等初始辅助工具
     function shengchengkaoqingming() {
@@ -973,13 +1031,85 @@
                         alert("系统异常，请稍后重试！");
                     }
                 })
-
-
         })
 
     }
+    function xiugaixianshi() {
+        $("body").on("click",".xiugai",function(){
 
+            var leaveid=$(this).parent().find(".leaveidxian").val();
+
+            $.ajax({
+                type: "post",
+                url: "/selectstubystuleaveid",
+                data:{"stuleaveid":leaveid},
+                dataType: "json",
+                success: function (data) {
+                    if(data==0||data==1){
+                        swal({
+                            title: "Sorry!",
+                            text: "SORRY!系统延迟或访问的人过多轻稍后再试！",
+                            type: "error",
+                            showCancelButton: false,
+                            cancelButtonClass: 'btn-secondary',
+                            confirmButtonClass: 'btn-danger',
+                            confirmButtonText: '确定!'
+                        });
+                    }else {
+                        $("#leaveremark").val(data.stuleave_remarks);
+                        $("#leaveclassname").val(data.classname);
+                        $("#leavestuname").val(data.stuname);
+                        $("#leaveupdateid").val(data.stuleave_id);
+                        $("#leavedays").val(data.stuleave_days);
+                        $("#xiugaixian").click();
+                    }
+                }, error: function () {
+                    alert("系统异常，请稍后重试！");
+                }
+            })
+        })
+    }
+    function xiugai() {
+        $(".xiugai").click(function () {
+            var leaveid=$(this).parent().find(".leaveidxian").val();
+
+            $.ajax({
+                type: "post",
+                url: "/selectstubystuleaveid",
+                data:{"stuleaveid":leaveid},
+                dataType: "json",
+                success: function (data) {
+                    if(data==0||data==1){
+                        swal({
+                            title: "Sorry!",
+                            text: "SORRY!系统延迟或访问的人过多轻稍后再试！",
+                            type: "error",
+                            showCancelButton: false,
+                            cancelButtonClass: 'btn-secondary',
+                            confirmButtonClass: 'btn-danger',
+                            confirmButtonText: '确定!'
+                        });
+                    }else {
+                        $("#leaveremark").val(data.stuleave_remarks);
+                        $("#leaveclassname").val(data.classname);
+                        $("#leavestuname").val(data.stuname);
+                        $("#leaveupdateid").val(data.stuleave_id);
+                        $("#leavedays").val(data.stuleave_days);
+                        $("#xiugaixian").click();
+                    }
+                }, error: function () {
+                    alert("系统异常，请稍后重试！");
+                }
+            })
+
+
+        })
+    }
     $(function () {
+        xiugaixianshi();
+        xiugaibaocun();
+        baocunstuleave();
+
         selectstuleavebymyclass();
         shengchengkaoqingming();
         addstuleave();
@@ -994,10 +1124,7 @@
         changeForm()
         tijaos()
         showstudentinfos();
-        $("body").on("click",".showstudentinfos",function(){
-            alert("sds")
-            parent.showstu(1);
-        })
+
     })
 
 </script>

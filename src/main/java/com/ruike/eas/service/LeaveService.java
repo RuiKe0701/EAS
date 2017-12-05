@@ -10,4 +10,6 @@ public interface LeaveService {
 
     public List<Stuleave> selectByleave(Stuleave stuleave);
     public List<Stu> selectstubyclassid(Stu stu);
+
+    public Integer updateleave(Stuleave stuleave);
 }
