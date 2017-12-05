@@ -16,4 +16,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO class(class_name,class_startday,grade_id,status,class_state) VALUES
         (#{class_name},#{class_startday},#{grade_id},#{status},#{class_state})
     </insert>
+
+
+    <update id="updateClass" parameterType="com.ruike.eas.pojo.Class">
+        UPDATE class
+        <trim prefix="set" suffixOverrides=",">
+            <if test="class_name != null and class_name != ''">
+                class_name = #{class_name},
+            </if>
+            <if test="class_startday != null">
+                class_startday = #{class_startday},
+            </if>
+            <if test="class_stopday != null">
+                class_stopday = #{class_stopday},
+            </if>
+            <if test="grade_id != null and grade_id > 0">
+                grade_id = #{grade_id},
+            </if>
+            <if test="class_state != null ">
+                class_state = #{class_state},
+            </if>
+            <if test="status != null ">
+                status = #{status},
+            </if>
+        </trim>
+        <where>
+            class_id = #{class_id}
+        </where>
+    </update>
 </mapper>

@@ -4,4 +4,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.ClassstuMapper">
 
+    <insert id="insertAllClassStu"  parameterType="java.util.List" >
+        INSERT INTO  classstu (stu_id,class_id) VALUES
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.stu_id},#{item.class_id})
+        </foreach>
+    </insert>
+    <insert id="insertClassStu" parameterType="com.ruike.eas.pojo.Classstu">
+        INSERT INTO  classstu (stu_id,class_id)
+        VALUES(#{stu_id},#{class_id})
+    </insert>
 </mapper>

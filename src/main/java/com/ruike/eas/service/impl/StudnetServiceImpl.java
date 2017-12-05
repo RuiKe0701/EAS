@@ -1,5 +1,6 @@
 package com.ruike.eas.service.impl;
 
+import com.ruike.eas.dao.ClassstuMapper;
 import com.ruike.eas.dao.ClassteacherMapper;
 import com.ruike.eas.dao.StudentMapper;
 
@@ -18,6 +19,9 @@ public class StudnetServiceImpl implements StudentService {
 
     @Autowired
     private ClassteacherMapper classteacherMapper;
+
+    @Autowired
+    private ClassstuMapper classstuMapper;
 
     public List<Stu> defaultStudent() {
         return studentMapper.defaultstudent();
@@ -47,17 +51,39 @@ public class StudnetServiceImpl implements StudentService {
     public List<Stu> selectStuByClass(Stu stu) {
         return studentMapper.selectStudent(stu);
     }
-
-    public List<Stu> addAllStudnet(List<Stu> stus) {
-
-        int a=studentMapper.insertByBatchByStu(stus);
-        if (a>0){
+    //批量添加学生
+    public Integer addAllStudnet(List<Stu> stus) {
+        int count=studentMapper.insertByBatchByStu(stus);
+        if (count > 0) {
+            List<Classstu> classstus = new ArrayList<Classstu>();
             for (Stu stu : stus) {
-                int as=stu.getStu_id();
-                System.out.println(as);
+                Classstu ct = new Classstu();
+                ct.setStu_id(stu.getStu_id());
+                ct.setClass_id(stu.getClass_id());
+                classstus.add(ct);
             }
+           count = classstuMapper.insertAllClassStu(classstus);
         }
-        return stus;
+        return count;
+    }
+
+    public Integer addStuAndClass(Stu stu) {
+        //添加到学生档案
+        Integer count = studentMapper.insertStu(stu);
+        //如果成功
+        if (count != 0) {
+            //声明班级学生分配对象
+            Classstu classstu = new Classstu();
+            //将返回的stu_id放入
+            classstu.setStu_id(stu.getStu_id());
+            //放入班级id
+            classstu.setClass_id(stu.getClass_id());
+            //添加到班级学生分配表
+            count = classstuMapper.insertClassStu(classstu);
+        }else {
+            count = -1;
+        }
+        return count;
     }
 }
 

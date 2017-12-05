@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.ruike.eas.pojo.Class;
 import com.ruike.eas.pojo.Classteacher;
 import com.ruike.eas.pojo.Teacher;
+import com.ruike.eas.service.ClassService;
 import com.ruike.eas.service.ClassteacherService;
 import com.ruike.eas.service.TeacherService;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,12 @@ import java.util.*;
 public class ClassTeacherOperating {
     @Resource
     private ClassteacherService classteacherService;
+
+    @Resource
+    private ClassService classService;
+
+    @Resource
+    private TeacherService teacherService;
 
     @RequestMapping("/showclasst")
     public String showClassThacher(HttpServletRequest request){
@@ -124,6 +131,8 @@ public class ClassTeacherOperating {
     public void ajaxEndSubstitution(PrintWriter printWriter,Integer ctid){
         Classteacher classte = new Classteacher();
         classte.setCt_id(ctid);
+        //0为当前其他为历史
+        classte.setStatus(1);
         classte.setCt_stopday(new Date());
         Integer count = classteacherService.update(classte);
         printWriter.print(count);
@@ -134,14 +143,50 @@ public class ClassTeacherOperating {
     @RequestMapping("/addclassteacherinfo")
     @ResponseBody
     public void addClassTeacherInfo(Classteacher classteacher,PrintWriter printWriter){
-        //开始时间
-        classteacher.setCt_startday(new Date());
         //0为当前档案
         classteacher.setStatus(0);
         Integer integer = classteacherService.inserClassteacher(classteacher);
         printWriter.print(integer);
         printWriter.flush();
         printWriter.close();
+    }
+
+    @RequestMapping("/tiaoaddclass")
+    public String tiaoAddClass(HttpServletRequest request){
+        Teacher teacher = new Teacher();
+        //放入要查找的老师的类型
+        teacher.setTh_type(0);
+        //调用带条件查找老师
+        List<Teacher> teachers = teacherService.selectTeacher(teacher);
+        request.setAttribute("teachers",teachers);
+        return "addclass";
+    }
+
+    @RequestMapping("/addclassandteacher")
+    @ResponseBody
+    public void addClassAndTeacher(Class c , Integer th_id ,PrintWriter printWriter){
+//        System.out.println(th_id);
+        c.setStatus(0);
+        c.setClass_state(0);
+        Classteacher classteacher = new Classteacher();
+        classteacher.setTeacher_id(th_id);
+        classteacher.setStatus(0);
+        classteacher.setRemarks("班主任");
+        classteacher.setCt_startday(c.getClass_startday());
+        //在此班的任教类型(0为班主任1为主教2辅教)
+        classteacher.setCt_type(0);
+        Integer integer = classService.addClassAndTeacher(c, classteacher);
+        printWriter.print(integer);
+        printWriter.flush();
+        printWriter.close();
+    }
+
+    @RequestMapping("/verificationclass_name")
+    @ResponseBody
+    public void showClassByName(Class c ,PrintWriter printWriter){
+        //根据班级名查询有无重名班级
+        List<Class> classes = classService.selectClass(c);
+        printWriter.print(classes!=null&&classes.size()>0?1:0);
     }
 
 }

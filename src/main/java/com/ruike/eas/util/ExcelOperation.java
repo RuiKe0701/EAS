@@ -19,7 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelOperation {
     //读取excel
-    public static List<Stu> readExcel(String filename, InputStream is,Integer Classid){
+    public static List<Stu> readExcel(String filename, InputStream is ,Integer class_id){
         Workbook wb = null;
         if(filename == null){
             return null;
@@ -69,7 +69,7 @@ public class ExcelOperation {
                 stu.setStu_state(1);
                 stu.setStatus(0);
                 stu.setCrateday(new Date());
-                stu.setClass_id(Classid);
+                stu.setClass_id(class_id);
                 stus.add(stu);
             }else{
                 break;
