@@ -11,7 +11,7 @@ public class StuScore {
   private Double stuc_Wtscores;
   private Double stuc_Ctscores;
   private Double stuc_Avgscores;
-  private Integer stuc_State;
+  private Integer stuc_State = 0;
   private Date stuc_Createdate;
 
 

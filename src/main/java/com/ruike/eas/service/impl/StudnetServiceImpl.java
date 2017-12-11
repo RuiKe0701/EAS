@@ -34,7 +34,7 @@ public class StudnetServiceImpl implements StudentService {
         }else {
             return null;
         }
-        }
+    }
     //根据条件查询学生信息
     public List<Stu> selectByStudent(Stu stu) {
         return studentMapper.selectStudent(stu);

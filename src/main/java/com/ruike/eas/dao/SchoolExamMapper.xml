@@ -3,5 +3,62 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.SchoolExamMapper">
+    <resultMap id="schoolexam" type="com.ruike.eas.pojo.SchoolExam">
 
+    </resultMap>
+
+    <sql id="pag">
+        SELECT se.*,c.class_name,tc.th_name FROM schoolexam se
+        INNER JOIN teacher tc on tc.th_id = se.se_createby
+        LEFT join class c on se.class_id = c.class_id
+        <where>
+            <if test="se_Id != null">
+                AND se.se_Id = #{se_Id}
+            </if>
+            <if test="se_Name != null and se_Name != ''">
+                AND  se.se_Name like concat('%',#{se_Name},'%')
+            </if>
+            <if test="se_Startday != null">
+                AND  se.se_Startday >= #{se_Startday}
+            </if>
+            <if test="se_Stopday != null">
+                  AND se.se_Startday  &lt;= #{se_Stopday}
+            </if>
+            <if test="disDate != null">
+                AND se.se_stopday  >= #{disDate}
+            </if>
+            <if test="se_Examtype != null">
+                AND se.se_Examtype = #{se_Examtype}
+            </if>
+            <if test="se_State != null">
+                AND se.se_State = #{se_State}
+            </if>
+        </where>
+    </sql>
+    <select id="selectSchoolExam" parameterType="com.ruike.eas.dao.SchoolExamMapper" resultMap="schoolexam">
+        SELECT * FROM (<include refid="pag"/>) schoolexam
+        <if test="totalPages != null and totalPages > 0">
+            limit #{cur},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectSchoolExamCount" parameterType="com.ruike.eas.dao.SchoolExamMapper" resultType="int">
+        SELECT count(1) FROM (<include refid="pag"/>) schoolexam
+    </select>
+
+    <insert id="insertSchoolExam" parameterType="com.ruike.eas.pojo.SchoolExam" >
+        INSERT INTO schoolexam VALUES
+        (NULL,#{se_Name},#{se_Startday},#{se_Stopday},#{se_Createby},
+        #{se_Examtype},#{class_id},#{se_Createdate},#{se_State})
+    </insert>
+
+    <update id="updateSchoolExam" parameterType="com.ruike.eas.pojo.SchoolExam">
+        UPDATE schoolexam
+        <set>
+            <if test="se_State != null">
+                se_State = #{se_State},
+            </if>
+        </set>
+        where se_Id = #{se_Id}
+    </update>
 </mapper>

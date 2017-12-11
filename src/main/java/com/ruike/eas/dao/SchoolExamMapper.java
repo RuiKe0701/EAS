@@ -15,6 +15,12 @@ public interface SchoolExamMapper {
      */
     public List<SchoolExam> selectSchoolExam(SchoolExam schoolExam);
 
+    /**
+     * 根据条件查询数据总数量
+     * @param schoolExam 实体类
+     * @return 总数量
+     */
+    public Integer selectSchoolExamCount(SchoolExam schoolExam);
 
     /**
      * 根据条件插入考试类型安排表

@@ -9,6 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           <if test="class_name != null and class_name != ''">
               and class_name = #{class_name}
           </if>
+          <if test="grade_id != null">
+              AND grade_id = #{grade_id}
+          </if>
+          <if test="class_state != null">
+              and class_state = #{class_state}
+          </if>
         </where>
     </select>
 

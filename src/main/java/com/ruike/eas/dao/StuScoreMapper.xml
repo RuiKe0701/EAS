@@ -3,5 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.StuScoreMapper">
+    <resultMap id="stuscore" type="com.ruike.eas.pojo.StuScore">
 
+    </resultMap>
+    <select id="selectStuScore" parameterType="com.ruike.eas.pojo.StuScore" resultMap="stuscore">
+      SELECT * FROM stuscore
+      <where>
+          <if test="ce_Id != null">
+              and ce_Id = #{ce_Id}
+          </if>
+      </where>
+    </select>
+
+    <insert id="insertStuScore" parameterType="com.ruike.eas.pojo.StuScore">
+
+    </insert>
 </mapper>

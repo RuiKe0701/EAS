@@ -1,5 +1,8 @@
 package com.ruike.eas.pojo;
 
+import com.ruike.eas.util.DateUtil;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 public class ClassExam {
 
@@ -9,7 +12,7 @@ public class ClassExam {
   private Date ce_Examday;
   private String ce_Remarks;
   private Integer se_Id;
-  private Integer ce_State;
+  private Integer ce_State = 0;
   private Date ce_Createdate;
 
 
@@ -43,7 +46,9 @@ public class ClassExam {
   public Date getCe_Examday() {
     return ce_Examday;
   }
-
+  public String getCe_Eday() {
+    return DateUtil.dateFormat(this.getCe_Examday(),"yyyy-MM-dd");
+  }
   public void setCe_Examday(Date ce_Examday) {
     this.ce_Examday = ce_Examday;
   }
@@ -84,4 +89,36 @@ public class ClassExam {
     this.ce_Createdate = ce_Createdate;
   }
 
+  //班级名
+  private String class_name;
+
+  public String getClass_name() {
+    return class_name;
+  }
+
+  public void setClass_name(String class_name) {
+    this.class_name = class_name;
+  }
+
+  //校级考试名称
+  private String se_name;
+
+  public String getSe_name() {
+    return se_name;
+  }
+
+  public void setSe_name(String se_name) {
+    this.se_name = se_name;
+  }
+
+  //结束时间
+  private Date stopDate;
+
+  public Date getStopDate() {
+    return stopDate;
+  }
+
+  public void setStopDate(Date stopDate) {
+    this.stopDate = stopDate;
+  }
 }

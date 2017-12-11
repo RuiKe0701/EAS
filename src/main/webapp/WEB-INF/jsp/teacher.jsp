@@ -104,6 +104,11 @@
                         </li>
                         <li><a class="J_menuItem" href="/tiaoaddclass" >添加班级</a></li>
                         </li>
+                        <li><a class="J_menuItem" href="/tzscoreexam" >考试</a></li>
+                        </li>
+                        <li><a class="J_menuItem" href="/tzclassexam.do" >班级考试</a></li>
+                        </li>
+
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
                             <span class="label label-danger pull-right">推荐</span></a>
                         </li>
