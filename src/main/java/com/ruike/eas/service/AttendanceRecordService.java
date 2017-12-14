@@ -12,4 +12,7 @@ public interface AttendanceRecordService {
     public List<Classattendance> selectClassttend(Classattendance classattendance);
     //根据班级考勤id查详情
     public List<Stuattendance> selectstuatdlist(Stuattendance stuattendance);
+    //根据老师id获取老师历史带的班级
+
+    public List<Classteacher> selectoldclassbytecaherid(Classteacher classteacher);
 }

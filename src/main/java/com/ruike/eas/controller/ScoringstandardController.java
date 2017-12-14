@@ -35,6 +35,8 @@ public class ScoringstandardController {
         return "thscoringstandard";
     }
 
+
+
     @RequestMapping("/addscoringstandard")
     public String addssd() {
         return "addscoringstandard";
@@ -92,5 +94,56 @@ public class ScoringstandardController {
             printWriter.close();
         }
     }
+    /*
+    获取单个评分信息
+     */
+    @RequestMapping("/selectss")
+    public void Selectss(Integer ssid,PrintWriter printWriter){
+        Scoringstandard scoringstandards=new Scoringstandard();
+        scoringstandards.setSs_id(ssid);
+        Scoringstandard scoringstandard=scoringstandardService.selectssdbyssdid(scoringstandards);
+        if (scoringstandard!=null &&scoringstandard.getSs_id()!=null){
+            String jsonString = JSON.toJSONString(scoringstandard);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }else{
+            String jsonString = JSON.toJSONString(0);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }
+    }
+    /*
+    修改评分数据
+     */
+    @RequestMapping("/updatess")
+    public void Updatess(Scoringstandard scoringstandard,PrintWriter printWriter){
+        System.out.println(scoringstandard.getSs_id());
+        if(scoringstandard!=null ){
+            scoringstandard.setSs_createby(1);
+            scoringstandard.setSs_createdate(new Date());
+            Integer aa=scoringstandardService.updatessd(scoringstandard);
+            if(aa>0){
+                String jsonString = JSON.toJSONString(1);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }else {
+                String jsonString = JSON.toJSONString(0);
+                printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
+            }
+
+        }else {
+            String jsonString = JSON.toJSONString(2);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }
+    }
+
+
 
 }

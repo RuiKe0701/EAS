@@ -14,4 +14,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO  classstu (stu_id,class_id)
         VALUES(#{stu_id},#{class_id})
     </insert>
+    <resultMap id="stuby" type="com.ruike.eas.pojo.Classstu">
+        <result column="stuname" property="stuname"/>
+    </resultMap>
+    <select id="selectclassstubyclassid" resultMap="stuby">
+        select s.stu_id , st.stu_name as stuname from classstu as s,stu as st where s.stu_id=st.stu_id and s.class_id=#{class_id}
+    </select>
 </mapper>

@@ -45,6 +45,9 @@ public class AttendanceRecordController {
         Stuattendance stuattendance=new Stuattendance();
         stuattendance.setCad_id(cadid);
         List<Stuattendance> stuattendanceList=attendanceRecordService.selectstuatdlist(stuattendance);
+        for (Stuattendance stuattendance1 : stuattendanceList) {
+            System.out.println(stuattendance1.getAttendancetime()+"sss"+stuattendance1.getStu_id());
+        }
         String jsonString = JSON.toJSONString(stuattendanceList);
         printWriter.write(jsonString);
         printWriter.flush();

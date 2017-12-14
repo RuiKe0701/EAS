@@ -5,9 +5,10 @@ import sun.rmi.server.InactiveGroupException;
 import java.io.Serializable;
 
 public class Stutotalscore implements Serializable {
+
     /*
-    学生总分表主键
-     */
+        学生总分表主键
+         */
     private Integer sts_id;
     /*
     学生表主键

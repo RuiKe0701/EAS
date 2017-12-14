@@ -19,8 +19,17 @@
                 </where>
         </select>
 
+    <select id="selectssdbyssdid" resultMap="sc">
+        select s.*,t.th_name as teachername from scoringstandard as s ,teacher as t where  t.th_id=s.ss_createby and s.ss_id=#{ss_id}
+    </select>
+
     <insert id="insert">
           insert into scoringstandard (ss_name,ss_fraction,ss_way,ss_createby,ss_createdate,ss_type)
             VALUES(#{ss_name},#{ss_fraction},#{ss_way},#{ss_createby},#{ss_createdate},#{ss_type});
     </insert>
+
+    <update id="updatessd">
+		update scoringstandard set ss_name = #{ss_name},ss_fraction=#{ss_fraction},ss_way=#{ss_way},ss_createby=#{ss_createby},
+		ss_createdate=#{ss_createdate},ss_type=#{ss_type} where ss_id=#{ss_id}
+    </update>
 </mapper>

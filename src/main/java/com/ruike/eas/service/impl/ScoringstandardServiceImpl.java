@@ -19,4 +19,12 @@ public class ScoringstandardServiceImpl implements ScoringstandardService{
     public List<Scoringstandard> selectAll(Scoringstandard param) {
         return scoringstandardMapper.selectAll(param);
     }
+
+    public Integer updatessd(Scoringstandard scoringstandard) {
+        return scoringstandardMapper.updatessd(scoringstandard);
+    }
+
+    public Scoringstandard selectssdbyssdid(Scoringstandard scoringstandard) {
+        return scoringstandardMapper.selectssdbyssdid(scoringstandard);
+    }
 }

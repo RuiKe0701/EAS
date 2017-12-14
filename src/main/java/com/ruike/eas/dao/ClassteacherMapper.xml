@@ -162,4 +162,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
 
     </select>
+
+    <select id="selectoldclassbytecaherid" resultMap="csth">
+        select c.*, cs.class_name as classname from classteacher as c ,class as cs
+        <where>
+            c.class_id=cs.class_id      and cs.class_state =1
+            <if test="teacher_id!=null and teacher_id>0">
+                and c.teacher_id=#{teacher_id}
+            </if>
+
+        </where>
+    </select>
 </mapper>

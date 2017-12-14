@@ -18,4 +18,8 @@ public interface ClassstuMapper {
      * @return 受影响行数
      */
     public Integer insertAllClassStu(List<Classstu> classstus);
+    /*
+    根据班级id获取班级学员
+     */
+    public List<Classstu> selectclassstubyclassid(Classstu classstu);
 }
