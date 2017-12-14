@@ -76,4 +76,36 @@ public class ClassScore {
     this.cs_Createdate = cs_Createdate;
   }
 
+  //班级id
+  private Integer class_id;
+
+  //班级名
+  private String class_name;
+
+  //班级考试名称
+  private String ce_name;
+
+  public String getClass_name() {
+    return class_name;
+  }
+
+  public void setClass_name(String class_name) {
+    this.class_name = class_name;
+  }
+
+  public Integer getClass_id() {
+    return class_id;
+  }
+
+  public void setClass_id(Integer class_id) {
+    this.class_id = class_id;
+  }
+
+  public String getCe_name() {
+    return ce_name;
+  }
+
+  public void setCe_name(String ce_name) {
+    this.ce_name = ce_name;
+  }
 }

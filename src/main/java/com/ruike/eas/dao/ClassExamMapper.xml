@@ -10,14 +10,17 @@
         SELECT ce.*,c.class_name,se.se_name FROM classexam ce, class c, schoolexam se
         <where>
             ce.class_id = c.class_id and ce.se_id = se.se_id
+            <if test="ce_Id != null">
+              AND ce.ce_Id = #{ce_Id}
+            </if>
             <if test="class_Id != null">
               and ce.class_Id = #{class_Id}
             </if>
             <if test="ce_Examday != null">
-              AND ce.ce_Examday >= #{ce_Examday}
+              AND ce.ce_Examday > #{ce_Examday}
             </if>
             <if test="stopDate != null ">
-              AND ce.stopDate &lt;= #{stopDate}
+              AND ce.ce_Examday &lt;= #{stopDate}
             </if>
         </where>
     </select>
@@ -31,22 +34,22 @@
         UPDATE classexam
         <set>
             <if test="ce_Name != null and ce_Name != ''">
-                AND ce_Name = #{ce_Names},
+                ce_Name = #{ce_Name},
             </if>
             <if test="class_Id != null">
-                AND class_Id = #{class_Id},
+                 class_Id = #{class_Id},
             </if>
             <if test="ce_Examday != null">
-                AND ce_Examday = #{ce_Examday},
+                ce_Examday = #{ce_Examday},
             </if>
             <if test="ce_Remarks != null and ce_Remarks != ''">
-                AND ce_Remarks = #{ce_Remarks},
+                ce_Remarks = #{ce_Remarks},
             </if>
             <if test="se_Id != null ">
-                AND se_Id = #{se_Id},
+               se_Id = #{se_Id},
             </if>
             <if test="ce_State != null">
-                AND ce_State = #{ce_State},
+                ce_State = #{ce_State},
             </if>
         </set>
         <where>
@@ -55,4 +58,19 @@
             </if>
         </where>
     </update>
+
+    <select id="selectByClassExamByDate" parameterType="com.ruike.eas.pojo.ClassExam" resultMap="classexam">
+        SELECT ce.*,se.se_examtype FROM classexam ce
+        LEFT JOIN stuscore sc on sc.ce_id = ce.ce_id
+        INNER JOIN schoolexam se on se.se_id = ce.se_id
+        <where>
+            <if test="class_Id != null">
+                AND ce.class_Id = #{class_Id}
+            </if>
+            <if test="ce_Examday != null">
+                AND ce.ce_Examday &lt; #{ce_Examday}
+            </if>
+                AND sc.stu_id IS NULL
+        </where>
+    </select>
 </mapper>

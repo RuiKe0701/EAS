@@ -18,4 +18,10 @@
     <insert id="insertStuScore" parameterType="com.ruike.eas.pojo.StuScore">
 
     </insert>
+    <insert id="insertAllStuScore" >
+      INSERT INTO stuscore VALUES
+        <foreach item="item" index="index" collection="list" separator=",">
+            (null,#{item.ce_Id},#{item.stu_Id},#{item.stuc_Wtscores},#{item.stuc_Ctscores},#{item.stuc_Avgscores},#{item.stuc_Createdate},#{item.stuc_State})
+        </foreach>
+    </insert>
 </mapper>

@@ -8,7 +8,6 @@ import com.ruike.eas.service.ClassService;
 import com.ruike.eas.service.ClassteacherService;
 import com.ruike.eas.service.StudentService;
 import com.ruike.eas.service.TeacherService;
-import com.ruike.eas.util.DateUtil;
 import com.ruike.eas.util.ExcelOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -81,7 +79,7 @@ public class ClassStudentController {
             List<Stu> stus = null;
             try {
                 //把导入的excel转换成学生的对象集合(文件名称,文件的流)
-                stus = ExcelOperation.readExcel(upload.getOriginalFilename(), upload.getInputStream() ,Integer.parseInt(class_id));
+                stus = ExcelOperation.readStuExcel(upload.getOriginalFilename(), upload.getInputStream() ,Integer.parseInt(class_id));
             } catch (IOException e) {
                 e.printStackTrace();
             }

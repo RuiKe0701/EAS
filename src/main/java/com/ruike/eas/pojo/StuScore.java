@@ -86,4 +86,13 @@ public class StuScore {
     this.stuc_Createdate = stuc_Createdate;
   }
 
+  private String stu_no;
+
+  public String getStu_no() {
+    return stu_no;
+  }
+
+  public void setStu_no(String stu_no) {
+    this.stu_no = stu_no;
+  }
 }

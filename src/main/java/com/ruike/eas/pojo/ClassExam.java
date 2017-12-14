@@ -121,4 +121,14 @@ public class ClassExam {
   public void setStopDate(Date stopDate) {
     this.stopDate = stopDate;
   }
+
+  private Integer se_Examtype;
+
+  public Integer getSe_Examtype() {
+    return se_Examtype;
+  }
+
+  public void setSe_Examtype(Integer se_Examtype) {
+    this.se_Examtype = se_Examtype;
+  }
 }

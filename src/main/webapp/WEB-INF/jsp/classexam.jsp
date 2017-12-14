@@ -60,7 +60,7 @@
 
 <!--main content start-->
 <section style="width: 96.8%;margin-left: 1.6%;margin-top: 1.6%">
-
+    <button type="button" id="m3" data-toggle="modal" data-target="#myModal3" style="display: none"></button>
     <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" style="border-radius: 5px">
             <div class="modal-content animated flipInY" style="border-radius: 5px">
@@ -141,6 +141,64 @@
                     <button type="button" class="btn btn-white" data-dismiss="modal" id="guanadd">关闭</button>
                     <input value="" type="hidden" id="leaveleaveid">
                     <button type="button" id="baochuclassexam" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal inmodal" id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="border-radius: 5px">
+            <div class="modal-content animated flipInY" style="border-radius: 5px">
+                <div class="modal-header">
+                    <h4 class="modal-title">修改班级考试</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form id="updateclassexam">
+                            <div class="row">
+                                <div class="col-sm-3"></div>
+                                <div class="col-md-3"
+                                     style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 5px">
+                                    <i class="fa fa-tag" style="color: #ed5666"></i>考试名称：
+                                </div>
+                                <div class="col-md-5" style="padding-left: 15px">
+                                    <input value="" placeholder="请输入考试名" id="updatece_Name" name="ce_Name"
+                                           style="height: 28px;padding-left: 5px">
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 15px">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3"
+                                     style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 2px">
+                                    <i class="fa fa-tag" style="color: #f8ac5a"></i>考试日期 ：
+                                </div>
+                                <div class="col-md-4" style="padding-left: 15px">
+                                    <input id="updatece_Examdays" name="examdays" type="date"
+                                           style="width:100%;height: 26px;font-size: 12px;padding-left: 8px" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 15px">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3"
+                                     style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 2px">
+                                    <i class="fa fa-tag" style="color: #f8ac5a"></i>考试说明 ：
+                                </div>
+                                <div class="col-md-4"
+                                     style="font-size: 15px ;font-weight: 400;padding-right: 0px;padding-left: 15px;padding-top: 2px">
+                                    <textarea id="updatece_Remarks" name="ce_Remarks" style="height: 50px"></textarea></div>
+                            </div>
+                            <div class="row" style="">
+                                <div class="col-lg-3"></div>
+                            </div>
+                            <input name="ce_Id" type="hidden" id="updatese_id">
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer" id="">
+                    <button type="button" class="btn btn-white" data-dismiss="modal" id="guanupdate">关闭</button>
+                    <button type="button" id="updatece" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
@@ -282,10 +340,9 @@
                                 <tr class="gradeX">
                                     <td class="leaveclassnamexian">${ce.class_name}</td>
                                     <td class="leavestunamexian">${ce.ce_Name}</td>
-                                    <td class="leaveremarksxian"><span>${ce.ce_Eday}</span>&nbsp;<span
-                                            class="label label-warning">默认</span></td>
-                                    <td class="leaveremarksxian">${ce.se_name}&nbsp;</td>
-                                    <td class="leaveremarksxian">${ce.ce_Remarks}&nbsp;</td>
+                                    <td class="leaveremarksxian"><span>${ce.ce_Eday}</span></td>
+                                    <td class="leaveremarksxian">${ce.se_name}</td>
+                                    <td class="leaveremarksxian">${ce.ce_Remarks}</td>
                                     <td>
                                         <input value="${ce.ce_Id}" type="hidden" class="leaveidxian">
                                         <button class="btn btn-xs btn-primary classscore">班级成绩</button>
@@ -355,21 +412,79 @@
         $("#baochuclassexam").click(function () {
             ajaxSaveClassExam();
         });
-        
-        $("body").on("click",".classupdate",function () {
-            var ce_id = $(this).prev("input").val();
-            if (ajaxVerification(ce_id)){
 
+        $("body").on("click",".classupdate",function () {
+            var ce_id = $(this).prev().prev().val();
+            var boo = ajaxVerification(ce_id);
+            if (boo){
+                var $tds = $(this).parent().siblings();
+                $("#myModal3").find("#updatece_Name").val($($tds).eq(1).html());
+                $("#myModal3").find("#updatece_Examdays").val($($tds).eq(2).children("span").html());
+                $("#myModal3").find("#updatece_Remarks").val($($tds).eq(4).html());
+                $("#myModal3").find("#updatese_id").val(ce_id);
+                $("#m3").click();
+            }else {
+                swal({
+                    title: "不可修改此次考试",
+                    text: "已录入分数或考试已经开始!",
+                    type: "info",
+                    showCancelButton: false,
+                    cancelButtonClass: 'btn-secondary',
+                    confirmButtonClass: 'btn-danger',
+                    confirmButtonText: '确定!'
+                })
             }
         });
+        $("#updatece").click(function () {
+            ajaxUpdate();
+        });
     });
+    
+    function ajaxUpdate() {
+        $("#guanupdate").click();
+        $.ajax({
+            type:"post",
+            url:"/updateclassexam.do",
+            data:$("#updateclassexam").serialize(),
+            success:function (data) {
+                if (data == 1){
+                    swal({
+                        title: "success",
+                        text: "保存成功!",
+                        type: "success",
+                        showCancelButton: false,
+                        cancelButtonClass: 'btn-secondary',
+                        confirmButtonClass: 'btn-danger',
+                        confirmButtonText: '确定!'
+                    })
+                    //刷新一遍数据
+                    ajaxSelect();
+                }else {
+                    swal({
+                        title: "ERROR",
+                        text: "保存失败!",
+                        type: "error",
+                        showCancelButton: false,
+                        cancelButtonClass: 'btn-secondary',
+                        confirmButtonClass: 'btn-danger',
+                        confirmButtonText: '确定!'
+                    })
+                }
+            },
+            error:function () {
+                
+            }
+        })
+    }
+    
     //验证是否可以修改
     function ajaxVerification(ce_id) {
         var boo = true;
         $.ajax({
             type:'POST',
-            url:'',
+            url:'ajaxverification.do',
             data:{'ce_Id':ce_id},
+            async:false,
             success:function (data) {
                 if (data == 0){
                     boo = false;
@@ -466,9 +581,9 @@
                     str += "<tr class=\"gradeX\">\n" +
                         "                                    <td class=\"leaveclassnamexian\">" + item.class_name + "</td>\n" +
                         "                                    <td class=\"leavestunamexian\">" + item.ce_Name + "</td>\n" +
-                        "                                    <td class=\"leaveremarksxian\"><span>" + item.ce_Eday + "</span>&nbsp;<span class=\"label label-warning\">默认</span></td>\n" +
-                        "                                    <td class=\"leaveremarksxian\">" + item.se_name + "&nbsp;</td>\n" +
-                        "                                    <td class=\"leaveremarksxian\">" + item.ce_Remarks + "&nbsp;</td>\n" +
+                        "                                    <td class=\"leaveremarksxian\"><span>" + item.ce_Eday + "</span></td>\n" +
+                        "                                    <td class=\"leaveremarksxian\">" + item.se_name + "</td>\n" +
+                        "                                    <td class=\"leaveremarksxian\">" + item.ce_Remarks + "</td>\n" +
                         "                                    <td>\n" +
                         "                                        <input value=\"" + item.ce_Id + "\" type=\"hidden\" class=\"leaveidxian\">\n" +
                         "                                        <button class=\"btn btn-xs btn-primary classscore\">班级成绩</button>\n" +

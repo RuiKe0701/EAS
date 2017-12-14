@@ -29,4 +29,11 @@ public interface ClassExamMapper {
      * @return 受影响行数
      */
     public Integer updateClassExam(ClassExam classExam);
+
+    /**
+     * 查询考完试还没有录入成绩的考试
+     * @param classExam 班级考试对象
+     * @return 集合
+     */
+    public List<ClassExam> selectByClassExamByDate(ClassExam classExam);
 }

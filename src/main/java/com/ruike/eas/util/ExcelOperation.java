@@ -8,7 +8,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.ruike.eas.pojo.ClassScore;
 import com.ruike.eas.pojo.Stu;
+import com.ruike.eas.pojo.StuScore;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -19,24 +21,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelOperation {
     //读取excel
-    public static List<Stu> readExcel(String filename, InputStream is ,Integer class_id){
+    public static List<Stu> readStuExcel(String filename, InputStream is , Integer class_id){
         Workbook wb = null;
         if(filename == null){
             return null;
         }
         List<Stu> stus = new ArrayList<Stu>();
-        String extString = filename.substring(filename.lastIndexOf("."));
-        try {
-            if(".xls".equals(extString)){
-                wb = new HSSFWorkbook(is);
-            }else if(".xlsx".equals(extString)){
-                wb = new XSSFWorkbook(is);
-            }else{
-                wb = null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //根据后缀名决定用什么类型解析
+        wb = getSheets(filename, is);
         //获取第一个sheet
         Sheet sheet = wb.getSheetAt(0);
         //获取最大行数
@@ -46,7 +38,6 @@ public class ExcelOperation {
         //获取最大列数
         int colnum = row.getPhysicalNumberOfCells();
         for (int i = 1; i<rownum; i++) {
-            Map<String,String> map = new LinkedHashMap<String,String>();
             row = sheet.getRow(i);
             if(row !=null){
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -77,6 +68,84 @@ public class ExcelOperation {
         }
         return stus;
     }
+
+    /**
+     *  将文件流转换为学生集合
+     * @param filename 文件名
+     * @param is 流
+     * @param sc 学生成绩对象
+     * @return 学生集合
+     */
+    public static List<StuScore> readStuScoreExcel(String filename, InputStream is , StuScore sc , ClassScore classScore){
+        List<StuScore> stuScores = new ArrayList<StuScore>();
+        Workbook wb = null;
+        if(filename == null){
+            return null;
+        }
+        //根据后缀名决定用什么类型解析
+        wb = getSheets(filename, is);
+        //获取第一个sheet
+        Sheet sheet = wb.getSheetAt(0);
+        //获取最大行数
+        int rownum = sheet.getPhysicalNumberOfRows();
+        //获取第一行
+        Row row = sheet.getRow(0);
+        //获取最大列数
+        int colnum = row.getPhysicalNumberOfCells();
+        Date date = new Date();
+        double wtScores = 0;
+        double ctScores = 0;
+        double avgScores = 0;
+        for (int i = 1; i<rownum; i++) {
+            Map<String,String> map = new LinkedHashMap<String,String>();
+            row = sheet.getRow(i);
+            if(row != null){
+                StuScore stuScore = new StuScore();
+                //班级考试ID
+                stuScore.setCe_Id(sc.getCe_Id());
+                //学生学号(并非id)
+                stuScore.setStu_no(getCellFormatValue(row.getCell(0)).toString());
+                //笔试分
+                stuScore.setStuc_Wtscores(Double.parseDouble(getCellFormatValue(row.getCell(2)).toString()));
+                //累计笔试分
+                wtScores+=stuScore.getStuc_Wtscores();
+                //机试
+                stuScore.setStuc_Ctscores(Double.parseDouble(getCellFormatValue(row.getCell(3)).toString()));
+                //累计机试分
+                ctScores+=stuScore.getStuc_Ctscores();
+                //平均分
+                stuScore.setStuc_Avgscores((stuScore.getStuc_Wtscores()+stuScore.getStuc_Ctscores())/2);
+                //创建时间
+                stuScore.setStuc_Createdate(date);
+                stuScore.setStuc_State(0);
+                stuScores.add(stuScore);
+            }else{
+                break;
+            }
+            classScore.setCs_Wtavg(wtScores/stuScores.size());
+            classScore.setCs_Ctavg(ctScores/stuScores.size());
+            classScore.setCs_Avg((classScore.getCs_Wtavg()+classScore.getCs_Ctavg())/2);
+        }
+        return stuScores;
+    }
+
+    private static Workbook getSheets(String filename, InputStream is) {
+        Workbook wb = null;
+        String extString = filename.substring(filename.lastIndexOf("."));
+        try {
+            if(".xls".equals(extString)){
+                wb = new HSSFWorkbook(is);
+            }else if(".xlsx".equals(extString)){
+                wb = new XSSFWorkbook(is);
+            }else{
+                wb = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return wb;
+    }
+
     public static Object getCellFormatValue(Cell cell){
         Object cellValue = null;
         if(cell!=null){
@@ -86,5 +155,6 @@ public class ExcelOperation {
         }
         return cellValue;
     }
+
 }
 

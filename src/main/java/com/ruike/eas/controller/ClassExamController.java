@@ -39,7 +39,7 @@ public class ClassExamController {
     @RequestMapping("/tzclassexam.do")
     public String tzClassExam(ClassExam classExam , HttpServletRequest request){
         Classteacher classteacher = new Classteacher();
-        //放入老师的id
+        //放入老师的id#################################################
         classteacher.setTeacher_id(1);
         Class c = new Class();
         //班级状态(1为结业,0为未结业)
@@ -95,8 +95,34 @@ public class ClassExamController {
     @RequestMapping("/ajaxverification.do")
     @ResponseBody
     public void ajaxVerification(StuScore stuScore,PrintWriter printWriter){
+        Boolean boo = false;
+        ClassExam classExam = new ClassExam();
+        //查找对应的班级考试
+        classExam.setCe_Id(stuScore.getCe_Id());
+        List<ClassExam> classExams = classExamService.selectClassExam(classExam);
+        //1为周考 如果不是周考则需要判定 是周考则可以修改
+        if (classExams.get(0).getSe_Id() != 1){
+            SchoolExam schoolExam = new SchoolExam();
+            schoolExam.setCurrentPage(1);
+            //放入对应的学校考试id
+            schoolExam.setSe_Id(classExams.get(0).getSe_Id());
+            //如果考试开始时间大于当前时间则不让修改
+            schoolExam.setSe_Stopday(new Date());
+            //查找此校级考试是否已开始
+            List<SchoolExam> schoolExams = schoolExamService.selectBySchoolExamInfo(schoolExam);
+            boo = schoolExams == null || schoolExams.size() == 0;
+        }
         List<StuScore> stuScores = stuScoreService.selectStuScore(stuScore);
-        printWriter.print(stuScores != null && stuScores.size() > 0 ? 1 : 0);
+        printWriter.print((stuScores != null && stuScores.size() > 0) && boo ? 1 : 0);
+        printWriter.flush();
+        printWriter.close();
+    }
+    @RequestMapping("/updateclassexam.do")
+    @ResponseBody
+    public void updateClassExam(ClassExam classExam ,String examdays ,PrintWriter printWriter){
+        classExam.setCe_Examday(DateUtil.dateFormat(examdays,"yyyy-MM-dd"));
+        Integer count = classExamService.updateClassExamInfo(classExam);
+        printWriter.print(count);
         printWriter.flush();
         printWriter.close();
     }

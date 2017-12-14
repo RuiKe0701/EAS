@@ -10,7 +10,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select stu_id,stu_name,stu_no,stu_birthday,stu_sex,stu_phone,stu_startday,stu_parentphone,class_id from stu
 	</select>
 	<select id="selectstudentbystu" parameterType="com.ruike.eas.pojo.Stu" resultType="com.ruike.eas.pojo.Stu">
-		select * from stu WHERE stu_id=#{stu_id}
+		select * from stu
+		 <where>
+		 	<if test="stu_id != null">
+			 	 AND stu_id=#{stu_id}
+			</if>
+			 <if test="stu_no != null">
+				AND stu_no=#{stu_no}
+			 </if>
+			 <if test="class_id != null">
+				AND class_id=#{class_id}
+			 </if>
+		 </where>
 	</select>
 
 	<sql id="stu">
@@ -28,6 +39,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 			<if test="stu_state != null">
 				and st.stu_state =#{stu_state}
+			</if>
+			<if test="stu_no != null">
+				and st.stu_no = #{stu_no}
 			</if>
 		</where>
 	</sql>

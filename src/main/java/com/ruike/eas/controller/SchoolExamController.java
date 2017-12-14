@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Administrator on 2017/12/7.
  */
 @Controller
-public class ScoreExamController {
+public class SchoolExamController {
 
     @Resource
     private SchoolExamService schoolExamService;
