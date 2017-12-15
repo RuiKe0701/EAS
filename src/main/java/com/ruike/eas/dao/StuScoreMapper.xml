@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruike.eas.dao.StuScoreMapper">
+    <resultMap id="stuscore" type="com.ruike.eas.pojo.StuScore">
+
+    </resultMap>
+    <select id="selectStuScore" parameterType="com.ruike.eas.pojo.StuScore" resultMap="stuscore">
+      SELECT * FROM stuscore
+      <where>
+          <if test="ce_Id != null">
+              and ce_Id = #{ce_Id}
+          </if>
+      </where>
+    </select>
+
+    <insert id="insertStuScore" parameterType="com.ruike.eas.pojo.StuScore">
+
+    </insert>
+    <insert id="insertAllStuScore" >
+      INSERT INTO stuscore VALUES
+        <foreach item="item" index="index" collection="list" separator=",">
+            (null,#{item.ce_Id},#{item.stu_Id},#{item.stuc_Wtscores},#{item.stuc_Ctscores},#{item.stuc_Avgscores},#{item.stuc_Createdate},#{item.stuc_State})
+        </foreach>
+    </insert>
+</mapper>

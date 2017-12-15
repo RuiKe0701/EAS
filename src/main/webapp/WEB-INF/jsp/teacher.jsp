@@ -106,6 +106,12 @@
                         <li><a class="J_menuItem" href="/tiaoaddclass" >添加班级</a></li>
                         <li><a class="J_menuItem" href="/classstuattencercord" >班级学员出勤</a></li>
                         </li>
+                        <li><a class="J_menuItem" href="/tzscoreexam" >考试</a></li>
+                        </li>
+                        <li><a class="J_menuItem" href="/tzclassexam.do" >班级考试</a></li>
+                        </li>
+                        <li><a class="J_menuItem" href="/tzstuscore.do" >班级成绩</a></li>
+                        </li>
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
                             <span class="label label-danger pull-right">推荐</span></a>
                         </li>

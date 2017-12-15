@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruike.eas.dao.ClassExamMapper">
+    <resultMap id="classexam" type="com.ruike.eas.pojo.ClassExam">
+
+    </resultMap>
+    <select id="selectClassExam" parameterType="com.ruike.eas.pojo.ClassExam" resultMap="classexam">
+        SELECT ce.*,c.class_name,se.se_name FROM classexam ce, class c, schoolexam se
+        <where>
+            ce.class_id = c.class_id and ce.se_id = se.se_id
+            <if test="ce_Id != null">
+              AND ce.ce_Id = #{ce_Id}
+            </if>
+            <if test="class_Id != null">
+              and ce.class_Id = #{class_Id}
+            </if>
+            <if test="ce_Examday != null">
+              AND ce.ce_Examday > #{ce_Examday}
+            </if>
+            <if test="stopDate != null ">
+              AND ce.ce_Examday &lt;= #{stopDate}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertClassExam" parameterType="com.ruike.eas.pojo.ClassExam">
+        INSERT INTO classexam VALUES
+        (NULL,#{ce_Name},#{class_Id},#{ce_Examday},#{ce_Remarks},#{se_Id},#{ce_Createdate},#{ce_State})
+    </insert>
+    
+    <update id="updateClassExam" parameterType="com.ruike.eas.pojo.ClassExam">
+        UPDATE classexam
+        <set>
+            <if test="ce_Name != null and ce_Name != ''">
+                ce_Name = #{ce_Name},
+            </if>
+            <if test="class_Id != null">
+                 class_Id = #{class_Id},
+            </if>
+            <if test="ce_Examday != null">
+                ce_Examday = #{ce_Examday},
+            </if>
+            <if test="ce_Remarks != null and ce_Remarks != ''">
+                ce_Remarks = #{ce_Remarks},
+            </if>
+            <if test="se_Id != null ">
+               se_Id = #{se_Id},
+            </if>
+            <if test="ce_State != null">
+                ce_State = #{ce_State},
+            </if>
+        </set>
+        <where>
+            <if test="ce_Id">
+              AND ce_Id =#{ce_Id}
+            </if>
+        </where>
+    </update>
+
+    <select id="selectByClassExamByDate" parameterType="com.ruike.eas.pojo.ClassExam" resultMap="classexam">
+        SELECT ce.*,se.se_examtype FROM classexam ce
+        LEFT JOIN stuscore sc on sc.ce_id = ce.ce_id
+        INNER JOIN schoolexam se on se.se_id = ce.se_id
+        <where>
+            <if test="class_Id != null">
+                AND ce.class_Id = #{class_Id}
+            </if>
+            <if test="ce_Examday != null">
+                AND ce.ce_Examday &lt; #{ce_Examday}
+            </if>
+                AND sc.stu_id IS NULL
+        </where>
+    </select>
+</mapper>

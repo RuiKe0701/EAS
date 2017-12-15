@@ -110,7 +110,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">填写备注</label>
                             <div class="col-sm-6">
-                                <textarea name="remarks" style="outline:none;resize:none;overflow: hidden" rows="10" cols="100"></textarea>
+                                <textarea name="remarks" style="outline:none;resize:none;overflow: hidden" list="10" cols="100"></textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
