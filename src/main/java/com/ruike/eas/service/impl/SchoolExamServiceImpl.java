@@ -33,4 +33,8 @@ public class SchoolExamServiceImpl implements SchoolExamService {
     public Integer removeSchoolExamInfo(SchoolExam schoolExam) {
         return schoolExamMapper.updateSchoolExam(schoolExam);
     }
+
+    public List<SchoolExam> selectNotFinishedSchoolExam(SchoolExam schoolExam) {
+        return schoolExamMapper.selectSchoolExamByDate(schoolExam);
+    }
 }

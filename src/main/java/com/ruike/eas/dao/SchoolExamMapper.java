@@ -36,4 +36,11 @@ public interface SchoolExamMapper {
      * @return 受影响行数
      */
     public Integer updateSchoolExam(SchoolExam schoolExam);
+
+    /**
+     * 查询未结束考试的校级考试
+     * @param schoolExam 校级考试对象
+     * @return 集合
+     */
+    List<SchoolExam> selectSchoolExamByDate(SchoolExam schoolExam);
 }

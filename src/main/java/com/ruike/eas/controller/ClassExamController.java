@@ -72,8 +72,10 @@ public class ClassExamController {
         //填入要查找的属性
         schoolExam.setSe_Examtype(examType);
         //结束时间小与当前时间的不显示
-        schoolExam.setDisDate(new Date());
-        List<SchoolExam> schoolExams = schoolExamService.selectBySchoolExamInfo(schoolExam);
+        Date date = new Date();
+        schoolExam.setSe_Stopday(date);
+        schoolExam.setSe_Startday(date);
+        List<SchoolExam> schoolExams = schoolExamService.selectNotFinishedSchoolExam(schoolExam);
         printWriter.print(JSON.toJSONString(schoolExams));
         printWriter.flush();
         printWriter.close();

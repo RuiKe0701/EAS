@@ -61,4 +61,30 @@
         </set>
         where se_Id = #{se_Id}
     </update>
+
+    <select id="selectSchoolExamByDate" parameterType="com.ruike.eas.pojo.SchoolExam" resultMap="schoolexam" >
+        SELECT se.*,c.class_name,tc.th_name FROM schoolexam se
+        INNER JOIN teacher tc on tc.th_id = se.se_createby
+        LEFT join class c on se.class_id = c.class_id
+        <where>
+            <if test="se_Id != null">
+                AND se.se_Id = #{se_Id}
+            </if>
+            <if test="se_Name != null and se_Name != ''">
+                AND  se.se_Name like concat('%',#{se_Name},'%')
+            </if>
+            <if test="se_Startday != null">
+                AND  se.se_Startday &lt;= #{se_Startday}
+            </if>
+            <if test="se_Stopday != null">
+                AND se.se_Stopday  >= #{se_Stopday}
+            </if>
+            <if test="se_Examtype != null">
+                AND se.se_Examtype = #{se_Examtype}
+            </if>
+            <if test="se_State != null">
+                AND se.se_State = #{se_State}
+            </if>
+        </where>
+    </select>
 </mapper>

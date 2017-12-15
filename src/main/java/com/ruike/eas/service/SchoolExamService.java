@@ -28,4 +28,11 @@ public interface SchoolExamService {
      * @return 受影响行数
      */
     public Integer removeSchoolExamInfo(SchoolExam schoolExam);
+
+    /**
+     * 查询未结束的校级安排
+     * @param schoolExam 学校考试安排
+     * @return 集合
+     */
+    List<SchoolExam> selectNotFinishedSchoolExam(SchoolExam schoolExam);
 }
