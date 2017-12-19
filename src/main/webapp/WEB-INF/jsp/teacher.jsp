@@ -92,17 +92,19 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/thstudentinfo" style="color: white">基本信息档案</a></li>
                         <li><a class="J_menuItem" href="/scoringstandardinfo" id="addstud">评分管理</a></li>
-
                         <li><a class="J_menuItem" href="/attendancerecord" id="sww">班级考勤管理</a></li>
                         <li><a class="J_menuItem" href="/jump" id="s">学员批量导入</a></li>
                         <li><a class="J_menuItem" href="/addatdrecord" id="s2">学员考勤卡</a></li>
+                        <li><a class="J_menuItem" href="/addscoringstandard" style="display: none" id="addscoringstandard">学员考勤卡</a></li>
                         <li><a class="J_menuItem" href="/addatd" >学员考勤卡</a></li>
                         <li><a class="J_menuItem" href="/showclasst" id="sss">班级老师管理</a></li>
                         <li><a class="J_menuItem" href="/ddd" >评分管理</a></li>
                         </li>
                         <li><a class="J_menuItem" href="/jumpupgraded" >学生升班</a></li>
+                        <li><a class="J_menuItem xuechu" href="/stuattebcercorerecord" id="stuattebcercorerecord" >学生出勤详情</a></li>
                         </li>
                         <li><a class="J_menuItem" href="/tiaoaddclass" >添加班级</a></li>
+                        <li><a class="J_menuItem" href="/classstuattencercord" >班级学员出勤</a></li>
                         </li>
                         <li><a class="J_menuItem" href="/tzscoreexam" >考试</a></li>
                         </li>
@@ -127,6 +129,7 @@
     <!--左侧导航结束-->
     <!--右侧部分开始-->
     <div id="page-wrapper" class="gray-bg dashbard-1">
+        <button type="button" id="aa">弹</button>
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
@@ -668,6 +671,7 @@
         </a>
     </div>
     <input type="text" id="ss" value="1111">
+
 </div>
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap.min.js?v=3.3.5"></script>
@@ -677,13 +681,42 @@
 <script src="js/hplus.min.js?v=4.0.0"></script>
 <script type="text/javascript" src="js/contabs.min.js"></script>
 <script src="js/plugins/pace/pace.min.js"></script>
-<script type="text/javascript">
-    window.addstu = function(){
-        $("#addstudents").click();
+<script language="javascript" type="text/javascript">
+    $(function () {
+    })
+
+    function btnClick() {
+        document.getElementById("myframe").window.childtest();
     }
+    var cc=""
+    window.addstuattebcercorerecord = function(a,b,d){
+        aa();
+        var url = '/stuattebcercorerecordbystu?classid=' + a+ "&stuid=" + b + "&zhuang="+d+"&l=" + 1;
+        $("#stuattebcercorerecord").attr('href', url)
+        alert($("#stuattebcercorerecord").attr('href'))
+        cc=url;
+        $("#stuattebcercorerecord").click();
+    }
+
+    function aa(){
+        $(".J_menuTab").each(function(){
+            if($(this).attr("data-id")==cc){
+                $(this).find(".fa-times-circle").click();
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    window.addscoringstandard = function(){
+        $("#addscoringstandard").click();
+    }
+
+
+
     window.showstu=function (id) {
-        var url='/showstudent?stuid='+id+"&l="+1;
-        $("#showstudent").attr('href',url)
+        var url = '/showstudent?stuid=' + id + "&l=" + 1;
+        $("#stuattebcercorerecord").
+        $("#showstudent").attr('href', url)
         $("#showstudent").click();
     }
 

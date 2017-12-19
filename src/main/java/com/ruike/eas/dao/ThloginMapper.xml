@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruike.eas.dao.ThloginMapper">
+    
+    <select id="selectbynumberandpwd"  resultType="com.ruike.eas.pojo.Thlogin">
+        SELECT * FROM thlogin
+        <where>
+            <if test="thl_number != null and thl_number !=''">
+               and thl_number = #{thl_number}
+            </if>
+            <if test="thl_password != null and thl_password !=''">
+               and thl_password = #{thl_password}
+            </if>
+        </where>
+    </select>
+</mapper>

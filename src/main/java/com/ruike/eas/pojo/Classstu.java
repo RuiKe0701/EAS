@@ -6,6 +6,15 @@ public class Classstu implements Serializable{
     private Integer sc_id;
     private Integer stu_id;
     private Integer class_id;
+    private String stuname;
+    public String getStuname() {
+        return stuname;
+    }
+
+    public void setStuname(String stuname) {
+        this.stuname = stuname;
+    }
+
     public Integer getSc_id() {
         return sc_id;
     }
