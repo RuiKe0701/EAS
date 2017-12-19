@@ -53,7 +53,7 @@ public class StudnetServiceImpl implements StudentService {
     }
     //批量添加学生
     public Integer addAllStudnet(List<Stu> stus) {
-        int count=studentMapper.insertByBatchByStu(stus);
+        int count = studentMapper.insertByBatchByStu(stus);
         if (count > 0) {
             List<Classstu> classstus = new ArrayList<Classstu>();
             for (Stu stu : stus) {
@@ -84,6 +84,20 @@ public class StudnetServiceImpl implements StudentService {
             count = -1;
         }
         return count;
+    }
+
+    public List<Stu> selectPagerStudentInfo(Stu stu) {
+        List<Stu> stus = null;
+        //总条数
+        Integer count = studentMapper.selectPagerStuInfoCount(stu);
+        //总数不等于0
+        if (count != 0){
+            //初始化分页属性
+            stu.init(20,count);
+            //根据条件分页查询学生信息
+            stus = studentMapper.selectPagerStuInfo(stu);
+        }
+        return stus;
     }
 }
 

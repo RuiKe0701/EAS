@@ -181,4 +181,34 @@ public class StudentController {
             }
         }
     }
+
+    /**
+     * 跳转教导主任查看学生信息页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("/anotherstudentinfo.do")
+    public String anotherStudentInfo(HttpServletRequest request){
+        Stu stu = new Stu();
+        //查询第一页的所有学生信息
+        stu.setList(studentService.selectPagerStudentInfo(stu));
+        request.setAttribute("pager",stu);
+        return "anotherstudentinfo";
+    }
+
+    /**
+     * ajax查询学生信息（教导主任查看）
+     * @param stu 学生对象
+     * @param printWriter
+     */
+    @RequestMapping("/anotherajaxstudentinfo.do")
+    @ResponseBody
+    public void  anotherAjaxStudentInfo(Stu stu ,PrintWriter printWriter){
+        List<Stu> stus = studentService.selectPagerStudentInfo(stu);
+        stu.setList(stus);
+        String s = JSON.toJSONString(stu);
+        printWriter.print(s);
+        printWriter.flush();
+        printWriter.close();
+    }
 }

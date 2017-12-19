@@ -110,6 +110,9 @@
                         </li>
                         <li><a class="J_menuItem" href="/tzstuscore.do" >班级成绩</a></li>
                         </li>
+                        <li><a class="J_menuItem" href="/anotherstudentinfo.do" >学生档案（教导主任权限）</a></li>
+                        </li>
+
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
                             <span class="label label-danger pull-right">推荐</span></a>
                         </li>

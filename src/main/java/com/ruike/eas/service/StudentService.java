@@ -59,4 +59,11 @@ public interface StudentService {
      * @return 受影响行数
      */
     public Integer addStuAndClass(Stu stu);
+
+    /**
+     * 根据条件分页查询学生信息
+     * @param stu 学生信息
+     * @return 集合
+     */
+    List<Stu> selectPagerStudentInfo(Stu stu);
 }
