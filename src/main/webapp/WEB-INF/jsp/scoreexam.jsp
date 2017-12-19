@@ -37,6 +37,8 @@
 
     <base target="_blank">
     <link rel="stylesheet" href="select/dist/css/bootstrap-select.css">
+    <link href="table/css/sweet-alert.css" rel="stylesheet">
+    <script src="table/js/sweet-alert.min.js"></script>
 
 </head>
 <style type="text/css">
@@ -391,7 +393,28 @@
             url:'/addschoolexam',
             data:$("#saveexam").serialize(),
             success:function (data) {
-                alert(data);
+                if (data == 1){
+                    swal({
+                        title: "success",
+                        text: "保存成功!",
+                        type: "success",
+                        showCancelButton: false,
+                        cancelButtonClass: 'btn-secondary',
+                        confirmButtonClass: 'btn-danger',
+                        confirmButtonText: '确定!'
+                    })
+                    $("#guanadd").click();
+                }else {
+                    swal({
+                        title: "ERROR",
+                        text: "保存失败!",
+                        type: "error",
+                        showCancelButton: false,
+                        cancelButtonClass: 'btn-secondary',
+                        confirmButtonClass: 'btn-danger',
+                        confirmButtonText: '确定!'
+                    })
+                };
             },
             error:function () {
 

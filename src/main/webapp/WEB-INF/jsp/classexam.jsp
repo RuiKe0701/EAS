@@ -438,7 +438,12 @@
         $("#updatece").click(function () {
             ajaxUpdate();
         });
+        $("#se_Id").change(function () {
+            var se_Id = $(this).val();
+
+        });
     });
+
     
     function ajaxUpdate() {
         $("#guanupdate").click();

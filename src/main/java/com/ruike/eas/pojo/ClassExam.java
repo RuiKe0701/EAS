@@ -122,6 +122,7 @@ public class ClassExam {
     this.stopDate = stopDate;
   }
 
+  //考试类型
   private Integer se_Examtype;
 
   public Integer getSe_Examtype() {
