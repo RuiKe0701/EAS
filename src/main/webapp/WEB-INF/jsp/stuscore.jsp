@@ -273,7 +273,8 @@
                                     <td>${cscore.cs_Ctavg}</td>
                                     <td>${cscore.cs_Avg}</td>
                                     <td class="center">
-                                        <input value="${cscore.cs_Id}" type="hidden" name="cs_Id" class="leaveidxian">
+                                        <input value="${cscore.ce_Id}" type="hidden" name="cs_Id" class="leaveidxian">
+                                        <input value="${cscore.class_id}" type="hidden">
                                         <button class="btn-success btn btn-xs xiugai" type="button"
                                                 style="padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white">
                                             详情查看
@@ -346,6 +347,11 @@
             //调用根据班级id ajax查询班级成绩信息
             ajaxSelectScoreInfo($(this).val());
         })
+        $("body").on("click",".xiugai",function () {
+            var classid = $(this).prev().val();
+            var ce_id = $(this).prev().prev().val();
+
+        });
 
     });
     

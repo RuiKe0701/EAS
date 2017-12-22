@@ -47,4 +47,11 @@ public interface ClassExamService {
      * @return 状态码
      */
     Integer insertBatchClassExam(List<StuScore> stuScores , ClassScore classScore ,Integer class_id);
+
+    /**
+     * 查询指定班级已录入成绩的班级考试
+     * @param classExam 班级考试
+     * @return 集合
+     */
+    List<ClassExam> selectExamHasBeen(ClassExam classExam);
 }

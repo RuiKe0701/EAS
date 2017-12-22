@@ -18,20 +18,25 @@
 
     <!-- Common plugins -->
     <link href="table/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Common plugins -->
     <link href="table/css/simple-line-icons.css" rel="stylesheet">
     <link href="table/css/font-awesome.min.css" rel="stylesheet">
-    <link href="table/css/pace.css" rel="stylesheet">
-    <link href="table/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link href="table/css/pace.css" rel="stylesheet"><link href="table/css/jasny-bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="table/css/nanoscroller.css">
     <link rel="stylesheet" href="table/css/metismenu.min.css">
-    <!-- dataTables -->
+    <!--&lt;!&ndash; dataTables &ndash;&gt;-->
     <link href="table/css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
     <link href="table/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
     <!--template css-->
     <link href="table/css/style.css" rel="stylesheet">
+    <link href="table/css/sweet-alert.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+
+
+
+    <base target="_blank">
+    <link rel="stylesheet" href="select/dist/css/bootstrap-select.css">
     <style type="text/css">
         .yemian{
             background-color:white;border:0.1px solid gainsboro;
@@ -54,15 +59,21 @@
             background-color: white;
             color: #2A2E36
         }
+        .ltselect{
+            background-color: #5cc0de;border: 0;border-radius: 3px;color: white;height: 22px;width:50px;
+        }
+        .ltsop{
+            background-color: white;color: #2A2E36
+        }
     </style>
-    <script src="table/js/html5shiv.min.js"></script>
-    <script src="js/respond.min.js"></script>
 
     <![endif]-->
 </head>
 <body class="gray-bg">
 
     <!--start page content-->
+
+    <section style="width: 96.8%;margin-left: 1.6%;margin-top: 1.6%">
 
     <div class="row">
         <div class="col-md-12">
@@ -147,19 +158,20 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <div id="curr" style="float: right">
-                        <button class="yemian" value="${requestScope.pager.currentPage-1}">< 上一页</button>
-                        <c:forEach begin="1" end="${requestScope.pager.totalPages}" var="i">
-                            <c:if test="${i == requestScope.pager.currentPage}">
-                                <button class="yemian" value="${i}" style="background-color: gainsboro">${i}</button>
-                            </c:if>
-                            <c:if test="${i != requestScope.pager.currentPage}">
-                                <button class="yemian" value="${i}">${i}</button>
-                            </c:if>
-                        </c:forEach>
-                        <button class="yemian"value="${requestScope.pager.currentPage+1}" >下一页 ></button>
-                    </div>
-
+                    <c:if test="${requestScope.pager.totalPages > 1}">
+                        <div id="curr" style="float: right">
+                            <button class="yemian" value='${requestScope.pager.currentPage-1}'>< 上一页</button>
+                            <c:forEach begin="1" end="${requestScope.pager.totalPages}" var="i">
+                                <c:if test="${i == requestScope.pager.currentPage}">
+                                    <button class="yemian" value="${i}" style="background-color: gainsboro">${i}</button>
+                                </c:if>
+                                <c:if test="${i != requestScope.pager.currentPage}">
+                                    <button class="yemian" value="${i}">${i}</button>
+                                </c:if>
+                            </c:forEach>
+                            <button class="yemian" value="${requestScope.pager.currentPage+1}" >下一页 ></button>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div>

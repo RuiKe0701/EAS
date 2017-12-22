@@ -1,5 +1,8 @@
 package com.ruike.eas.pojo;
 
+import com.ruike.eas.util.DateUtil;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 
@@ -86,6 +89,7 @@ public class StuScore {
     this.stuc_Createdate = stuc_Createdate;
   }
 
+  //学号
   private String stu_no;
 
   public String getStu_no() {
@@ -94,5 +98,82 @@ public class StuScore {
 
   public void setStu_no(String stu_no) {
     this.stu_no = stu_no;
+  }
+
+  //学生id
+  private Integer stu_id;
+  //学生姓名
+  private String stu_name;
+  //参加考试日期
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  private Date ce_Examday;
+
+  //班级id
+  private Integer class_id;
+  //班级名
+  private String class_name;
+
+  //开始名称
+  private String ce_Name;
+
+  //学生年级id
+  private Integer gread_id;
+
+  public String getCe_Name() {
+    return ce_Name;
+  }
+
+  public void setCe_Name(String ce_Name) {
+    this.ce_Name = ce_Name;
+  }
+
+  public Integer getGread_id() {
+    return gread_id;
+  }
+
+  public void setGread_id(Integer gread_id) {
+    this.gread_id = gread_id;
+  }
+
+  public Date getCe_Examday() {
+    return ce_Examday;
+  }
+  public String getCe_Examdays() {
+    return this.ce_Examday!=null ? DateUtil.dateFormat(this.ce_Examday,"yyyy-MM-dd") :"";
+  }
+  public void setCe_Examday(Date ce_Examday) {
+    this.ce_Examday = ce_Examday;
+  }
+
+  public String getStu_name() {
+    return stu_name;
+  }
+
+  public void setStu_name(String stu_name) {
+    this.stu_name = stu_name;
+  }
+
+  public String getClass_name() {
+    return class_name;
+  }
+
+  public void setClass_name(String class_name) {
+    this.class_name = class_name;
+  }
+
+  public Integer getStu_id() {
+    return stu_id;
+  }
+
+  public void setStu_id(Integer stu_id) {
+    this.stu_id = stu_id;
+  }
+
+  public Integer getClass_id() {
+    return class_id;
+  }
+
+  public void setClass_id(Integer class_id) {
+    this.class_id = class_id;
   }
 }

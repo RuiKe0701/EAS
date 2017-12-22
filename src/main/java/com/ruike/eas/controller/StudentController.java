@@ -73,6 +73,7 @@ public class StudentController {
     @RequestMapping("/thselecstudentbystu")
     @ResponseBody
     public void selectStudentByStu(PrintWriter printWriter,String classname,String stuname,Integer sturts){
+        String jsonString = "";
         //根据班级名称查询
         if(classname!=null&&classname!=""){
             Classteacher classteacher=new Classteacher();
@@ -91,18 +92,13 @@ public class StudentController {
                 stu.setClasses(s);
                 List<Stu> stus= studentService.selectStuByClass(stu);
                 if(stus!=null) {
-                    String jsonString = JSON.toJSONString(stus);
-                    printWriter.write(jsonString);
-                    printWriter.flush();
-                    printWriter.close();
+                    jsonString = JSON.toJSONString(stus);
                 }else{
-                    String jsonString = JSON.toJSONString(0);
-                    printWriter.write(jsonString);
-                    printWriter.flush();
-                    printWriter.close();
+                    jsonString = JSON.toJSONString(0);
                 }
+                printWriter.write(jsonString);
             }else{
-                String jsonString = JSON.toJSONString(0);
+                jsonString = JSON.toJSONString(0);
                 printWriter.write(jsonString);
                 printWriter.flush();
                 printWriter.close();
@@ -114,17 +110,15 @@ public class StudentController {
             List<Stu> stuList=new ArrayList<Stu>();
             stuList=studentService.selectByStudent(stu1);
             if(stuList!=null) {
-                String jsonString = JSON.toJSONString(stuList);
+                jsonString = JSON.toJSONString(stuList);
                 printWriter.write(jsonString);
-                printWriter.flush();
-                printWriter.close();
             }else{
-                    String jsonString = JSON.toJSONString(0);
-                    printWriter.write(jsonString);
-                    printWriter.flush();
-                    printWriter.close();
+                jsonString = JSON.toJSONString(0);
+                printWriter.write(jsonString);
             }
         }
+        printWriter.flush();
+        printWriter.close();
     }
 
     @RequestMapping("/ddd")
