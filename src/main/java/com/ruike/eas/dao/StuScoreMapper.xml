@@ -7,10 +7,20 @@
 
     </resultMap>
     <select id="selectStuScore" parameterType="com.ruike.eas.pojo.StuScore" resultMap="stuscore">
-      SELECT * FROM stuscore
-      <where>
+        SELECT sc.*,ca.class_name,st.stu_name,cx.ce_Examday,cx.ce_name FROM stuscore sc,stu st,class ca,classexam cx
+        <where>
+            sc.stu_id = st.stu_id and st.class_id = ca.class_id AND cx.ce_id = sc.ce_id
           <if test="ce_Id != null">
-              and ce_Id = #{ce_Id}
+              and sc.ce_Id = #{ce_Id}
+          </if>
+          <if test="class_id != null">
+              and st.class_id = #{class_id}
+          </if>
+          <if test="stuc_State != null">
+              and stuc_State = #{stuc_State}
+          </if>
+          <if test="stu_id != null">
+              and st.stu_id = #{stu_id}
           </if>
       </where>
     </select>

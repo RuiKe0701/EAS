@@ -73,6 +73,7 @@ public class StudentController {
     @RequestMapping("/thselecstudentbystu")
     @ResponseBody
     public void selectStudentByStu(PrintWriter printWriter,String classname,String stuname,Integer sturts){
+        String jsonString = "";
         //根据班级名称查询
         if(classname!=null&&classname!=""){
             Classteacher classteacher=new Classteacher();
@@ -91,18 +92,13 @@ public class StudentController {
                 stu.setClasses(s);
                 List<Stu> stus= studentService.selectStuByClass(stu);
                 if(stus!=null) {
-                    String jsonString = JSON.toJSONString(stus);
-                    printWriter.write(jsonString);
-                    printWriter.flush();
-                    printWriter.close();
+                    jsonString = JSON.toJSONString(stus);
                 }else{
-                    String jsonString = JSON.toJSONString(0);
-                    printWriter.write(jsonString);
-                    printWriter.flush();
-                    printWriter.close();
+                    jsonString = JSON.toJSONString(0);
                 }
+                printWriter.write(jsonString);
             }else{
-                String jsonString = JSON.toJSONString(0);
+                jsonString = JSON.toJSONString(0);
                 printWriter.write(jsonString);
                 printWriter.flush();
                 printWriter.close();
@@ -114,17 +110,15 @@ public class StudentController {
             List<Stu> stuList=new ArrayList<Stu>();
             stuList=studentService.selectByStudent(stu1);
             if(stuList!=null) {
-                String jsonString = JSON.toJSONString(stuList);
+                jsonString = JSON.toJSONString(stuList);
                 printWriter.write(jsonString);
-                printWriter.flush();
-                printWriter.close();
             }else{
-                    String jsonString = JSON.toJSONString(0);
-                    printWriter.write(jsonString);
-                    printWriter.flush();
-                    printWriter.close();
+                jsonString = JSON.toJSONString(0);
+                printWriter.write(jsonString);
             }
         }
+        printWriter.flush();
+        printWriter.close();
     }
 
     @RequestMapping("/ddd")
@@ -180,5 +174,35 @@ public class StudentController {
                 printWriter.close();
             }
         }
+    }
+
+    /**
+     * 跳转教导主任查看学生信息页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("/anotherstudentinfo.do")
+    public String anotherStudentInfo(HttpServletRequest request){
+        Stu stu = new Stu();
+        //查询第一页的所有学生信息
+        stu.setList(studentService.selectPagerStudentInfo(stu));
+        request.setAttribute("pager",stu);
+        return "anotherstudentinfo";
+    }
+
+    /**
+     * ajax查询学生信息（教导主任查看）
+     * @param stu 学生对象
+     * @param printWriter
+     */
+    @RequestMapping("/anotherajaxstudentinfo.do")
+    @ResponseBody
+    public void  anotherAjaxStudentInfo(Stu stu ,PrintWriter printWriter){
+        List<Stu> stus = studentService.selectPagerStudentInfo(stu);
+        stu.setList(stus);
+        String s = JSON.toJSONString(stu);
+        printWriter.print(s);
+        printWriter.flush();
+        printWriter.close();
     }
 }

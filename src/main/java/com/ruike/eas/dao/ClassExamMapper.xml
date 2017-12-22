@@ -60,17 +60,31 @@
     </update>
 
     <select id="selectByClassExamByDate" parameterType="com.ruike.eas.pojo.ClassExam" resultMap="classexam">
-        SELECT ce.*,se.se_examtype FROM classexam ce
+    SELECT ce.*,se.se_examtype FROM classexam ce
+    LEFT JOIN stuscore sc on sc.ce_id = ce.ce_id
+    INNER JOIN schoolexam se on se.se_id = ce.se_id
+    <where>
+        <if test="class_Id != null">
+            AND ce.class_Id = #{class_Id}
+        </if>
+        <if test="ce_Examday != null">
+            AND ce.ce_Examday &lt; #{ce_Examday}
+        </if>
+        AND sc.stu_id IS NULL
+    </where>
+</select>
+    <select id="selectClassExamHasBeen" parameterType="com.ruike.eas.pojo.ClassExam" resultMap="classexam">
+       select * from classexam
+       WHERE ce_Id IN (
+        SELECT ce.ce_Id FROM classexam ce
         LEFT JOIN stuscore sc on sc.ce_id = ce.ce_id
         INNER JOIN schoolexam se on se.se_id = ce.se_id
         <where>
             <if test="class_Id != null">
                 AND ce.class_Id = #{class_Id}
             </if>
-            <if test="ce_Examday != null">
-                AND ce.ce_Examday &lt; #{ce_Examday}
-            </if>
-                AND sc.stu_id IS NULL
+            AND sc.stu_id IS NOT NULL
         </where>
+       )
     </select>
 </mapper>

@@ -3,9 +3,7 @@ package com.ruike.eas.controller;
 import com.alibaba.fastjson.JSON;
 import com.ruike.eas.pojo.*;
 import com.ruike.eas.pojo.Class;
-import com.ruike.eas.service.ClassExamService;
-import com.ruike.eas.service.ClassScoreService;
-import com.ruike.eas.service.ClassteacherService;
+import com.ruike.eas.service.*;
 import com.ruike.eas.util.ExcelOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +33,15 @@ public class StuScoreController {
 
     @Resource
     private ClassScoreService classScoreService;
+
+    @Resource
+    private StuScoreService stuScoreService;
+
+    @Resource
+    private StudentService studentService;
+
+    @Resource
+    private ClassService classService;
 
     @RequestMapping("/tzstuscore.do")
     public String tzStuScore(HttpServletRequest request){
@@ -114,6 +121,51 @@ public class StuScoreController {
         //根据班级查询考试
         List<ClassScore> classScores = classScoreService.selectClassScoreByClass(classScore);
         printWriter.print(classScores!=null && classScores.size()>0 ?JSON.toJSONString(classScores):0);
+        printWriter.flush();
+        printWriter.close();
+    }
+
+    @RequestMapping("/tzstuscoreinfo.do")
+    public String tzStuScoreInfo(StuScore stuScore ,HttpServletRequest request){
+        Class c = new Class();
+        //查询所有班级
+        Integer gread_id = stuScore!=null&&stuScore.getGread_id()!=null?stuScore.getGread_id():1;
+        c.setGrade_id(gread_id);
+        List<Class> classes = classService.selectClass(c);
+        request.setAttribute("classes",classes);
+
+        ClassExam classExam = new ClassExam();
+        //如果第一次进此控制器则用查询出来的第一个班级
+        Integer class_id = stuScore!=null&&stuScore.getClass_id()!=null?stuScore.getClass_id():classes.get(0).getClass_id();
+        classExam.setClass_Id(class_id);
+        //查询此班级参加的考试
+        List<ClassExam> classExams = classExamService.selectExamHasBeen(classExam);
+        if (classExams != null && classExams.size() > 0) {
+            request.setAttribute("classExams",classExams);
+            //如果为null则为第一次进入 或者前段改变了选择班级
+            stuScore.setCe_Id(stuScore!=null&&stuScore.getCe_Id()!=null?stuScore.getCe_Id():classExams.get(0).getCe_Id());
+            stuScore.setClass_id(class_id);
+            stuScore.setGread_id(gread_id);
+            //查询指定班级指定考试的学生成绩
+            List<StuScore> stuScores = stuScoreService.selectStuScore(stuScore);
+            request.setAttribute("stuScores",stuScores);
+            Stu stu = new Stu();
+            Class cc = new Class();
+            cc.setClass_id(class_id);
+            stu.setClasses(cc);
+            List<Stu> stus = studentService.selectStuByClass(stu);
+            request.setAttribute("stus",stus);
+        }
+        request.setAttribute("stuScore",stuScore);
+        return "stuscoreinfo";
+    }
+
+    @RequestMapping("/ajaxstuscoreinfo.do")
+    @ResponseBody
+    public void ajaxClassExamInfo(StuScore stuScore ,PrintWriter printWriter){
+        //查询指定班级指定考试的学生成绩
+        List<StuScore> stuScores = stuScoreService.selectStuScore(stuScore);
+        printWriter.print(stuScores!=null&&stuScores.size()>0?JSON.toJSONString(stuScores):0);
         printWriter.flush();
         printWriter.close();
     }

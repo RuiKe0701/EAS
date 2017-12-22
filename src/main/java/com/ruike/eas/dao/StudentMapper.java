@@ -20,4 +20,18 @@ public interface StudentMapper {
     public List<Stu> selectStuclassid(Stu stu);
 
     public Integer insertByBatchByStu(List<Stu> stus);
+
+    /**
+     * 根据条件分页查询学生信息
+     * @param stu 学生对象
+     * @return  集合
+     */
+    List<Stu> selectPagerStuInfo(Stu stu);
+
+    /**
+     * 根据条件查询学生信息总条数
+     * @param stu 学生信息
+     * @return 集合
+     */
+    Integer selectPagerStuInfoCount(Stu stu);
 }

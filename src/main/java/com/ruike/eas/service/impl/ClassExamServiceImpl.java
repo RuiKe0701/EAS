@@ -71,4 +71,8 @@ public class ClassExamServiceImpl implements ClassExamService {
         }
         return count!=0?1:0;
     }
+
+    public List<ClassExam> selectExamHasBeen(ClassExam classExam) {
+        return classExamMapper.selectClassExamHasBeen(classExam);
+    }
 }

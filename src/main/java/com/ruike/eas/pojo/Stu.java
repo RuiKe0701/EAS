@@ -1,12 +1,13 @@
 package com.ruike.eas.pojo;
 
 import com.ruike.eas.util.DateUtil;
+import com.ruike.eas.util.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class Stu {
+public class Stu extends Page{
   private Integer stu_id;
   private String stu_name;
   private String stu_no;
@@ -204,10 +205,10 @@ public class Stu {
   }
   //格式化输出入学日期
   public String getStu_startdays() {
-    return DateUtil.dateFormat(this.getStu_startday(), "yyyy-MM-dd");
+    return this.getStu_startday() !=null ? DateUtil.dateFormat(this.getStu_startday(), "yyyy-MM-dd"):"";
   }
   //格式化输出出生日期
   public String getStu_birthdays() {
-    return DateUtil.dateFormat(this.getStu_birthday(), "yyyy-MM-dd");
+    return this.getStu_birthday()!=null?DateUtil.dateFormat(this.getStu_birthday(), "yyyy-MM-dd"):"";
   }
 }
