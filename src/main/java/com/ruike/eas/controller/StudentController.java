@@ -184,6 +184,7 @@ public class StudentController {
     @RequestMapping("/anotherstudentinfo.do")
     public String anotherStudentInfo(HttpServletRequest request){
         Stu stu = new Stu();
+        stu.setStu_state(0);
         //查询第一页的所有学生信息
         stu.setList(studentService.selectPagerStudentInfo(stu));
         request.setAttribute("pager",stu);

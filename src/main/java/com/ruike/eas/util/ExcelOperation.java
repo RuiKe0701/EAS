@@ -57,7 +57,7 @@ public class ExcelOperation {
                 stu.setStu_carde((String) getCellFormatValue(row.getCell(8)));
                 stu.setStu_education((String) getCellFormatValue(row.getCell(9)));
                 stu.setStu_email((String) getCellFormatValue(row.getCell(10)));
-                stu.setStu_state(1);
+                stu.setStu_state(0);
                 stu.setStatus(0);
                 stu.setCrateday(new Date());
                 stu.setClass_id(class_id);

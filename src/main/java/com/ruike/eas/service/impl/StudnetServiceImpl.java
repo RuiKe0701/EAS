@@ -112,7 +112,7 @@ public class StudnetServiceImpl implements StudentService {
         //总数不等于0
         if (count != 0){
             //初始化分页属性
-            stu.init(20,count);
+            stu.init(10,count);
             //根据条件分页查询学生信息
             stus = studentMapper.selectPagerStuInfo(stu);
         }

@@ -47,12 +47,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          select c.* , cs.class_name as classname from classattendance as c,class as cs
      <where>
          c.class_id=cs.class_id
-             <if test="class_id!=null">
-                 and  cs.class_id = #{class_id}
+
+             <if test="grade!=null">
+                 and cs.grade_id=#{grade}
              </if>
-             <if test="gradeid!=null">
-                 and cs.grade_id=#{gradeid}
-             </if>
+         <if test="cad_date!=null">
+             and  c.cad_date = #{cad_date}
+         </if>
          </where>
          ORDER BY c.cad_date DESC  LIMIT 0,50
     </select>

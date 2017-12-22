@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class AttendanceRecordController {
                 classid = classes.get(0).getClass_id();
             }
             Classattendance classattendance = new Classattendance();
-            classattendance.setGradeid(1);
+            classattendance.setGrade(1);
             List<Classattendance> classattendances = attendanceRecordService.selectclassstdBygrade(classattendance);
             for (Classattendance classattendance1 : classattendances) {
                 System.out.println(classattendance1.getCad_name());
@@ -67,6 +69,36 @@ public class AttendanceRecordController {
             request.setAttribute("quan",1);
             request.setAttribute("classattendances", classattendances);
             return "classattencercord";
+        }
+    }
+    //根据年级和班级和日期 查询
+    @RequestMapping("/selectclassatdbydateandgrade")
+    public void Selectclassbygradeanddate(Integer grade,String xuandate,PrintWriter printWriter){
+        Date date=new Date();
+        try
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            date = sdf.parse(xuandate);
+        }
+        catch (ParseException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        if(grade!=null&&date!=null){
+            Classattendance classattendance=new Classattendance();
+            System.out.println(grade);
+            classattendance.setGrade(grade);
+            classattendance.setCad_date(date);
+            List<Classattendance> classattendances=attendanceRecordService.selectclassstdBygrade(classattendance);
+            String jsonString = JSON.toJSONString(classattendances);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
+        }else {
+            String jsonString = JSON.toJSONString(-1);
+            printWriter.write(jsonString);
+            printWriter.flush();
+            printWriter.close();
         }
     }
     //查询班级出勤详情

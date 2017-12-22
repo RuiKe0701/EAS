@@ -8,15 +8,17 @@ import java.util.Date;
 
 public class Classattendance implements Serializable {
 
-    private Integer gradeid;
-
-    public Integer getGradeid() {
-        return gradeid;
+    public Integer getGrade() {
+        return grade;
     }
 
-    public void setGradeid(Integer gradeid) {
-        this.gradeid = gradeid;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
+
+    private Integer grade;
+
+
 
     /*
         班级出勤率主键

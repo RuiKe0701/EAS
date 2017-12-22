@@ -112,7 +112,7 @@
                 <c:if test="${quan==1}">
                     <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
                         <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
-                            <select id="class2"  class="selectpicker show-tick form-control" onchange="selectclass(this.value)" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+                            <select id="gradeid"  class="selectpicker show-tick form-control" onchange="selectclass(this.value)" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
                                 <optgroup label="test" data-subtext="optgroup subtext">
                                     <option value="1">s1</option>
 
@@ -167,7 +167,7 @@
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 15px;padding-bottom: 3px;">
                     <div class="col-sm-3">
                         <label>选择一个日期：
-                        <input type="date">
+                        <input type="date" id="xuandate">
                             <button class="btn btn-primary" id="selectall">查看所有班级</button>
                         </label>
                     </div>
@@ -297,12 +297,83 @@
 <script type="text/javascript">
     //查询所有班级根据具体日期
     function  selectall() {
-        $("#selectall").click
-    }
-    //根据年级差班级
-    function selectclass(){
+        $("#selectall").click(function () {
+            var grade=$("#gradeid").val();
+            var xuandate=$("#xuandate").val();
+            if(xuandate==""){
+                swal({
+                    title: "",
+                    text: "SORRY!请选择一个日期在进行全部查询！",
+                    type: "error",
+                    showCancelButton: true,
+                    cancelButtonClass: 'btn-secondary',
+                    confirmButtonClass: 'btn-danger',
+                    confirmButtonText: '确定!'
+                });
+            }else {
+                alert(grade);
+                alert(xuandate);
+                $.ajax({
+                    type: "post",
+                    url: "/selectclassatdbydateandgrade",
+                    data:{"grade":grade,"xuandate":xuandate},
+                    dataType: "json",
+                    success: function (data) {
+                        alert(data);
+                        if(data==-1){
+                            swal({
+                                title: "",
+                                text: "SORRY!系统繁忙请稍后再试！",
+                                type: "error",
+                                showCancelButton: true,
+                                cancelButtonClass: 'btn-secondary',
+                                confirmButtonClass: 'btn-danger',
+                                confirmButtonText: '确定!'
+                            });}else {
+                            $("#classatd").html("");
+                            var str=" <table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                                "                            <thead>\n" +
+                                "                            <tr>\n" +
+                                "                                <th>班级名</th>\n" +
+                                "                                <th>日期</th>\n" +
+                                "                                <th>出勤统计名</th>\n" +
+                                "                                <th>次数</th>\n" +
+                                "                                <th>出勤率</th>\n" +
+                                "                                <th>操作</th>\n" +
+                                "                            </tr>\n" +
+                                "                            </thead>\n" +
+                                "                            <tbody id=\"showstu\">\n"
+                            $.each(data, function (i, item) {
 
+                                str+="   <tr>   <td>"+item.classname+"</td>\n" +
+                                    "                                    <td>"+item.cad_date+"</td>\n" +
+                                    "                                    <td>"+item.cad_name+"</td>\n" +
+                                    "                                    <td>"+item.cad_number+"</td>"
+                                if(item.cad_rate>=80){
+                                    str+="  <td><span class=\"label label-info\">"+item.cad_rate+"</span></td>"
+                                }else if((item.cad_rate>=60)){
+                                    str+="  <td><span class=\"label label-success\">"+item.cad_rate+"</span></td>"
+                                }else if((item.cad_rate<=60)){
+                                    str+="  <td><span class=\"label label-warning\">"+item.cad_rate+"</span></td>"
+                                }
+                                str+=" <td class=\"center\">\n" +
+                                    "                                        <input value=\""+item.cad_id+"\" type=\"hidden\" class=\"cadid\">\n" +
+                                    "                                        <button class=\"xiangqing btn-success btn btn-xs\"  type=\"button\" style=\"padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white\" onclick=\"xiangqing("+item.cad_id+")\"  data-toggle=\"modal\" data-target=\"#myModal\">查看</button></td>\n" +
+                                    "                                </tr>";
+
+                            })
+                            str+=" </tbody> </table>"
+                            $("#classatd").append(str);
+                            $('#datatable').dataTable();}
+                    },
+                    error: function () {
+                        alert("系统异常，请稍后重试！");
+                    }
+                })
+            }
+        })
     }
+
     //添加学生信息页面跳转
     function addstudent() {
         1.//根据iframe的id获取对象
@@ -490,6 +561,7 @@
             alert("sds")
             parent.showstu(1);
         })
+        selectall();
     })
 
 </script>

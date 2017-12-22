@@ -251,6 +251,7 @@
                     strs += "</tbody></table>"
                     var pages = "  <div id=\"curr\" style=\"float: right\">" +
                         "<button class=\"yemian\" value='"+(data.currentPage-1)+"'>< 上一页</button>";
+                    alert(data.totalPages);
                     for (var i = 1; i <= data.totalPages ; i++){
                         if (i == data.currentPage){
                             pages += "<button class=\"yemian\" value=\""+i+"\" style=\"background-color: gainsboro\">"+i+"</button>"
