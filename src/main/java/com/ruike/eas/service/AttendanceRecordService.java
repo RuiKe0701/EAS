@@ -13,6 +13,9 @@ public interface AttendanceRecordService {
     //根据班级考勤id查详情
     public List<Stuattendance> selectstuatdlist(Stuattendance stuattendance);
     //根据老师id获取老师历史带的班级
-
     public List<Classteacher> selectoldclassbytecaherid(Classteacher classteacher);
+       /*
+    查询默认的主任年级查看班级出勤率
+     */
+       public List<Classattendance> selectclassstdBygrade(Classattendance classattendance);
 }

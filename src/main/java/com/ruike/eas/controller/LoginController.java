@@ -1,5 +1,6 @@
 package com.ruike.eas.controller;
 
+import com.ruike.eas.pojo.Teacher;
 import com.ruike.eas.pojo.Thlogin;
 import com.ruike.eas.service.ThloginService;
 import org.springframework.stereotype.Controller;
@@ -31,8 +32,13 @@ public class LoginController {
             thlogin.setThl_password(password);
             Thlogin thlogin1=thloginService.dologin(thlogin);
             if(thlogin1!=null&&thlogin1.getTh_id()!=null){
-                request.getSession().setAttribute("th",thlogin1);
-                return "redirect:/studentinfo";
+                request.getSession().setAttribute("th",thlogin1.getTh_id());
+                Teacher teacher=new Teacher();
+                teacher.setTh_id(thlogin1.getTh_id());
+                Teacher teacher1=thloginService.TeacherInfo(teacher);
+                request.setAttribute("teachers",teacher1);
+                System.out.println(teacher1.getTh_name());
+                return "teacher";
             }
         }
         return "studentinfo";

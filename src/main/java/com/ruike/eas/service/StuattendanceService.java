@@ -14,4 +14,7 @@ public interface StuattendanceService {
  根据班级id获取班级学生
   */
     public List<Classstu> selectClassstubyclassid(Classstu classstu);
+    /*
+    根据年级获取班级
+     */
 }

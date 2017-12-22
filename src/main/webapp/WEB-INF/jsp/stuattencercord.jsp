@@ -329,20 +329,20 @@
     }
 
     function xiangiqng() {
-        $(".xiangqing").click(function () {
-            var newclass=$("#classid").val();
-            var oldclass=$("#oldclass").val();
-            var b=$(this).parent().find(".sadid").val();
-            var a;
-            var d;
-            if(newclass!=null){
-                a=newclass;
-                d=0;
-            }else {
-                a=oldclass;
-                d=1;
-            }
-            parent.addstuattebcercorerecord(a,b,d);
+        $("body").on("click",".xiangqing",function(){
+                var newclass=$("#classid").val();
+                var oldclass=$("#oldclass").val();
+                var b=$(this).parent().find(".sadid").val();
+                var a;
+                var d;
+                if(newclass!=null){
+                    a=newclass;
+                    d=0;
+                }else {
+                    a=oldclass;
+                    d=1;
+                }
+                parent.addstuattebcercorerecord(a,b,d);
             })
     }
     function selelctbyclassid() {

@@ -7,9 +7,20 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Classattendance implements Serializable {
+
+    private Integer gradeid;
+
+    public Integer getGradeid() {
+        return gradeid;
+    }
+
+    public void setGradeid(Integer gradeid) {
+        this.gradeid = gradeid;
+    }
+
     /*
-    班级出勤率主键
-     */
+        班级出勤率主键
+         */
     private Integer cad_id;
     /*
     班级点名次数

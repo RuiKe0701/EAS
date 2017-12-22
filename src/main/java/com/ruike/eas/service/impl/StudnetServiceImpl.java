@@ -4,7 +4,9 @@ import com.ruike.eas.dao.ClassstuMapper;
 import com.ruike.eas.dao.ClassteacherMapper;
 import com.ruike.eas.dao.StudentMapper;
 
+import com.ruike.eas.dao.StutotalscoreMapper;
 import com.ruike.eas.pojo.Classstu;
+import com.ruike.eas.pojo.Stutotalscore;
 import com.ruike.eas.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public class StudnetServiceImpl implements StudentService {
 
     @Autowired
     private ClassstuMapper classstuMapper;
+    @Autowired
+    private StutotalscoreMapper stutotalscoreMapper;
 
     public List<Stu> defaultStudent() {
         return studentMapper.defaultstudent();
@@ -62,7 +66,22 @@ public class StudnetServiceImpl implements StudentService {
                 ct.setClass_id(stu.getClass_id());
                 classstus.add(ct);
             }
+            List<Stutotalscore> stutotalscoreList=new ArrayList<Stutotalscore>();
+
+            for (Stu stu : stus) {
+                Stutotalscore ct = new Stutotalscore();
+                ct.setStu_id(stu.getStu_id());
+                ct.setClass_id(stu.getClass_id());
+                ct.setStu_totalscore(80);
+                stutotalscoreList.add(ct);
+            }
+            int count2=stutotalscoreMapper.insertStustses(stutotalscoreList);
            count = classstuMapper.insertAllClassStu(classstus);
+            if(count>0&&count2>0){
+                count=1;
+            }else {
+                count=0;
+            }
         }
         return count;
     }

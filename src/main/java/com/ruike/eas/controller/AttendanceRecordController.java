@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.ruike.eas.pojo.*;
 import com.ruike.eas.pojo.Class;
 import com.ruike.eas.service.AttendanceRecordService;
+import com.ruike.eas.service.ClassService;
 import com.ruike.eas.service.ClassteacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,24 +21,53 @@ public class AttendanceRecordController {
     private AttendanceRecordService attendanceRecordService;
     @Resource
     private ClassteacherService classteacherService;
+    @Resource
+    private ClassService classService;
     @RequestMapping("/attendancerecord")
     public String Attend(HttpServletRequest request){
-        Classteacher classteacher=new Classteacher();
-        classteacher.setTeacher_id(1);
-        List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
-        Integer classid=0;
-        if(classteacherList.size()>0){
-            request.setAttribute("classteacherList",classteacherList);
-            classid=classteacherList.get(0).getClass_id();
+        int a=0;
+        if(a==1) {
+            Classteacher classteacher = new Classteacher();
+            classteacher.setTeacher_id(1);
+            List<Classteacher> classteacherList = attendanceRecordService.classteacherlist(classteacher);
+            List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
+            request.setAttribute("oldclassteacherList",classteacherList1);
+            Integer classid = 0;
+            if (classteacherList.size() > 0) {
+                request.setAttribute("classteacherList", classteacherList);
+                classid = classteacherList.get(0).getClass_id();
+            }
+            Classattendance classattendance = new Classattendance();
+            classattendance.setClass_id(classid);
+            List<Classattendance> classattendances = attendanceRecordService.selectClassttend(classattendance);
+            for (Classattendance classattendance1 : classattendances) {
+                System.out.println(classattendance1.getCad_name());
+            }
+            request.setAttribute("quan",3);
+            request.setAttribute("classattendances", classattendances);
+            return "classattencercord";
+        }else{
+            System.out.println("sssssssssssssssssssssssssssssssssssssssssssssssssssss");
+            Class class1 = new Class();
+            class1.setGrade_id(1);
+            List<Class> classes = classService.selectClass(class1);
+            request.setAttribute("classes", classes);
+            Integer classid = 0;
+            if (classes.size() > 0) {
+                request.setAttribute("classteacherList", classes);
+                classid = classes.get(0).getClass_id();
+            }
+            Classattendance classattendance = new Classattendance();
+            classattendance.setGradeid(1);
+            List<Classattendance> classattendances = attendanceRecordService.selectclassstdBygrade(classattendance);
+            for (Classattendance classattendance1 : classattendances) {
+                System.out.println(classattendance1.getCad_name());
+            }
+
+            request.setAttribute("quan",1);
+            request.setAttribute("classattendances", classattendances);
+            return "classattencercord";
         }
-        Classattendance classattendance=new Classattendance();
-        classattendance.setClass_id(classid);
-        List<Classattendance> classattendances= attendanceRecordService.selectClassttend(classattendance);
-        for (Classattendance classattendance1 : classattendances) {
-            System.out.println(classattendance1.getCad_name());
-        }
-        request.setAttribute("classattendances",classattendances);
-        return "classattencercord";
     }
     //查询班级出勤详情
     @RequestMapping("/dostuattendancerecord")

@@ -9,4 +9,7 @@ public interface StuattendanceMapper{
 
     public List<Stuattendance> stuattendancesbystuatd(Stuattendance stuattendance);
     public List<Stuattendance> selectstuatdbyclassid(Stuattendance stuattendance);
+    /*
+    根据年级ID
+     */
 }

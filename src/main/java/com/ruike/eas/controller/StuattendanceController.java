@@ -22,8 +22,30 @@ public class StuattendanceController {
     @Resource
     private StuattendanceService stuattendanceService;
     /*
+    班级学生主任查看页面
+     */
+    @RequestMapping("/zhuclassstuattencercord.do")
+    public String Classstuadts(HttpServletRequest request){
+        Classteacher classteacher=new Classteacher();
+        classteacher.setTeacher_id(1);
+        List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
+        List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
+        request.setAttribute("oldclassteacherList",classteacherList1);
+        Integer classid=0;
+        if(classteacherList.size()>0){
+            request.setAttribute("classteacherList",classteacherList);
+            classid=classteacherList.get(0).getClass_id();
+        }
+        Stuattendance stuattendance=new Stuattendance();
+        stuattendance.setClass_id(classid);
+        List<Stuattendance> stuattendanceList=stuattendanceService.selectsatdbyclassid(stuattendance);
+        request.setAttribute("stuattendanceList",stuattendanceList);
+        return "stuattencercord";
+    }
+    /*
   班级学生考勤页面
    */
+
     @RequestMapping("/classstuattencercord")
     public String Classstuadt(HttpServletRequest request){
         Classteacher classteacher=new Classteacher();
@@ -92,6 +114,7 @@ public class StuattendanceController {
         List<Stuattendance> stuattendanceList=new ArrayList<Stuattendance>();
         stuattendanceList=attendanceRecordService.selectstuatdlist(stuattendance);
         request.setAttribute("stuattendanceList",stuattendanceList);
+        request.setAttribute("xq",0);
         System.out.println(classid+"+++++++++++++++"+stuid);
         return "stuattebcercorerecord";
     }
@@ -102,7 +125,7 @@ public class StuattendanceController {
  根据班级id改变学员
   */
  @RequestMapping("/selectstubyclassids")
-    public String SelectStuByClassids(Integer classid,Integer zhuang,HttpServletRequest request){
+    public String SelectStuByClassids(Integer classid,Integer zhuang,HttpServletRequest request,Integer xq){
      Classteacher classteacher=new Classteacher();
      classteacher.setTeacher_id(1);
      List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
@@ -126,6 +149,8 @@ public class StuattendanceController {
      request.setAttribute("classteacherList",classteacherList);
      request.setAttribute("classid",classid);
      request.setAttribute("stuid",stuid);
+     request.setAttribute("xq",xq);
+     System.out.println(xq+"ssssssssssssssssss");
      return "stuattebcercorerecord";
  }
  /*

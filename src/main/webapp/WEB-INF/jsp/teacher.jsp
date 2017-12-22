@@ -37,8 +37,8 @@
                         <span><img alt="image" class="img-circle" src="img/profile_small.jpg" /></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
-                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                               <span class="block m-t-xs"><strong class="font-bold">${teachers.th_name}</strong></span>
+                                <span class="text-muted text-xs block"><b class="caret"></b></span>
                                 </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs" style="color: #2f4050">
@@ -68,7 +68,6 @@
                         <li>
                             <a class="J_menuItem" href="index_v1.html" data-index="0">主页示例一</a>
                         </li>
-
                         <li>
                             <a class="J_menuItem" href="index_v2.html">主页示例二</a>
                         </li>
@@ -86,25 +85,39 @@
                 </li>
 
 
+                <li>
+                    <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">考试成绩</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
 
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">班级出勤</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/addatd" >学员考勤卡</a></li>
+                        <li><a class="J_menuItem" href="/attendancerecord" id="sww">班级考勤管理</a></li>
+                        <li><a class="J_menuItem xuechu" href="/stuattebcercorerecord" id="stuattebcercorerecord" >学生出勤详情</a></li>
+                        <li><a class="J_menuItem" href="/classstuattencercord" >班级学员出勤</a></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员档案管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/thstudentinfo" style="color: white">基本信息档案</a></li>
                         <li><a class="J_menuItem" href="/scoringstandardinfo" id="addstud">评分管理</a></li>
-                        <li><a class="J_menuItem" href="/attendancerecord" id="sww">班级考勤管理</a></li>
+
                         <li><a class="J_menuItem" href="/jump" id="s">学员批量导入</a></li>
                         <li><a class="J_menuItem" href="/addatdrecord" id="s2">学员考勤卡</a></li>
                         <li><a class="J_menuItem" href="/addscoringstandard" style="display: none" id="addscoringstandard">学员考勤卡</a></li>
-                        <li><a class="J_menuItem" href="/addatd" >学员考勤卡</a></li>
+
                         <li><a class="J_menuItem" href="/showclasst" id="sss">班级老师管理</a></li>
                         <li><a class="J_menuItem" href="/ddd" >评分管理</a></li>
                         </li>
+                        <li><a class="J_menuItem" href="/selectstuscore.do" >学生成绩详情</a></li>
+                        </li>
                         <li><a class="J_menuItem" href="/jumpupgraded" >学生升班</a></li>
-                        <li><a class="J_menuItem xuechu" href="/stuattebcercorerecord" id="stuattebcercorerecord" >学生出勤详情</a></li>
                         </li>
                         <li><a class="J_menuItem" href="/tiaoaddclass" >添加班级</a></li>
-                        <li><a class="J_menuItem" href="/classstuattencercord" >班级学员出勤</a></li>
                         </li>
                         <li><a class="J_menuItem" href="/tzscoreexam" >考试</a></li>
                         </li>
@@ -212,7 +225,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="hidden-xs">
+                     <li class="hidden-xs">
                         <a href="index_v1.html" class="J_menuItem" data-index="0"><i class="fa fa-cart-arrow-down"></i> 购买</a>
                     </li>
                     <li class="dropdown hidden-xs">
@@ -686,8 +699,10 @@
         document.getElementById("myframe").window.childtest();
     }
     var cc=""
+
     window.addstuattebcercorerecord = function(a,b,d){
-        aa();
+        aa(cc);
+        alert("sss")
         var url = '/stuattebcercorerecordbystu?classid=' + a+ "&stuid=" + b + "&zhuang="+d+"&l=" + 1;
         $("#stuattebcercorerecord").attr('href', url)
         alert($("#stuattebcercorerecord").attr('href'))
@@ -695,9 +710,9 @@
         $("#stuattebcercorerecord").click();
     }
 
-    function aa(){
+    function aa(urls){
         $(".J_menuTab").each(function(){
-            if($(this).attr("data-id")==cc){
+            if($(this).attr("data-id")==urls){
                 $(this).find(".fa-times-circle").click();
             }
         });

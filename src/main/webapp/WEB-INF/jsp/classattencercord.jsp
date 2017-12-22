@@ -18,29 +18,27 @@
     <title>Float-Admin</title>
 
     <!-- Common plugins -->
+    <title>Float-Admin</title>
     <link href="table/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Common plugins -->
     <link href="table/css/simple-line-icons.css" rel="stylesheet">
     <link href="table/css/font-awesome.min.css" rel="stylesheet">
     <link href="table/css/pace.css" rel="stylesheet"><link href="table/css/jasny-bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="table/css/nanoscroller.css">
     <link rel="stylesheet" href="table/css/metismenu.min.css">
-    <!-- dataTables -->
+    <!--&lt;!&ndash; dataTables &ndash;&gt;-->
     <link href="table/css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
     <link href="table/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
     <!--template css-->
-    <link href="table/css/sweet-alert.css" rel="stylesheet">
-
-    <link href="css/animate.min.css" rel="stylesheet">
-
     <link href="table/css/style.css" rel="stylesheet">
+    <link href="table/css/sweet-alert.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
 
-    <script src="table/js/html5shiv.min.js"></script>
-    <script src="js/respond.min.js"></script>
 
-    <link href="css/style.min.css?v=4.0.0" rel="stylesheet">
+
+    <base target="_blank">
+    <link rel="stylesheet" href="select/dist/css/bootstrap-select.css">
     <![endif]-->
 </head>
 <body class="gray-bg" >
@@ -62,54 +60,118 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default collapsed">
+
+
+
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 0px;">
                     <h>出勤管理</h>
                 </div>
-                <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
-                    <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
-                       <select style="background-color: #7c86cb;height: 26px;color: white;border-radius: 5px" id="myclass" onchange="selectmyclass(this.value)">
-                            <c:forEach items="${classteacherList}" var="ct">
-                           <option style="background-color: white;color: darkslategray" value="${ct.class_id}">${ct.classname}</option>
-                            </c:forEach>
-                       </select>
-                    </div>
-
-                    <div class="col-md-5">
-                    <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
-
-                        <div class="input-group date" style="padding-left: 0px;">
-                            <input type="date" id="startday" class="form-control" style="height: 24.5px;font-size:12px;float:left;">
-                            <span class=" input-group-addon " style="height: 23.5px;font-size:12px;background-color: white">开始日期 </span>
+                <c:if test="${quan==3}">
+                    <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
+                        <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
+                            <select id="class" onchange="selectmyclass(this.value)" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+                                <optgroup label="test" data-subtext="optgroup subtext">
+                                    <option value="0">正在班级</option>
+                                    <c:forEach items="${classteacherList}" var="ct">
+                                        <option style="background-color: white;color: darkslategray" value="${ct.class_id}">${ct.classname}</option>
+                                    </c:forEach>
+                                </optgroup>
+                            </select>
                         </div>
 
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
-                        <div class="input-group date" style="padding-left: 0px;">
-                            <input type="date" id="stopday" class="form-control" style="height: 24.5px;font-size:12px;float:left;">
-                            <span class=" input-group-addon " style="height: 23.5px;font-size:12px;background-color: white">结束日期 </span>
+                        <div class="col-md-5">
+                            <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
+                                <div class="input-group date" style="padding-left: 0px;">
+                                    <input type="date" id="startday" class="form-control" style="font-size:12px;float:left;">
+                                    <span class=" input-group-addon " style="font-size:12px;background-color: white">开始日期 </span>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
+                                <div class="input-group date" style="padding-left: 0px;">
+                                    <input type="date" id="stopday" class="form-control" style="font-size:12px;float:left;">
+                                    <span class=" input-group-addon " style="font-size:12px;background-color: white">结束日期 </span>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
                         </div>
-                    </div>
-                        <div class="col-md-1"></div>
-                    </div>
 
 
 
-                    <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
-                        <div class="input-group">
-                            <input type="text"  id="classname" class="form-control"style="height: 26.5px;font-size:12px" placeholder="请输入班级名">
-                            <span class="input-group-btn">
+                        <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
+                            <div class="input-group">
+                              <span class="input-group-btn">
 						<button class="btn btn-primary btn-xs"  id="seletclassname" type="button">
-							班级查询
+							查询
 						</button>
 					</span>
-
-                        </div><!-- /input-group -->
+                            </div><!-- /input-group -->
+                        </div>
                     </div>
+                </c:if>
+                <c:if test="${quan==1}">
+                    <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
+                        <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
+                            <select id="class2"  class="selectpicker show-tick form-control" onchange="selectclass(this.value)" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+                                <optgroup label="test" data-subtext="optgroup subtext">
+                                    <option value="1">s1</option>
+
+                                    <option style="background-color: white;color: darkslategray" value="2">s2</option>
+
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
+                            <select id="oldclass2" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+                                <optgroup label="test" data-subtext="optgroup subtext">
+                                    <option value="0">选择班级</option>
+                                    <c:forEach items="${classes}" var="oc">
+                                        <option value="${oc.class_id}">${oc.class_name}</option>
+                                    </c:forEach>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
+                                <div class="input-group date" style="padding-left: 0px;">
+                                    <span class=" input-group-addon " style="font-size:12px;background-color: white">开始 </span>
+                                    <input type="date" id="startday1" class="form-control" style="font-size:12px;float:left;">
+
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
+                                <div class="input-group date" style="padding-left: 0px;">
+                                    <span class=" input-group-addon " style="font-size:12px;background-color: white">结束 </span>
+                                    <input type="date" id="stopday1" class="form-control" style="font-size:12px;float:left;">
+                                    <span class=" input-group-addon "  style="font-size:12px;">查询 </span>
+                                </div>
+
+                            </div>
+
+                        </div>
 
 
+
+                        <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
+                            <div class="input-group">
+                              <span class="input-group-btn">
+
+					</span>
+                            </div><!-- /input-group -->
+                        </div>
+                    </div>
+                </c:if>
+
+
+                <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 15px;padding-bottom: 3px;">
+                    <div class="col-sm-3">
+                        <label>选择一个日期：
+                        <input type="date">
+                            <button class="btn btn-primary" id="selectall">查看所有班级</button>
+                        </label>
+                    </div>
                 </div>
-
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 8px;">
                     <div class="col-md-12" style="border-bottom: 1px solid silver"></div>
                 </div>
@@ -221,6 +283,8 @@
 <script src="table/js/datatables.responsive.min.js"></script>
 
 <script src="table/js/sweet-alert.min.js"></script>
+
+<script src="select/js/bootstrap-select.js"></script>
 <script>
 
     $(document).ready(function () {
@@ -231,6 +295,14 @@
 
 </script>
 <script type="text/javascript">
+    //查询所有班级根据具体日期
+    function  selectall() {
+        $("#selectall").click
+    }
+    //根据年级差班级
+    function selectclass(){
+
+    }
     //添加学生信息页面跳转
     function addstudent() {
         1.//根据iframe的id获取对象
@@ -263,9 +335,7 @@
                     confirmButtonText: '确定!'
                 });
             }else {
-
-
-                selectclassatd(classid,startday,stopday,classname)
+ selectclassatd(classid,startday,stopday,classname)
             }
         })
     }
@@ -344,10 +414,11 @@
         var ss=classid
         var startday=null;
         var stopday=null;
-        var classname=null;
-        selectclassatd(classid,startday,stopday,classname)
+        $("#oldclass").val(0);
+        alert($("#oldclass").val());
+        selectclassatd(classid,startday,stopday)
     }
-        function selectclassatd(classid,startday,stopday,classname) {
+     function selectclassatd(classid,startday,stopday,classname) {
 
             $.ajax({
                 type: "post",
