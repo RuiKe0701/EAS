@@ -33,6 +33,7 @@ public class LoginController {
             Thlogin thlogin1=thloginService.dologin(thlogin);
             if(thlogin1!=null&&thlogin1.getTh_id()!=null){
                 request.getSession().setAttribute("th",thlogin1.getTh_id());
+                request.getSession().setAttribute("thtype",thlogin1.getTy_id());
                 Teacher teacher=new Teacher();
                 teacher.setTh_id(thlogin1.getTh_id());
                 Teacher teacher1=thloginService.TeacherInfo(teacher);

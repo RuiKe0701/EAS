@@ -66,10 +66,10 @@
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 0px;">
                     <h>出勤管理</h>
                 </div>
-                <c:if test="${quan==3}">
+                <c:if test="${quan==0}">
                     <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
                         <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
-                            <select id="class" onchange="selectmyclass(this.value)" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+                            <select id="class" onchange="selectmyclass(this.value,1)" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
                                 <optgroup label="test" data-subtext="optgroup subtext">
                                     <option value="0">正在班级</option>
                                     <c:forEach items="${classteacherList}" var="ct">
@@ -79,50 +79,63 @@
                             </select>
                         </div>
 
+                        <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
+                            <select id="oldclass" onchange="selectmyclass(this.value,2)" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+
+                                    <option value="0" id="old">历史班级</option>
+                                    <c:forEach items="${oldclassteacherList}" var="oc">
+                                        <option value="${oc.class_id}">${oc.classname}</option>
+                                    </c:forEach>
+
+                            </select>
+                        </div>
                         <div class="col-md-5">
                             <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
                                 <div class="input-group date" style="padding-left: 0px;">
+                                    <span class=" input-group-addon " style="font-size:12px;background-color: white">开始 </span>
                                     <input type="date" id="startday" class="form-control" style="font-size:12px;float:left;">
-                                    <span class=" input-group-addon " style="font-size:12px;background-color: white">开始日期 </span>
+
                                 </div>
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-5" style="padding-left: 0px;padding-top:8px">
                                 <div class="input-group date" style="padding-left: 0px;">
+                                    <span class=" input-group-addon " style="font-size:12px;background-color: white">结束 </span>
                                     <input type="date" id="stopday" class="form-control" style="font-size:12px;float:left;">
-                                    <span class=" input-group-addon " style="font-size:12px;background-color: white">结束日期 </span>
+                                    <span class=" input-group-addon " id="selectindatebydateteach" style="font-size:12px;">查询 </span>
                                 </div>
+
                             </div>
-                            <div class="col-md-1"></div>
-                        </div>
 
-
-
-                        <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
-                            <div class="input-group">
-                              <span class="input-group-btn">
-						<button class="btn btn-primary btn-xs"  id="seletclassname" type="button">
-							查询
-						</button>
-					</span>
-                            </div><!-- /input-group -->
                         </div>
                     </div>
                 </c:if>
-                <c:if test="${quan==1}">
+                <c:if test="${quan==2 || quan==3}">
                     <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
                         <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
-                            <select id="gradeid"  class="selectpicker show-tick form-control" onchange="selectclass(this.value)" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
-                                <optgroup label="test" data-subtext="optgroup subtext">
-                                    <option value="1">s1</option>
+                            <c:if test="${quan==2}">
+                                <select id="gradeid"  class="selectpicker show-tick form-control" onchange="selectclass(this.value)" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+                                    <optgroup label="test" data-subtext="optgroup subtext">
+                                        <option value="1">s1</option>
 
-                                    <option style="background-color: white;color: darkslategray" value="2">s2</option>
+                                        <option style="background-color: white;color: darkslategray" value="2">s2</option>
 
-                                </optgroup>
-                            </select>
+                                    </optgroup>
+                                </select>
+                            </c:if>
+                            <c:if test="${quan==3}">
+                                <select id="gradeid"  class="selectpicker show-tick form-control" onchange="selectclass(this.value)" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+                                    <optgroup label="test" data-subtext="optgroup subtext">
+                                        <option value="3">Y2</option>
+
+                                        <option style="background-color: white;color: darkslategray" value="4">学士后</option>
+
+                                    </optgroup>
+                                </select>
+                            </c:if>
                         </div>
                         <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
-                            <select id="oldclass2" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+                            <select id="allclass" onchange="selectmyclass(this.value)" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
                                 <optgroup label="test" data-subtext="optgroup subtext">
                                     <option value="0">选择班级</option>
                                     <c:forEach items="${classes}" var="oc">
@@ -144,7 +157,7 @@
                                 <div class="input-group date" style="padding-left: 0px;">
                                     <span class=" input-group-addon " style="font-size:12px;background-color: white">结束 </span>
                                     <input type="date" id="stopday1" class="form-control" style="font-size:12px;float:left;">
-                                    <span class=" input-group-addon "  style="font-size:12px;">查询 </span>
+                                    <span class=" input-group-addon " id="selectindatebydate" style="font-size:12px;">查询 </span>
                                 </div>
 
                             </div>
@@ -295,6 +308,34 @@
 
 </script>
 <script type="text/javascript">
+    //根据班级和时间区间查询
+    function selelctbyclassanddaybyth() {
+        $("#selectindatebydateteach").click(function () {
+            
+        })
+    }
+    function selectbyclassandday() {
+        $("#selectindatebydate").click(function () {
+            var classid=$("#allclass").val();
+            var startday=$("#startday1").val();
+            var stopday=$("#stopday1").val();
+            var classname=null;
+            if(classid==0){
+                swal({
+                    title: "",
+                    text: "SORRY!请悬着您的班级",
+                    type: "error",
+                    showCancelButton: true,
+                    cancelButtonClass: 'btn-secondary',
+                    confirmButtonClass: 'btn-danger',
+                    confirmButtonText: '确定!'
+                });
+            }else {
+                selectclassatd(classid,startday,stopday,classname)
+            }
+        })
+
+    }
     //查询所有班级根据具体日期
     function  selectall() {
         $("#selectall").click(function () {
@@ -374,21 +415,7 @@
         })
     }
 
-    //添加学生信息页面跳转
-    function addstudent() {
-        1.//根据iframe的id获取对象
-        $("#addstudent").click(function () {
-            window.location.href='/thaddstudent';
-        })
-        //var i1 = window.frames['iframeId'];搜索
-    }
-    //单个展示学生信息页面跳转
-    function showstudentinfo() {
-        $(".showstudentinfo").on("click",function(){
-            alert("sds")
-            parent.showstu(1);
-        })
-    }
+
     function seletclassname() {
         $('#seletclassname').click(function () {
             var startday=$("#startday").val();
@@ -406,10 +433,11 @@
                     confirmButtonText: '确定!'
                 });
             }else {
- selectclassatd(classid,startday,stopday,classname)
+                selectclassatd(classid,startday,stopday,classname)
             }
         })
     }
+
     function showstudentinfos() {
         $(".showstudentinfos").on("click",function(){
 
@@ -481,23 +509,33 @@
 
 
     }
-    function selectmyclass(classid) {
+    function selectmyclass(classid,cc) {
+        alert(cc)
+        if(cc==1){
+            $("#old").click();
+            var ass=0;
+            $("#oldclass").val(ass);
+
+            alert($("#oldclass").val());
+            $("#oldclass").find("#old").attr("selected",true);
+        }else if(cc==2){
+
+        }
         var ss=classid
         var startday=null;
         var stopday=null;
-        $("#oldclass").val(0);
-        alert($("#oldclass").val());
+
+        var classname=null;
         selectclassatd(classid,startday,stopday)
     }
      function selectclassatd(classid,startday,stopday,classname) {
-
             $.ajax({
                 type: "post",
                 url: "/doselectclassatdss",
                 data:{"classsid":classid,"startday":startday,"stopday":stopday,"classname":classname},
                 dataType: "json",
                 success: function (data) {
-                    if(data==0){
+                    if(data==-1){
                         swal({
                             title: "",
                             text: "SORRY!您没有权限访问该班级或该班级未创建！",
@@ -553,10 +591,8 @@
         }
 
     $(function () {
-        showstudentinfo();
-        addstudent();
+        selectbyclassandday();
         seletclassname();
-        showstudentinfos();
         $("body").on("click",".showstudentinfos",function(){
             alert("sds")
             parent.showstu(1);
