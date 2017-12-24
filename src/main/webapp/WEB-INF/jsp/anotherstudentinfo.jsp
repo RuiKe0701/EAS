@@ -259,7 +259,7 @@
                             pages += "<button class=\"yemian\" value=\""+i+"\" >"+i+"</button>"
                         }
                     };
-                    pages+="<button class=\"yemian\"value=\""+(data.currentPage-1)+"\" >下一页 ></button></div>";
+                    pages+="<button class=\"yemian\"value=\""+(data.currentPage+1)+"\" >下一页 ></button></div>";
                     $("#tables").append(strs+pages);
                 }
             },
