@@ -17,6 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="selecttime" resultType="int">
+        SELECT count(*) from classattendance where class_id=#{class_id}
+    </select>
 
     <select id="selectnewClassatd"  resultType="com.ruike.eas.pojo.Classattendance">
             select * from classattendance where class_id=#{class_id}
@@ -39,5 +42,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 and c.cad_date &lt;= #{stopday}
             </if>
         </where>
+    </select>
+    <select id="selectClassatdbygradeid" resultMap="catd">
+         select c.* , cs.class_name as classname from classattendance as c,class as cs
+     <where>
+         c.class_id=cs.class_id
+
+             <if test="grade!=null">
+                 and cs.grade_id=#{grade}
+             </if>
+         <if test="cad_date!=null">
+             and  c.cad_date = #{cad_date}
+         </if>
+         </where>
+         ORDER BY c.cad_date DESC  LIMIT 0,50
     </select>
 </mapper>

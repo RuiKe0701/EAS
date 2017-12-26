@@ -574,6 +574,7 @@
                     success: function (data) {
                             if(data==1){
                                 $("#guanadd").click();
+
                                 swal({
                                     title: "Success",
                                     text: "恭喜！修改成功！请刷新后查看！",
@@ -977,8 +978,10 @@
                 var stuScoreobject = new Object();
                 var a=myMap[kaoqin]
                 var score=0;
+
                 if(a.caozuo==1){
                     score=parseInt(stutotalscore)+parseInt(a.fen);
+
                 }else if(a.caozuo==0){
                     score=stutotalscore-a.fen
                 }

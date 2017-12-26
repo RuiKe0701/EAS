@@ -25,9 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<sql id="stu">
-		SELECT st.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.`status` as classsta,c.class_state from stu st,class c, classstu ct
+		SELECT st.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.`status` as classsta,c.class_state from stu st,class c
 		<where>
-			st.stu_id = ct.stu_id and ct.class_id = c.class_id
+			st.class_id = c.class_id
 			<if test="stu_name != null and stu_name != ''">
 				and st.stu_name like concat("%",#{stu_name},"%")
 			</if>
@@ -295,4 +295,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>)
 		</foreach>
 	</insert>
+	<select id="selectPagerStuInfoCount"  parameterType="com.ruike.eas.pojo.Stu" resultType="int">
+		SELECT count(1) FROM (<include refid="stu"/>) student
+	</select>
+	<select id="selectPagerStuInfo"  parameterType="com.ruike.eas.pojo.Stu" resultMap="stuclass">
+		SELECT * FROM (<include refid="stu"/>) student
+		<if test="totalRows!=null and totalRows > 0">
+			limit #{cur},#{pageSize}
+		</if>
+	</select>
 </mapper>

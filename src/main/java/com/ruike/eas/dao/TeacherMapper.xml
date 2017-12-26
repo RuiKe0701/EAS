@@ -6,10 +6,8 @@
     
     <select id="selectTeacher" parameterType="com.ruike.eas.pojo.Teacher" resultType="com.ruike.eas.pojo.Teacher">
         SELECT * FROM teacher
-        <where>
-            <if test="th_type != null">
-                AND th_type = #{th_type}
-            </if>
-        </where>
+    </select>
+    <select id="SelectTeacherBythid" resultType="com.ruike.eas.pojo.Teacher">
+        SELECT * from teacher where th_id =#{th_id}
     </select>
 </mapper>

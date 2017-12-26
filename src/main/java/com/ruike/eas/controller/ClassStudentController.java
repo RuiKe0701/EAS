@@ -48,7 +48,8 @@ public class ClassStudentController {
     public String jump(HttpServletRequest request){
         Classteacher classteacher = new Classteacher();
         //放入老师的id
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         //查询此老师在校的班级
         classteacher.setStatus(0);
         List<Classteacher> cs = classteacherService.selectClassteacher(classteacher);
@@ -114,12 +115,23 @@ public class ClassStudentController {
     @RequestMapping("/jumpupgraded")
     public String jumpUpgraded(HttpServletRequest request){
         Classteacher classteacher = new Classteacher();
+        Class aClass = new Class();
+        //是否结业状态0为不结业
+        aClass.setClass_state(0);
+        classteacher.setClasses(aClass);
         //放入老师的id
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         //查询此老师在校的班级
         classteacher.setStatus(0);
         List<Classteacher> cs = classteacherService.selectClassteacher(classteacher);
-        Collections.sort(cs, new Comparator<Classteacher>() {
+        List<Classteacher> classteacherList = new ArrayList<Classteacher>();
+        for (Classteacher cc : cs) {
+            if (cc.getClasses().getGrade_id()==1 || cc.getClasses().getGrade_id()==2 ){
+                classteacherList.add(cc);
+            }
+        }
+        Collections.sort(classteacherList, new Comparator<Classteacher>() {
             public int compare(Classteacher o1, Classteacher o2) {
                 return o1.getCt_startday().compareTo(o2.getCt_startday());
             }
@@ -128,7 +140,7 @@ public class ClassStudentController {
         Stu stu = new Stu();
         Class c = new Class();
         //默认查询第一个班级的学生
-        c.setClass_id(cs.get(0).getClass_id());
+        c.setClass_id(classteacherList.get(0).getClass_id());
         stu.setClasses(c);
         //根据班级id查询对应的学生
         List<Stu> stuList = studentService.selectByStudent(stu);
@@ -138,7 +150,7 @@ public class ClassStudentController {
         teacher.setTh_type(0);
         //调用带条件查找老师
         List<Teacher> teachers = teacherService.selectTeacher(teacher);
-        request.setAttribute("classteachers",cs);
+        request.setAttribute("classteachers",classteacherList);
         request.setAttribute("teachers",teachers);
         request.setAttribute("stuList",stuList);
         return "upgraded";

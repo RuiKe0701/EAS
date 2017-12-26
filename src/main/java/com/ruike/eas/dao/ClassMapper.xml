@@ -3,6 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.ClassMapper">
+
     <select id="selectClass" parameterType="com.ruike.eas.pojo.Class" resultType="com.ruike.eas.pojo.Class">
         SELECT * FROM  class
         <where>
@@ -15,7 +16,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           <if test="class_state != null">
               and class_state = #{class_state}
           </if>
+
         </where>
+        ORDER BY class_startday desc
     </select>
 
     <insert id="insertClass" useGeneratedKeys="true" keyProperty="class_id" parameterType="com.ruike.eas.pojo.Class">

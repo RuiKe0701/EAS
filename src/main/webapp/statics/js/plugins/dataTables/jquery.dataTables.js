@@ -13463,14 +13463,14 @@
 	
 	
 	var extPagination = DataTable.ext.pager;
-	
+
 	function _numbers ( page, pages ) {
 		var
 			numbers = [],
 			buttons = extPagination.numbers_length,
 			half = Math.floor( buttons / 2 ),
 			i = 1;
-	
+
 		if ( pages <= buttons ) {
 			numbers = _range( 0, pages );
 		}
@@ -13491,34 +13491,34 @@
 			numbers.splice( 0, 0, 'ellipsis' );
 			numbers.splice( 0, 0, 0 );
 		}
-	
+
 		numbers.DT_el = 'span';
 		return numbers;
 	}
-	
-	
+
+
 	$.extend( extPagination, {
 		simple: function ( page, pages ) {
 			return [ 'previous', 'next' ];
 		},
-	
+
 		full: function ( page, pages ) {
 			return [  'first', 'previous', 'next', 'last' ];
 		},
-	
+
 		simple_numbers: function ( page, pages ) {
 			return [ 'previous', _numbers(page, pages), 'next' ];
 		},
-	
+
 		full_numbers: function ( page, pages ) {
 			return [ 'first', 'previous', _numbers(page, pages), 'next', 'last' ];
 		},
-	
+
 		// For testing and plug-ins to use
 		_numbers: _numbers,
 		numbers_length: 7
 	} );
-	
+
 	
 	$.extend( true, DataTable.ext.renderer, {
 		pageButton: {

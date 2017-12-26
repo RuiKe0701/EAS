@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruike.eas.dao.ClasshomeworkMapper">
+    <select id="selectnewClasswork"  resultType="com.ruike.eas.pojo.Classhomework">
+        select * from classhomework where chw_classid=#{chw_classid}
+        order by chw_number DESC limit 0,1
+    </select>
+
+    <insert id="insertclasshomework" useGeneratedKeys="true" keyProperty="chw_id" parameterType="com.ruike.eas.pojo.Classhomework">
+        INSERT into classhomework(`chw_name`,`chw_number`,`chw_caddate`,`chw_classid`,`chw_rate`)
+        VALUES (#{chw_name},#{chw_number},#{chw_caddate},#{chw_classid},#{chw_rate})
+    </insert>
+</mapper>

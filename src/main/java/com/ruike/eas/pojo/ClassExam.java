@@ -47,7 +47,7 @@ public class ClassExam {
     return ce_Examday;
   }
   public String getCe_Eday() {
-    return DateUtil.dateFormat(this.getCe_Examday(),"yyyy-MM-dd");
+    return this.ce_Examday!=null?DateUtil.dateFormat(this.getCe_Examday(),"yyyy-MM-dd"):"";
   }
   public void setCe_Examday(Date ce_Examday) {
     this.ce_Examday = ce_Examday;

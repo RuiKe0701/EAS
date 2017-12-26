@@ -29,6 +29,7 @@
     <link href="table/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
     <!--template css-->
     <link href="table/css/style.css" rel="stylesheet">
+    <link href="table/css/sweet-alert.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -118,7 +119,7 @@
 
 
                             <td> <input type="hidden" value="${sst.ss_id}" class="ssdid">
-                                <button type="button" class="btn btn-xs showstudentinfo" style="background-color: #f8ac5a;color: white">修改</button>
+                                <button type="button" class="btn btn-xs updatessd" style="background-color: #f8ac5a;color: white">修改</button>
 
                             </td>
                         </tr>
@@ -133,8 +134,65 @@
     </div><!--end row-->
 
     <!--end page content-->
+    <div class="modal inmodal" id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="border-radius: 5px">
+            <div class="modal-content animated flipInY" style="border-radius: 5px">
+                <div class="modal-header">
+                    <h4 class="modal-title">修改请假信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="ibox-content">
 
+                        <form role="form" id="updatesss" class="form-horizontal m-t" >
+                            <div class="form-group draggable">
+                                <label class="col-sm-3 control-label">评分项：</label>
+                                <div class="col-sm-7">
+                                    <input type="text" name="ss_name" id="ssname" class="form-control" placeholder="评分项">
+                                    <span class="help-block m-b-none">评分项名字</span>
+                                </div>
+                            </div>
+                            <div class="form-group draggable">
+                                <label class="col-sm-3 control-label">分数
+                                    ：</label>
+                                <div class="col-sm-7">
+                                    <input type="number" class="form-control" name="ss_fraction" id="ssfraction" placeholder="评分分数">
+                                </div>
+                            </div>
+                            <div class="form-group draggable">
+                                <label class="col-sm-3 control-label">处理：</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="ss_way" id="ssway">
+                                        <option value="1">加分</option>
+                                        <option value="0">减分</option>
 
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group draggable">
+                                <label class="col-sm-3 control-label">类型：</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="ss_type" id="sstype">
+                                        <option value="0">考勤</option>
+                                        <option value="1">其他</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input value="" type="hidden" name="ss_id" id="ssid" >
+                            <div class="hr-line-dashed"></div>
+                            <input value="${jieguo}" id="jieguo" type="hidden">
+                        </form>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="modal-footer" >
+                    <button type="button" class="btn btn-white" data-dismiss="modal" id="guanupdate">关闭</button>
+
+                    <button type="button" id="updatess" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="" style="display: none" id="addstuleave2" data-toggle="modal" data-target="#myModal3"></button>
     <!--Start footer-->
 
     <!--end footer-->
@@ -156,6 +214,7 @@
 <!-- Datatables-->
 <script src="table/js/jquery.datatables.min.js"></script>
 <script src="table/js/datatables.responsive.min.js"></script>
+<script src="table/js/sweet-alert.min.js"></script>
 <script>
 
     $(document).ready(function () {
@@ -167,18 +226,113 @@
     function addssd() {
         1.//根据iframe的id获取对象
         $("#addssd").click(function () {
-            window.location.href='/addscoringstandard';
+            parent.addscoringstandard();
         })
         //var i1 = window.frames['iframeId'];搜索
     }
-    //单个展示学生信息页面跳转
-    function showstudentinfo() {
-        $(".showstudentinfo").on("click",function(){
-            alert("sds")
-            parent.showstu(1);
+    //修改评分需求
+    function updatessd() {
+        $(".updatessd").click(function () {
+            var ssdid= $(this).parent().find(".ssdid").val();
+            selectssdbyid(ssdid);
+            $("#addstuleave2").click();
         })
     }
+    
+    function doupdate() {
+        $("#updatess").click(function () {
 
+            $.ajax({
+                type: "post",
+                url: "/updatess",
+                data:$("#updatesss").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    if(data==1){
+                        $("#guanupdate").click();
+                        swal({
+                            title: "Success",
+                            text: "恭喜！修改成功！请刷新后查看！",
+                            type: "success",
+                            showCancelButton: false,
+                            cancelButtonClass: 'btn-secondary ',
+                            confirmButtonClass: 'btn-success  ',
+                            confirmButtonText: '确定!'
+                        });
+                    }else if(data==0){
+                        $("#guanupdate").click();
+                        swal({
+                            title: "Sorry!",
+                            text: "SORRY!系统延迟！请稍后再试！",
+                            type: "error",
+                            showCancelButton:false,
+                            cancelButtonClass: 'btn-secondary',
+                            confirmButtonClass: 'btn-danger',
+                            confirmButtonText: '确定!'
+                        });
+                    }else if(data==2){
+                        $("#guanupdate").click();
+                        swal({
+                            title: "Sorry!",
+                            text: "SORRY!您给的参数有误请确定您的参数无误后重试",
+                            type: "error",
+                            showCancelButton:false,
+                            cancelButtonClass: 'btn-secondary',
+                            confirmButtonClass: 'btn-danger',
+                            confirmButtonText: '确定!'
+                        });
+                    }
+                },error: function () {
+                    swal({
+                        title: "Sorry!",
+                        text: "SORRY!系统延迟！请稍后再试！",
+                        type: "error",
+                        showCancelButton:false,
+                        cancelButtonClass: 'btn-secondary',
+                        confirmButtonClass: 'btn-danger',
+                        confirmButtonText: '确定!'
+                    });
+                }
+            });
+        })
+    }
+    function selectssdbyid(ssdid) {
+        $.ajax({
+            type: "post",
+            url: "/selectss",
+            data:{"ssid":ssdid},
+            dataType: "json",
+            success: function (data) {
+                if(data!=0){
+                    $("#ssname").val(data.ss_name);
+                    $("#ssfraction").val(data.ss_fraction);
+                    $("#ssway").val(data.ss_way);
+                    $("#sstype").val(data.ss_type);
+                    $("#ssid").val(data.ss_id);
+                }else if(data==0){
+                    swal({
+                        title: "Sorry!",
+                        text: "SORRY!系统延迟！请稍后再试！",
+                        type: "error",
+                        showCancelButton:false,
+                        cancelButtonClass: 'btn-secondary',
+                        confirmButtonClass: 'btn-danger',
+                        confirmButtonText: '确定!'
+                    });
+                }
+            },error: function () {
+                swal({
+                    title: "Sorry!",
+                    text: "SORRY!系统延迟！请稍后再试！",
+                    type: "error",
+                    showCancelButton:false,
+                    cancelButtonClass: 'btn-secondary',
+                    confirmButtonClass: 'btn-danger',
+                    confirmButtonText: '确定!'
+                });
+            }
+            });
+    }
     function selectByssd(ssdname) {
         $.ajax({
             type: "post",
@@ -239,7 +393,6 @@
     }
     function seletbyssd() {
         $("#seletbyssd").click(function () {
-
             ssdname=$("#ssdnames").val();
             if(ssdname==null||ssdname==""){
                 alert("SORRY!请先评分项名字名在进行查询！")
@@ -253,7 +406,8 @@
     $(function () {
         seletbyssd();
         addssd();
-
+        updatessd();
+        doupdate();
     })
 
 </script>

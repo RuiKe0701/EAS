@@ -65,4 +65,11 @@ public class AttendanceRecordServiceimpl implements AttendanceRecordService{
     public List<Stuattendance> selectstuatdlist(Stuattendance stuattendance) {
         return stuattendanceMapper.stuattendancesbystuatd(stuattendance);
     }
+    public List<Classteacher> selectoldclassbytecaherid(Classteacher classteacher) {
+        return classteacherMapper.selectoldclassbytecaherid(classteacher);
+    }
+
+    public List<Classattendance> selectclassstdBygrade(Classattendance classattendance) {
+        return classattendanceMapper.selectClassatdbygradeid(classattendance);
+    }
 }

@@ -15,4 +15,11 @@ public interface ClassattendanceMapper {
     根据班级查询班级考勤情况
      */
     public List<Classattendance> selectClassatdbyclassatd(Classattendance classattendance);
+
+    public Integer selecttime(Classattendance classattendance);
+    /*
+    根据年级查询班级出勤情况
+     */
+    public List<Classattendance> selectClassatdbygradeid(Classattendance classattendance);
+
 }

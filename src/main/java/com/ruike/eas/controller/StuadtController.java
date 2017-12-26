@@ -29,12 +29,14 @@ public class StuadtController {
     private LeaveService leaveService;
     @Resource
     private ClassteacherService classteacherService;
+
     /*进入新增考勤记录页面
      */
     @RequestMapping("/addatd")
     public String add(HttpServletRequest request){
         Classteacher classteacher=new Classteacher();
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
         int a =0;
         Integer attendancenumber=0;
@@ -111,16 +113,15 @@ public class StuadtController {
     根据学生请假条件查询请假学生
     */
     @RequestMapping("/selectstuleavebystu")
-    public void selectstuleavebystu(String stuleaves,PrintWriter printWriter){
-
+    public void selectstuleavebystu(String stuleaves,PrintWriter printWriter,HttpServletRequest request){
         Stuleave stuleave= JSON.parseObject(stuleaves,Stuleave.class);
-
         System.out.println(stuleave.getClass_id()+""+stuleave.getClassname());
         List<Stuleave> stuleaveList=new ArrayList<Stuleave>();
         if(stuleave.getClassname()!=null&&stuleave.getClassname()!=""){
             System.out.println(stuleave.getClassname());
             Classteacher classteacher=new Classteacher();
-            classteacher.setTeacher_id(1);
+            Integer thid=(Integer) request.getSession().getAttribute("th");
+            classteacher.setTeacher_id(thid);
             Class cla=new Class();
             cla.setClass_name(stuleave.getClassname());
             classteacher.setClasses(cla);

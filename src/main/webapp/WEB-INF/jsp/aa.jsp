@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -14,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Float-Admin</title>
+    <title>Float-Admijn</title>
 
     <!-- Common plugins -->
     <link href="table/css/bootstrap.min.css" rel="stylesheet">
@@ -75,7 +76,7 @@
             </div>
         </div>
     </div><!--end row-->
-
+<di><button id="ddd">ssss</button></di>
     <!--end page content-->
 
 
@@ -262,6 +263,20 @@
 
         })
     }
+    function sss() {
+            alert("ss");
+        $("#ddd").click(function () {
+            $.ajax({
+                type: "post",
+                url: "/userssss",
+                data:{},
+                dataType: "json",
+                success: function (data) {//将数据转换成json类型，可以把data用alert()输出出来看看到底是什么样的结构
+                    alert(data[0].class_name)
+                }
+            })
+        })
+    }
     function selectBystuname() {
         $("#seletstuname").click(function () {
             var obj=document.getElementsByName('sturts');
@@ -302,10 +317,11 @@
         showstudentinfo();
         selectBystuname();
         $("#an").click();
-        selectByclassid();
+
         addstudent();
-        selctByclassid();
+
         showstudentinfos();
+        sss();
         $("body").on("click",".showstudentinfos",function(){
             alert("sds")
             parent.showstu(1);

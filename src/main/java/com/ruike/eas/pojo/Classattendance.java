@@ -7,9 +7,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Classattendance implements Serializable {
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
+    }
+
+    private Integer grade;
+
+
     /*
-    班级出勤率主键
-     */
+        班级出勤率主键
+         */
     private Integer cad_id;
     /*
     班级点名次数
@@ -102,6 +114,9 @@ public class Classattendance implements Serializable {
 
     public Date getCad_date() {
         return cad_date;
+    }
+    public String getCad_dates() {
+        return this.getCad_date() != null ? DateUtil.dateFormat(this.getCad_date(),"yyyy-MM-dd") : "";
     }
 
     public void setCad_date(Date cad_date) {

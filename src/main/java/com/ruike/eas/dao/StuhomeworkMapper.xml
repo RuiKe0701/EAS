@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruike.eas.dao.StuhomeworkMapper">
+    <insert id="addstuhomeworks">
+        INSERT into homework(`ras_id`,`stu_id`,`class_id`,`chw_id`,`work_date`)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.ras_id},#{item.stu_id},#{item.class_id},#{item.chw_id},#{item.work_date})
+        </foreach>
+    </insert>
+</mapper>

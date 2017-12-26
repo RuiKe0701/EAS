@@ -36,4 +36,11 @@ public interface ClassExamMapper {
      * @return 集合
      */
     public List<ClassExam> selectByClassExamByDate(ClassExam classExam);
+
+    /**
+     * 查询指定班级已录入成绩的班级考试
+     * @param classExam 班级考试
+     * @return 集合
+     */
+    List<ClassExam> selectClassExamHasBeen(ClassExam classExam);
 }

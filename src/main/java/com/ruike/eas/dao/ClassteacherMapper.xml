@@ -25,12 +25,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <result column="class_stopday" property="class_stopday"/>
             <result column="grade_id" property="grade_id"/>
             <result column="csta" property="status"/>
-            <result column="class_state" property="class_state"/>
+            <result column="class_states" property="class_state"/>
         </association>
     </resultMap>
 
     <sql id="classte">
-        SELECT ch.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.status as csta,t.* FROM classteacher ch,class c,teacher t
+        SELECT ch.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.status as csta,c.class_state as class_states,t.* FROM classteacher ch,class c,teacher t
         <where>
             ch.class_id = c.class_id and t.th_id = ch.teacher_id
             <if test="class_id != null and class_id > 0">
@@ -161,5 +161,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
         </where>
 
+    </select>
+
+    <select id="selectoldclassbytecaherid" resultMap="csth">
+        select c.*, cs.class_name as classname from classteacher as c ,class as cs
+        <where>
+            c.class_id=cs.class_id      and cs.class_state =1
+            <if test="teacher_id!=null and teacher_id>0">
+                and c.teacher_id=#{teacher_id}
+            </if>
+
+        </where>
     </select>
 </mapper>

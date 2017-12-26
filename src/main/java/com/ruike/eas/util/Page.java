@@ -12,7 +12,7 @@ import java.util.List;
 public class Page<T> implements Serializable {
     private static final long serialVersionUID = -3198048449643774660L;
     // 主表的当前页码
-    private Integer currentPage;
+    private Integer currentPage=1;
     // 一页显示的条数
     private Integer pageSize;
     // 总条数，查询出来的
@@ -105,7 +105,7 @@ public class Page<T> implements Serializable {
         this.currentPage = Math.min(this.currentPage, this.totalPages);
     }
     public Integer getCur(){
-        return this.currentPage != null ? (this.currentPage-1 >= 0 ? this.currentPage-1:0)*this.getPageSize() : null  ;
+        return this.pageSize != null ? (this.currentPage-1 >= 0 ? this.currentPage-1:0)*this.getPageSize() : 0  ;
    }
 
 

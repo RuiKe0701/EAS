@@ -13,6 +13,7 @@
                 http://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="com.ruike.eas.service"/>
     <context:component-scan base-package="com.ruike.eas.dao"/>
+    <context:component-scan base-package="com.ruike.eas.pojo"/>
     <context:annotation-config />
     <context:property-placeholder location="classpath:jdbc.properties"/>
     <!-- JNDI获取数据源(使用dbcp连接池) -->

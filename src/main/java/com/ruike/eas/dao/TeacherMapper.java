@@ -11,7 +11,10 @@ public interface TeacherMapper {
      * @return
      */
     public List<Teacher> selectTeacher(Teacher teacher);
-
+    /*
+    根据老师id查询老师信息
+     */
+    public Teacher SelectTeacherBythid(Teacher teacher);
     /**
      * 新增老师信息
      * @param teacher
