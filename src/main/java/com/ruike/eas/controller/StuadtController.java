@@ -112,7 +112,9 @@ public class StuadtController {
     */
     @RequestMapping("/selectstuleavebystu")
     public void selectstuleavebystu(String stuleaves,PrintWriter printWriter){
+
         Stuleave stuleave= JSON.parseObject(stuleaves,Stuleave.class);
+
         System.out.println(stuleave.getClass_id()+""+stuleave.getClassname());
         List<Stuleave> stuleaveList=new ArrayList<Stuleave>();
         if(stuleave.getClassname()!=null&&stuleave.getClassname()!=""){

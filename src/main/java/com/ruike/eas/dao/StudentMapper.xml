@@ -203,13 +203,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="stu_sex != null">
 				stu_sex = #{stu_sex},
 			</if>
-			<if test="stu_birthday != null and stu_birthday != ''">
+			<if test="stu_birthday != null">
 				stu_birthday = #{stu_birthday},
 			</if>
 			<if test="stu_phone != null and stu_phone != ''">
 				stu_phone = #{stu_phone},
 			</if>
-			<if test="stu_address != null and stu_address != ''">
+			<if test="stu_address != null">
 				stu_address = #{stu_address},
 			</if>
 			<if test="stu_startday != null and stu_startday != ''">
@@ -236,7 +236,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="crateday != null">
 				crateday = #{crateday},
 			</if>
-			<if test="class_id != null and class_id > 0">
+			<if test="class_id != null">
 				class_id = #{class_id},
 			</if>
 		</trim>

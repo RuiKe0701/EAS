@@ -1,9 +1,12 @@
 package com.ruike.eas.pojo;
 
+/**
+ * 老师表
+ */
 public class Teacher {
-  private Integer th_id;
-  private String th_name;
-  private Integer th_type;
+  private Integer th_id; //主键，自增
+  private String th_name; //名字
+  private Integer th_type; //老师类型
 
   public Integer getTh_id() {
     return th_id;
