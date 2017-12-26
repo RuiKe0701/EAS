@@ -350,7 +350,7 @@
         $("body").on("click",".xiugai",function () {
             var classid = $(this).prev().val();
             var ce_id = $(this).prev().prev().val();
-
+            parent.oneStuScore(classid,ce_id);
         });
 
     });
@@ -420,7 +420,6 @@
                         str += "<option style=\"background-color: white;color: #2b303a\" value=\"" + item.ce_Id + "\" cetype=\"" + item.se_Examtype + "\" >" + item.ce_Name + "</option>";
                     });
                 }
-                alert(str);
                 $("#ajaxclassexam").html(str);
             }
         });

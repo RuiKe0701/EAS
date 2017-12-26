@@ -12,7 +12,7 @@
         (NULL,#{ce_Id},#{cs_Wtavg},#{cs_Ctavg},#{cs_Avg},#{cs_Createdate},#{cs_State})
     </insert>
     <select id="selectClassScore" parameterType="com.ruike.eas.pojo.ClassScore" resultMap="cs">
-        SELECT ce.ce_name,c.class_name,cs.* FROM classscore cs,classexam ce,class c
+        SELECT ce.ce_name,c.class_name,c.class_id,cs.* FROM classscore cs,classexam ce,class c
         <where>
             cs.ce_id = ce.ce_id and c.class_id = ce.class_id
            <if test="class_id != null">

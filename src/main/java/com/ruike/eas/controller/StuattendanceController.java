@@ -27,7 +27,8 @@ public class StuattendanceController {
     @RequestMapping("/zhuclassstuattencercord.do")
     public String Classstuadts(HttpServletRequest request){
         Classteacher classteacher=new Classteacher();
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
         List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
         request.setAttribute("oldclassteacherList",classteacherList1);
@@ -49,7 +50,8 @@ public class StuattendanceController {
     @RequestMapping("/classstuattencercord")
     public String Classstuadt(HttpServletRequest request){
         Classteacher classteacher=new Classteacher();
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
         List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
         request.setAttribute("oldclassteacherList",classteacherList1);
@@ -95,7 +97,8 @@ public class StuattendanceController {
     @RequestMapping("/stuattebcercorerecordbystu")
     public String Stuattsbystu(Integer classid,Integer stuid,String l,Integer zhuang,HttpServletRequest request){
         Classteacher classteacher=new Classteacher();
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
         List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
         Classstu classstu=new Classstu();
@@ -127,7 +130,8 @@ public class StuattendanceController {
  @RequestMapping("/selectstubyclassids")
     public String SelectStuByClassids(Integer classid,Integer zhuang,HttpServletRequest request,Integer xq){
      Classteacher classteacher=new Classteacher();
-     classteacher.setTeacher_id(1);
+     Integer thid=(Integer) request.getSession().getAttribute("th");
+     classteacher.setTeacher_id(thid);
      List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
      List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
      Classstu classstu=new Classstu();

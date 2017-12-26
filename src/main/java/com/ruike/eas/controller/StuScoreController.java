@@ -49,7 +49,7 @@ public class StuScoreController {
         Classteacher classteacher = new Classteacher();
         //取出老师id#################################################
         Integer th_id = (Integer)request.getSession().getAttribute("th");//登录的老师id
-        classteacher.setTeacher_id(1);
+        classteacher.setTeacher_id(th_id);
         Class c = new Class();
         //班级状态(1为结业,0为未结业)
         c.setStatus(0);

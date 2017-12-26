@@ -1,11 +1,13 @@
 package com.ruike.eas.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.ruike.eas.pojo.*;
 import com.ruike.eas.pojo.Class;
 import com.ruike.eas.service.ClassteacherService;
 import com.ruike.eas.util.DateUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ruike.eas.service.StudentService;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,7 +75,6 @@ public class StudentController {
     @RequestMapping("/thselecstudentbystu")
     @ResponseBody
     public void selectStudentByStu(PrintWriter printWriter,String classname,String stuname,Integer sturts){
-        String jsonString = "";
         //根据班级名称查询
         if(classname!=null&&classname!=""){
             Classteacher classteacher=new Classteacher();
@@ -92,13 +93,18 @@ public class StudentController {
                 stu.setClasses(s);
                 List<Stu> stus= studentService.selectStuByClass(stu);
                 if(stus!=null) {
-                    jsonString = JSON.toJSONString(stus);
+                    String jsonString = JSON.toJSONString(stus);
+                    printWriter.write(jsonString);
+                    printWriter.flush();
+                    printWriter.close();
                 }else{
-                    jsonString = JSON.toJSONString(0);
+                    String jsonString = JSON.toJSONString(0);
+                    printWriter.write(jsonString);
+                    printWriter.flush();
+                    printWriter.close();
                 }
-                printWriter.write(jsonString);
             }else{
-                jsonString = JSON.toJSONString(0);
+                String jsonString = JSON.toJSONString(0);
                 printWriter.write(jsonString);
                 printWriter.flush();
                 printWriter.close();
@@ -110,15 +116,17 @@ public class StudentController {
             List<Stu> stuList=new ArrayList<Stu>();
             stuList=studentService.selectByStudent(stu1);
             if(stuList!=null) {
-                jsonString = JSON.toJSONString(stuList);
+                String jsonString = JSON.toJSONString(stuList);
                 printWriter.write(jsonString);
+                printWriter.flush();
+                printWriter.close();
             }else{
-                jsonString = JSON.toJSONString(0);
-                printWriter.write(jsonString);
+                    String jsonString = JSON.toJSONString(0);
+                    printWriter.write(jsonString);
+                    printWriter.flush();
+                    printWriter.close();
             }
         }
-        printWriter.flush();
-        printWriter.close();
     }
 
     @RequestMapping("/ddd")
@@ -144,18 +152,18 @@ public class StudentController {
 
     @RequestMapping("/showclassstuinfo")
     @ResponseBody
-    public void showClassStuInfo(String classid ,PrintWriter printWriter){
-        if(classid!=null && !classid.equals("")){
-            Classteacher classteacher=new Classteacher();
+    public void showClassStuInfo(String classid ,PrintWriter printWriter) {
+        if (classid != null && !classid.equals("")) {
+            Classteacher classteacher = new Classteacher();
             //#############################登陆的老师id
             classteacher.setTeacher_id(1);
             classteacher.setStatus(0);
             classteacher.setClass_id(Integer.parseInt(classid));
-            Class cla=new Class();
+            Class cla = new Class();
             cla.setClass_state(0);
             classteacher.setClasses(cla);
             List<Classteacher> classteachers = classteacherService.selectClassteacher(classteacher);
-            if(classteachers!=null && classteachers.size()>=1) {
+            if (classteachers != null && classteachers.size() >= 1) {
                 Integer wa = classteachers.get(0).getClasses().getClass_id();
                 System.out.println(wa);
                 Stu stu = new Stu();
@@ -177,33 +185,42 @@ public class StudentController {
     }
 
     /**
-     * 跳转教导主任查看学生信息页面
-     * @param request
+     * 修改学生信息
+
+     * @param s
      * @return
      */
-    @RequestMapping("/anotherstudentinfo.do")
-    public String anotherStudentInfo(HttpServletRequest request){
-        Stu stu = new Stu();
-        stu.setStu_state(0);
-        //查询第一页的所有学生信息
-        stu.setList(studentService.selectPagerStudentInfo(stu));
-        request.setAttribute("pager",stu);
-        return "anotherstudentinfo";
-    }
-
-    /**
-     * ajax查询学生信息（教导主任查看）
-     * @param stu 学生对象
-     * @param printWriter
-     */
-    @RequestMapping("/anotherajaxstudentinfo.do")
-    @ResponseBody
-    public void  anotherAjaxStudentInfo(Stu stu ,PrintWriter printWriter){
-        List<Stu> stus = studentService.selectPagerStudentInfo(stu);
-        stu.setList(stus);
-        String s = JSON.toJSONString(stu);
-        printWriter.print(s);
+    @RequestMapping("/updatestuinfo.do")
+    public void updatestuInfo(String s ,PrintWriter printWriter) {
+        System.out.println(s);
+        Stu stu =  JSON.parseObject(s,Stu.class);
+        System.out.println(stu.getStu_name());
+        System.out.println(stu.getStu_id());
+        System.out.println(stu.getCrateday());
+        System.out.println(stu.getStu_address());
+        System.out.println("sssssssss");
+        int count =studentService.updateStuInfo(stu);
+        System.out.println(count);
+        String json="";
+        if(count>0){
+            json=JSON.toJSONString(1);
+        }else {
+            json=JSON.toJSONString(0);
+        }
+        printWriter.write(json);
         printWriter.flush();
         printWriter.close();
+    }
+    /**
+     * 根据id查询学生所有信息
+     */
+    @RequestMapping("/updateByidinfo.do")
+    @ResponseBody
+    public String updateByidinfo(HttpServletRequest request,Integer id){
+        Stu stu=new Stu();
+        stu.setStu_id(id);
+        Stu stu1=studentService.selectStudentByStu(stu);
+     String json=JSON.toJSONString(stu1);
+     return json;
     }
 }

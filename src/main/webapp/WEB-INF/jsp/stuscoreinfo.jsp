@@ -170,7 +170,7 @@
                             </optgroup>
                         </select>
                     </div>
-                    <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
+                    <div id="stuDiv" class="col-md-1" style="padding-left: 0px;padding-top: 8px">
                         <select id="classstu"  class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
                             <optgroup label="test" data-subtext="optgroup subtext">
                                 <option value="0">学员选择</option>
@@ -266,6 +266,7 @@
             if (class_id == 0){
                 class_id = $("#oldclass").val();
             }
+            initStu();
             ajaxClassExamByClassId(class_id,$(this).val())
         })
         $("#gread_id").change(function () {
@@ -282,6 +283,11 @@
             }
         });
     });
+    
+    function initStu() {
+        $("#classstu").val(0);
+        $("#stuDiv").find(".filter-option").text("选择学员");
+    }
     function ajaxStu_id(class_id,stu_id) {
         $.ajax({
             type:'post',
@@ -310,8 +316,7 @@
             }
         })
     }
-
-
+    
 
     function ajaxClassExamByClassId(class_Id,ce_Id) {
         $.ajax({

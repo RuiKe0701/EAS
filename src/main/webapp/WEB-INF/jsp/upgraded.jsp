@@ -128,12 +128,12 @@
                 </div>
             </div>
             <div class="col-md-12" id="biaoshi">
-                <div class="panel-heading" style="margin-top: -5px;margin-bottom: -20px;">
+                <div id="stude" class="panel-heading" style="margin-top: -5px;margin-bottom: -20px;">
                     <h5>选择升班学生</h5>
                 </div>
                 <c:forEach items="${requestScope.stuList}" var="stu">
                     <div class="ldivwai">
-                <table  class="ltable">
+                <table class="ltable">
                     <tr>
                         <td rowspan="6" style="width:78px;height: 80px">
                             <img src="ss/559.PNG" style="margin-left:3px;margin-right:7px;width:70px;height: 70px;border-radius:50px;border: solid 3px #5db85d;">
@@ -164,33 +164,53 @@
     </div>
 <script src="table/js/jquery.min.js"></script>
 <script src="table/js/bootstrap.min.js"></script>
-    <script src="table/js/sweet-alert.min.js"></script>
+<script src="table/js/sweet-alert.min.js"></script>
+<script src="table/js/sweet-alert.min.js"></script>
+
+<script src="js/bootstrap-select.js"></script>
     <script>
         alert("注意选择学生是否离校状态!")
-//        var count = 0;
-//        $(document).ready(function() {
-//            $(window).scroll(function() {
-//                if ($(document).scrollTop() >= $(document).height() - $(window).height() && count == 0) {
-//                    count = 1;
-//                    $("#upclass").show();
-//                }
-//            });
-//        });
+        var s = ${requestScope.stuList};
         $(function () {
+            if (s.length == 0){
+                $("#stude h5").html("此班级没有学生!");
+            }
             classChange();
             $("#myclass").change(function () {
                 $("#class_id").val($(this).val());
             });
             $("#shengban").click(function () {
-                ajaxUpClass();
+                if ($(".ldivwai").length > 0){
+                    ajaxUpClass();
+                }else {
+                    swal({
+                        title: "",
+                        text: "这个班级没有学生!",
+                        type: "error",
+                        showCancelButton: false,
+                        cancelButtonClass: 'btn-secondary ',
+                        confirmButtonClass: 'btn-success  ',
+                        confirmButtonText: '确定!'
+                    });
+                }
             });
             $("#class_name").blur(function () {
                 yanzhengname();
             });
-
             upclass();
             guan();
         });
+        function ss() {
+            swal({
+                title: "",
+                text: "这个班级没有学生!",
+                type: "error",
+                showCancelButton: false,
+                cancelButtonClass: 'btn-secondary ',
+                confirmButtonClass: 'btn-success  ',
+                confirmButtonText: '确定!'
+            });
+        }
         
         function classChange() {
             $("#myclass").change(function () {
@@ -204,53 +224,77 @@
                     success: function (data) {
                         var da = eval(data);
                         var str = "";
-                        $.each(da,function (i,item) {
-                            str+="<div class=\"ldivwai\">\n" +
-                                "                <table  class=\"ltable\">\n" +
-                                "                    <tr>\n" +
-                                "                        <td rowspan=\"6\" style=\"width:78px;height: 80px\">\n" +
-                                "                            <img src=\"ss/559.PNG\" style=\"margin-left:3px;margin-right:7px;width:70px;height: 70px;border-radius:50px;border: solid 3px #5db85d;\">\n" +
-                                "                        </td>\n" +
-                                "                    </tr>\n" +
-                                "                    <tr style=\"height:12px \"><td></td></tr>\n" +
-                                "                     <tr style=\"height:16px;font-size: 13px\"><td><span style=\"border-bottom: 0.1px solid gainsboro;padding-bottom: 3px\">\n" +
-                                "                                    <input type=\"hidden\" value=\"1\" class=\"stuid\">\n" +
-                                "                                    <input type=\"hidden\" value=\"80\" class=\"stutotalscore\">\n" +
-                                "                                    <span sty>姓名：</span><span>"+item.stu_name+"</span></span></td></tr>\n" +
-                                "                    <tr style=\"height:16px;font-size: 12px \"><td><span >学号：</span><span>"+item.stu_no+"</span></td></tr>\n" +
-                                "                    <tr style=\"height:22px;font-size: 13px \"><td>\n" +
-                                "                        <div>\n" +
-                                "                            <input type=\"hidden\"  value=\""+item.stu_id+"\">\n" +
-                                "                            <select class=\"ltselect\">\n" +
-                                "                                <option class=\"ltsop\" value=\"1\">升班</option>\n" +
-                                "                                <option class=\"ltsop\" value=\"2\">离校</option>\n" +
-                                "                            </select>\n" +
-                                "                        </div>\n" +
-                                "                    </td></tr>\n" +
-                                "                    <tr style=\"height:9px \"><td></td></tr>\n" +
-                                "                </table>\n" +
-                                "            </div>\n"
-                        })
-                        $("#biaoshi").append(str);
+                        $("#stude h5").html(da != 0 ? "选择升班学生" :"此班级没有学生!");
+                        if(da != 0){
+                            $.each(da,function (i,item) {
+                                str+="<div class=\"ldivwai\">\n" +
+                                    "                <table  class=\"ltable\">\n" +
+                                    "                    <tr>\n" +
+                                    "                        <td rowspan=\"6\" style=\"width:78px;height: 80px\">\n" +
+                                    "                            <img src=\"ss/559.PNG\" style=\"margin-left:3px;margin-right:7px;width:70px;height: 70px;border-radius:50px;border: solid 3px #5db85d;\">\n" +
+                                    "                        </td>\n" +
+                                    "                    </tr>\n" +
+                                    "                    <tr style=\"height:12px \"><td></td></tr>\n" +
+                                    "                     <tr style=\"height:16px;font-size: 13px\"><td><span style=\"border-bottom: 0.1px solid gainsboro;padding-bottom: 3px\">\n" +
+                                    "                                    <input type=\"hidden\" value=\"1\" class=\"stuid\">\n" +
+                                    "                                    <input type=\"hidden\" value=\"80\" class=\"stutotalscore\">\n" +
+                                    "                                    <span sty>姓名：</span><span>"+item.stu_name+"</span></span></td></tr>\n" +
+                                    "                    <tr style=\"height:16px;font-size: 12px \"><td><span >学号：</span><span>"+item.stu_no+"</span></td></tr>\n" +
+                                    "                    <tr style=\"height:22px;font-size: 13px \"><td>\n" +
+                                    "                        <div>\n" +
+                                    "                            <input type=\"hidden\"  value=\""+item.stu_id+"\">\n" +
+                                    "                            <select class=\"ltselect\">\n" +
+                                    "                                <option class=\"ltsop\" value=\"1\">升班</option>\n" +
+                                    "                                <option class=\"ltsop\" value=\"2\">离校</option>\n" +
+                                    "                            </select>\n" +
+                                    "                        </div>\n" +
+                                    "                    </td></tr>\n" +
+                                    "                    <tr style=\"height:9px \"><td></td></tr>\n" +
+                                    "                </table>\n" +
+                                    "            </div>\n"
+                            })
+                            $("#biaoshi").append(str)
+                        }else {
+                            swal({
+                                title: "",
+                                text: "这个班级没有学生!",
+                                type: "error",
+                                showCancelButton: false,
+                                cancelButtonClass: 'btn-secondary ',
+                                confirmButtonClass: 'btn-success  ',
+                                confirmButtonText: '确定!'
+                            });
+                        }
                     }
                 })
             });
         }
         function upclass() {
             $("#upclass").click(function () {
-                swal({
-                    title: "",
-                    text: "您是否确定以下学员进行升班?",
-                    type: "warning",
-                    showCancelButton: true,
-                    cancelButtonClass: 'btn-secondary ',
-                    confirmButtonClass: 'btn-warning',
-                    confirmButtonText: "确定!",
-                    closeOnConfirm: false
-                }, function () {
-                    $("#tan").click();
-                });
-
+                if ($(".ldivwai").length > 0){
+                    swal({
+                        title: "",
+                        text: "您是否确定以下学员进行升班?",
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonClass: 'btn-secondary ',
+                        confirmButtonClass: 'btn-warning',
+                        confirmButtonText: "确定!",
+                        closeOnConfirm: false
+                    }, function () {
+                        $("#tan").click();
+                    });
+                }else {
+                    swal({
+                        title: "",
+                        text: "这个班级没有学生!",
+                        type: "error",
+                        showCancelButton: false,
+                        cancelButtonClass: 'btn-secondary ',
+                        confirmButtonClass: 'btn-success  ',
+                        confirmButtonText: '确定!'
+                    });
+                }
             })
         }
         function shengban() {

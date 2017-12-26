@@ -133,7 +133,7 @@
                         </li>
                         <li><a class="J_menuItem" href="/anotherstudentinfo.do" >学生档案（教导主任权限）</a></li>
                         </li>
-                        <li><a class="J_menuItem" href="/tzstuscoreinfo.do" >学生成绩（教导主任权限）</a></li>
+                        <li><a class="J_menuItem" href="/tzstuscoreinfo.do" id="studentScores" >学生成绩</a></li>
                         </li>
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
                             <span class="label label-danger pull-right">推荐</span></a>
@@ -709,17 +709,26 @@
         document.getElementById("myframe").window.childtest();
     }
     var cc=""
-
+    //跳转成绩用的url
+    var scoreurl="";
     window.addstuattebcercorerecord = function(a,b,d){
         aa(cc);
-        alert("sss")
         var url = '/stuattebcercorerecordbystu?classid=' + a+ "&stuid=" + b + "&zhuang="+d+"&l=" + 1;
         $("#stuattebcercorerecord").attr('href', url)
         alert($("#stuattebcercorerecord").attr('href'))
         cc=url;
         $("#stuattebcercorerecord").click();
     }
-
+    window.oneStuScore = function(class_id,ce_id){
+        aa(scoreurl);
+        var url = '/tzstuscoreinfo.do?class_id=' + class_id + "&ce_Id=" + ce_id+"&l=" + 1;
+        var yuanurl = $("#studentScores").attr('href');
+        $("#studentScores").attr('href',url);
+        scoreurl=url;
+        alert( $("#studentScores").attr('href'))
+        $("#studentScores").click();
+        $("#studentScores").attr('href',yuanurl);
+    }
     function aa(urls){
         $(".J_menuTab").each(function(){
             if($(this).attr("data-id")==urls){
