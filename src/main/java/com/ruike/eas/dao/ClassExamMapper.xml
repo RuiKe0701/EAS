@@ -22,6 +22,9 @@
             <if test="stopDate != null ">
               AND ce.ce_Examday &lt;= #{stopDate}
             </if>
+            <if test="se_Id != null">
+              AND se.se_Id = #{se_Id}
+            </if>
         </where>
     </select>
 

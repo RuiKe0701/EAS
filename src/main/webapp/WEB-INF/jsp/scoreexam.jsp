@@ -326,10 +326,10 @@
         
         $("body").on("click",".deleteid",function () {
             var se_Id = $(this).prev().val();
-            var boo = true;
+            var boo = false;
             swal({
                 title: "",
-                text: "您是否确定以下学员进行升班?",
+                text: "是否删除此次考试?",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonClass: 'btn-secondary ',
@@ -348,42 +348,54 @@
            var se_id = $($this).next().val();
         });
     });
-
+    var boo = false;
     function deleteSchoolExam(se_Id) {
-        var boo = true;
         $.ajax({
             type:'POST',
             url:'/deleteschool',
             data:{'se_Id':se_Id},
+            async:false,
             success:function (data) {
-                if (data == 1){
-                    swal({
-                        title: "success",
-                        text: "删除成功!",
-                        type: "success",
-                        showCancelButton: false,
-                        cancelButtonClass: 'btn-secondary',
-                        confirmButtonClass: 'btn-danger',
-                        confirmButtonText: '确定!'
-                    })
-                }else {
-                    swal({
-                        title: "ERROR",
-                        text: "删除失败!",
-                        type: "error",
-                        showCancelButton: false,
-                        cancelButtonClass: 'btn-secondary',
-                        confirmButtonClass: 'btn-danger',
-                        confirmButtonText: '确定!'
-                    })
-                    boo = false;
-                };
+               if (data != -1){
+                   if (data == 1){
+                       swal({
+                           title: "success",
+                           text: "删除成功!",
+                           type: "success",
+                           showCancelButton: false,
+                           cancelButtonClass: 'btn-secondary',
+                           confirmButtonClass: 'btn-danger',
+                           confirmButtonText: '确定!'
+                       })
+                   }else {
+                       swal({
+                           title: "ERROR",
+                           text: "删除失败!",
+                           type: "error",
+                           showCancelButton: false,
+                           cancelButtonClass: 'btn-secondary',
+                           confirmButtonClass: 'btn-danger',
+                           confirmButtonText: '确定!'
+                       })
+                       boo = false;
+                   };
+               }else {
+                   swal({
+                       title: "ERROR",
+                       text: "此考试已有班级参加,无法删除!",
+                       type: "error",
+                       showCancelButton: false,
+                       cancelButtonClass: 'btn-secondary',
+                       confirmButtonClass: 'btn-danger',
+                       confirmButtonText: '确定!'
+                   })
+                   boo = false;
+               }
             },
             error:function () {
 
             }
         })
-        return boo;
     }
 
     function ajaxAddSchooExam() {

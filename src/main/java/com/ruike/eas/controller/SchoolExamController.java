@@ -2,7 +2,9 @@ package com.ruike.eas.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ruike.eas.pojo.Class;
+import com.ruike.eas.pojo.ClassExam;
 import com.ruike.eas.pojo.SchoolExam;
+import com.ruike.eas.service.ClassExamService;
 import com.ruike.eas.service.ClassService;
 import com.ruike.eas.service.SchoolExamService;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ public class SchoolExamController {
 
     @Resource
     private ClassService classService;
+
+    @Resource
+    private ClassExamService classExamService;
 
     @RequestMapping("/tzscoreexam")
     public String tzScoreExam(HttpServletRequest request){
@@ -68,7 +73,8 @@ public class SchoolExamController {
         //标识是否删除
         schoolExam.setSe_State(0);
         //##################################################此处为创建人 暂时为1 有登陆功能则填入登陆账号的老师
-        schoolExam.setSe_Createby(1);
+        Integer th_id = (Integer)request.getSession().getAttribute("th");
+        schoolExam.setSe_Createby(th_id);
         Integer integer = schoolExamService.addSchoolExamInfo(schoolExam);
         printWriter.print(integer);
         printWriter.flush();
@@ -77,11 +83,17 @@ public class SchoolExamController {
     @RequestMapping("/deleteschool")
     @ResponseBody
     public void deleteSchool(SchoolExam schoolExam ,PrintWriter printWriter){
-        //1为删除状态
-        schoolExam.setSe_State(1);
-        //调用删除方法
-        Integer integer = schoolExamService.removeSchoolExamInfo(schoolExam);
-        printWriter.print(integer);
+        ClassExam classExam = new ClassExam();
+        classExam.setSe_Id(schoolExam.getSe_Id());
+        List<ClassExam> classExams = classExamService.selectClassExam(classExam);
+        Integer count = -1;
+        if (!(classExams != null && classExams.size() > 0)) {
+            //1为删除状态
+            schoolExam.setSe_State(1);
+            //调用删除方法
+            count = schoolExamService.removeSchoolExamInfo(schoolExam);
+        }
+        printWriter.print(count);
         printWriter.flush();
         printWriter.close();
     }
