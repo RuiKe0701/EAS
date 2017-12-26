@@ -37,7 +37,8 @@ public class ClassTeacherOperating {
 
         Classteacher classteacher = new Classteacher();
         //放入老师的id
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         Class c = new Class();
         //班级状态(1为结业,0为未结业)
         c.setStatus(0);
@@ -68,12 +69,13 @@ public class ClassTeacherOperating {
 
     @RequestMapping("/jsonclass")
     @ResponseBody
-    public void jsonFindClassTeache(PrintWriter printWriter,String classname,Integer status){
+    public void jsonFindClassTeache(PrintWriter printWriter,String classname,Integer status,HttpServletRequest request){
         //从此老师所有记录中查找
         if (status != null ){
             Classteacher classteacher = new Classteacher();
             //放入老师的id
-            classteacher.setTeacher_id(1);
+            Integer thid=(Integer) request.getSession().getAttribute("th");
+            classteacher.setTeacher_id(thid);
             Class c = new Class();
             //班级名称
             c.setClass_name(classname);

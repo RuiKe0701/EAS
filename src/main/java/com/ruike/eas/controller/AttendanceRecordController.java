@@ -61,7 +61,6 @@ public class AttendanceRecordController {
                 class1.setGrade_id(3);
                 classattendance.setGrade(3);
             }
-            System.out.println("sssssssssssssssssssssssssssssssssssssssssssssssssssss");
             List<Class> classes = classService.selectClass(class1);
             request.setAttribute("classes", classes);
             Integer classid = 0;
@@ -126,7 +125,7 @@ public class AttendanceRecordController {
     }
     //根据班级id查询班级出勤记录
     @RequestMapping("/doselectclassatdss")
-    public void selectclassatdss(PrintWriter printWriter, Integer classsid,String startday,String stopday,String classname){
+    public void selectclassatdss(PrintWriter printWriter, Integer classsid,String startday,String stopday,String classname,HttpServletRequest request){
         Classattendance classattendance=new Classattendance();
         System.out.println(startday);
         if(startday!=null && startday.length()>0) {
@@ -138,7 +137,8 @@ public class AttendanceRecordController {
         }
         if(classname!=null&& classname!=""){
                 Classteacher classteacher=new Classteacher();
-                classteacher.setTeacher_id(1);
+                Integer th_id = (Integer)request.getSession().getAttribute("th");
+                classteacher.setTeacher_id(th_id);
                 Class cla=new Class();
                 cla.setClass_name(classname);
                 classteacher.setClasses(cla);

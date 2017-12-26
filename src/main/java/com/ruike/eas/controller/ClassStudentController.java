@@ -48,7 +48,8 @@ public class ClassStudentController {
     public String jump(HttpServletRequest request){
         Classteacher classteacher = new Classteacher();
         //放入老师的id
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         //查询此老师在校的班级
         classteacher.setStatus(0);
         List<Classteacher> cs = classteacherService.selectClassteacher(classteacher);
@@ -119,7 +120,8 @@ public class ClassStudentController {
         aClass.setClass_state(0);
         classteacher.setClasses(aClass);
         //放入老师的id
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         //查询此老师在校的班级
         classteacher.setStatus(0);
         List<Classteacher> cs = classteacherService.selectClassteacher(classteacher);

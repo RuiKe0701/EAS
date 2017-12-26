@@ -40,7 +40,8 @@ public class ClassExamController {
     public String tzClassExam(ClassExam classExam , HttpServletRequest request){
         Classteacher classteacher = new Classteacher();
         //放入老师的id#################################################
-        classteacher.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
         Class c = new Class();
         //班级状态(1为结业,0为未结业)
         c.setStatus(0);

@@ -44,7 +44,8 @@ public class StudentController {
         Classteacher classteachers=new Classteacher();
         //放入老师id 暂时没有登陆所以用1#########################################################
         classteachers.setStatus(0);
-        classteachers.setTeacher_id(1);
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteachers.setTeacher_id(thid);
         //获取老师正在管理的班级
         classteacherArrayList=classteacherService.selectClassteacher(classteachers);
         request.setAttribute("ct",classteacherArrayList);
@@ -72,12 +73,13 @@ public class StudentController {
 
     @RequestMapping("/thselecstudentbystu")
     @ResponseBody
-    public void selectStudentByStu(PrintWriter printWriter,String classname,String stuname,Integer sturts){
+    public void selectStudentByStu(PrintWriter printWriter,String classname,String stuname,Integer sturts,HttpServletRequest request){
         String jsonString = "";
         //根据班级名称查询
         if(classname!=null&&classname!=""){
             Classteacher classteacher=new Classteacher();
-            classteacher.setTeacher_id(1);
+            Integer thid=(Integer) request.getSession().getAttribute("th");
+            classteacher.setTeacher_id(thid);
             Class cla=new Class();
             cla.setClass_name(classname);
             classteacher.setClasses(cla);
@@ -144,11 +146,12 @@ public class StudentController {
 
     @RequestMapping("/showclassstuinfo")
     @ResponseBody
-    public void showClassStuInfo(String classid ,PrintWriter printWriter){
+    public void showClassStuInfo(String classid ,PrintWriter printWriter,HttpServletRequest request){
         if(classid!=null && !classid.equals("")){
             Classteacher classteacher=new Classteacher();
             //#############################登陆的老师id
-            classteacher.setTeacher_id(1);
+            Integer thid=(Integer) request.getSession().getAttribute("th");
+            classteacher.setTeacher_id(thid);
             classteacher.setStatus(0);
             classteacher.setClass_id(Integer.parseInt(classid));
             Class cla=new Class();
