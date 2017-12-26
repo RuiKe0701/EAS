@@ -91,21 +91,36 @@
                     <h>学员出勤详情</h>
                 </div>
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
-                    <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
+                    <c:if test="${sessionScope.thtype==2 || sessionScope.thtype==3}">
+                        <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
+
                         <select id="gread_id" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
                             <optgroup label="test" data-subtext="optgroup subtext">
                                 <option value="0">选择年级</option>
-                                <c:if test="${requestScope.stuScore.gread_id==1}">
-                                    <option style="background-color: white;color: darkslategray" value="1" selected >S1</option>
-                                    <option style="background-color: white;color: darkslategray" value="2">S2</option>
+                                <c:if test="${sessionScope.thtype == 2}">
+                                    <c:if test="${requestScope.stuScore.gread_id==1}">
+                                        <option style="background-color: white;color: darkslategray" value="1" selected >S1</option>
+                                        <option style="background-color: white;color: darkslategray" value="2">S2</option>
+                                    </c:if>
+                                    <c:if test="${requestScope.stuScore.gread_id==2}">
+                                        <option style="background-color: white;color: darkslategray" value="1">S1</option>
+                                        <option style="background-color: white;color: darkslategray" value="2" selected>S2</option>
+                                    </c:if>
                                 </c:if>
-                                <c:if test="${requestScope.stuScore.gread_id==2}">
-                                    <option style="background-color: white;color: darkslategray" value="1">S1</option>
-                                    <option style="background-color: white;color: darkslategray" value="2" selected>S2</option>
+                                <c:if test="${sessionScope.thtype == 3}">
+                                    <c:if test="${requestScope.stuScore.gread_id==3}">
+                                        <option style="background-color: white;color: darkslategray" value="3" selected >Y2</option>
+                                        <option style="background-color: white;color: darkslategray" value="4">学士后</option>
+                                    </c:if>
+                                    <c:if test="${requestScope.stuScore.gread_id==4}">
+                                        <option style="background-color: white;color: darkslategray" value="3">Y2</option>
+                                        <option style="background-color: white;color: darkslategray" value="4" selected>学士后</option>
+                                    </c:if>
                                 </c:if>
                             </optgroup>
                         </select>
                     </div>
+                    </c:if>
                     <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
                         <select id="class" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
                             <optgroup label="test" data-subtext="optgroup subtext">
@@ -239,10 +254,12 @@
     $(document).ready(function () {
         $('#datatables').dataTable();
         $("#class").change(function () {
-           window.location.href='/tzstuscoreinfo.do?class_id='+$(this).val()+"&gread_id="+$("#gread_id").val();
+            var str = $("#gread_id").val()==null?"" :"&gread_id="+$("#gread_id").val();
+           window.location.href='/tzstuscoreinfo.do?class_id='+$(this).val()+str;
         });
         $("#oldclass").change(function () {
-            window.location.href='/tzstuscoreinfo.do?class_id='+$(this).val()+"&gread_id="+$("#gread_id").val();;
+            var str = $("#gread_id").val()==null?"" :"&gread_id="+$("#gread_id").val();
+            window.location.href='/tzstuscoreinfo.do?class_id='+$(this).val()+str;
         });
         $("#classexam").change(function () {
             var class_id = $("#class").val();
