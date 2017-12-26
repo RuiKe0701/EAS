@@ -19,7 +19,6 @@ public class Classattendance implements Serializable {
     private Integer grade;
 
 
-
     /*
         班级出勤率主键
          */
@@ -115,6 +114,9 @@ public class Classattendance implements Serializable {
 
     public Date getCad_date() {
         return cad_date;
+    }
+    public String getCad_dates() {
+        return this.getCad_date() != null ? DateUtil.dateFormat(this.getCad_date(),"yyyy-MM-dd") : "";
     }
 
     public void setCad_date(Date cad_date) {

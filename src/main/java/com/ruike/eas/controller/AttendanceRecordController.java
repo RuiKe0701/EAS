@@ -150,7 +150,10 @@ public class AttendanceRecordController {
                     List<Classattendance> classattendanceList = attendanceRecordService.selectClassttend(classattendance);
                     for (Classattendance classattendance1 : classattendanceList) {
                         System.out.println(classattendance1.getCad_name());
+                        System.out.println(classattendance1);
+                        System.out.println(classattendance1.getCad_dates());
                     }
+
                     String jsonString = JSON.toJSONString(classattendanceList);
                     printWriter.write(jsonString);
                     printWriter.flush();

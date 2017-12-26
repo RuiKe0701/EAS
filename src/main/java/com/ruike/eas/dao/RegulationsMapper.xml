@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruike.eas.dao.RegulationsMapper">
+    <insert id="InsertRegulation">
+        INSERT into regulations(ras_name,ras_fraction,ras_way,rast_id,ras_createday,ras_createby)
+VALUES(#{ras_name},#{ras_fraction},#{ras_way},#{rast_id},#{ras_createday},#{ras_createby});
+    </insert>
+    <resultMap id="rl" type="com.ruike.eas.pojo.Regulations">
+        <result property="restname" column="restname"></result>
+        <result property="thname" column="thname"></result>
+    </resultMap>
+    <select id="SelectRegulationByRl" resultMap="rl">
+        SELECT r.*,rt.rast_name as restname,t.th_name as thname from regulations as r,regulationstype as rt,teacher as t
+        <where>
+            rt.rast_id=r.rast_id and r.ras_createby=t.th_id
+            <if test="rast_id!=null">
+                and r.rast_id=#{rast_id}
+            </if>
+            <if  test="tiao!=null">
+                LIMIT 0,#{tiao}
+            </if>
+        </where>
+
+    </select>
+</mapper>

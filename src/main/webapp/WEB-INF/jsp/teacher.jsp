@@ -88,7 +88,24 @@
                 <li>
                     <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">考试成绩</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/tzclassexam.do" >班级考试</a></li>
+                        </li>
+                        <li><a class="J_menuItem" href="/tzstuscore.do" >班级成绩</a></li>
+                        </li>
+                        <li><a class="J_menuItem" href="/selectstuscore.do" >学生成绩详情</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员档案</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
 
+                        <li><a class="J_menuItem" href="/thstudentinfo" style="color: white">基本信息档案</a></li>
+                        <li><a class="J_menuItem" href="/jumpupgraded" >学生升班</a></li>
+                        </li>
+                        <li><a class="J_menuItem" href="/tiaoaddclass" >添加班级</a></li>
+                        </li>
+                        <li><a class="J_menuItem" href="/jump" id="s">学员批量导入</a></li>
+                        <li><a class="J_menuItem" href="/showclasst" id="sss">班级老师管理</a></li>
                     </ul>
                 </li>
                 <li>
@@ -101,29 +118,18 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员档案管理</span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">主任</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/thstudentinfo" style="color: white">基本信息档案</a></li>
-                        <li><a class="J_menuItem" href="/scoringstandardinfo" id="addstud">评分管理</a></li>
-
-                        <li><a class="J_menuItem" href="/jump" id="s">学员批量导入</a></li>
-                        <li><a class="J_menuItem" href="/addatdrecord" id="s2">学员考勤卡</a></li>
-                        <li><a class="J_menuItem" href="/addscoringstandard" style="display: none" id="addscoringstandard">学员考勤卡</a></li>
-
-                        <li><a class="J_menuItem" href="/showclasst" id="sss">班级老师管理</a></li>
-                        <li><a class="J_menuItem" href="/ddd" >评分管理</a></li>
-                        </li>
-                        <li><a class="J_menuItem" href="/selectstuscore.do" >学生成绩详情</a></li>
-                        </li>
-                        <li><a class="J_menuItem" href="/jumpupgraded" >学生升班</a></li>
-                        </li>
-                        <li><a class="J_menuItem" href="/tiaoaddclass" >添加班级</a></li>
+                        <li><a class="J_menuItem" href="/scoringstandardinfo" id="addstud">考勤规章管理</a></li>
                         </li>
                         <li><a class="J_menuItem" href="/tzscoreexam" >考试</a></li>
                         </li>
-                        <li><a class="J_menuItem" href="/tzclassexam.do" >班级考试</a></li>
+
+                        <li><a class="J_menuItem" href="/regulastions.do" id="regulastions">评分规章管理</a></li>
                         </li>
-                        <li><a class="J_menuItem" href="/tzstuscore.do" >班级成绩</a></li>
+                        <li><a class="J_menuItem" href="/stuhomework.do" id="">学员作业</a></li>
+                        </li>
+                        <li><a class="J_menuItem" href="/classhomework.do" >班级作业</a></li>
                         </li>
                         <li><a class="J_menuItem" href="/anotherstudentinfo.do" >学生档案（教导主任权限）</a></li>
                         </li>
