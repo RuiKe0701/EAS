@@ -3,6 +3,7 @@ package com.ruike.eas.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.ruike.eas.pojo.*;
+import com.ruike.eas.pojo.Class;
 import com.ruike.eas.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,12 +36,14 @@ public class HomeWorkController {
         classteacher.setTeacher_id(thid);
         List<Classteacher> classteacherList = attendanceRecordService.classteacherlist(classteacher);
         List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
+
         request.setAttribute("oldclassteacherList",classteacherList1);
-        Integer classid = 0;
+        Integer classid = -1;
         if (classteacherList.size() > 0) {
             request.setAttribute("classteacherList", classteacherList);
             classid = classteacherList.get(0).getClass_id();
         }
+
         return "stuhomework";
     }
     //班级作业情况
@@ -56,11 +59,14 @@ public class HomeWorkController {
         Integer classid = 0;
         if (classteacherList.size() > 0) {
             request.setAttribute("classteacherList", classteacherList);
-            for (Classteacher classteacher1 : classteacherList) {
-                System.out.println(classteacher1.getClassname());
-            }
             classid = classteacherList.get(0).getClass_id();
         }
+        request.setAttribute("classid",classid);
+        Classhomework classhomework=new Classhomework();
+        classhomework.setChw_classid(classid);
+        classhomework.setTiao(50);
+        List<Classhomework> classhomeworkList=homeworkService.selectClassworkByclasswork(classhomework);
+        request.setAttribute("classhomeworkList",classhomeworkList);
         return "classhomework";
     }
     //查询出记录次数
@@ -97,6 +103,7 @@ public class HomeWorkController {
             List<Regulations> regulationsList=new ArrayList<Regulations>();
             Regulations regulations=new Regulations();
             regulations.setRast_id(1);
+            regulations.setTiao(16);
             regulationsList=regulationsService.SelectRegulationByRl(regulations);
             String jsonString = JSON.toJSONString(regulationsList);
             printWriter.write(jsonString);
@@ -148,5 +155,34 @@ public class HomeWorkController {
             printWriter.flush();
             printWriter.close();
         }
+    }
+    @RequestMapping("/doseleclasshomeworkinfo.do")
+    public void DoselectClassHomeWordinfo(Integer chwid,PrintWriter printWriter){
+        Stuhomework stuhomework=new Stuhomework();
+        stuhomework.setChw_id(chwid);
+        List<Stuhomework> stuhomeworkList=homeworkService.selectStuhomeworkbystuhomework(stuhomework);
+        String jsonString = JSON.toJSONString(stuhomeworkList);
+        printWriter.write(jsonString);
+        printWriter.flush();
+        printWriter.close();
+
+    }
+    /*
+   根据班级查询作业记录详情
+     */
+    @RequestMapping("/selectclasshomeworkbyclassidand.do")
+    public void SelectClassHome(Integer classsid,String startdate ,String stopdate,PrintWriter printWriter){
+        System.out.println("//////////////////////////"+classsid);
+        Classhomework classhomework =new Classhomework();
+        classhomework.setChw_classid(classsid);
+        System.out.println(startdate);
+        classhomework.setStopdate(stopdate);
+        classhomework.setStartdate(startdate);
+        System.out.println(stopdate);
+        List<Classhomework> classhomeworkList=homeworkService.selectClassworkByclasswork(classhomework);
+        String jsonString = JSON.toJSONString(classhomeworkList);
+        printWriter.write(jsonString);
+        printWriter.flush();
+        printWriter.close();
     }
 }

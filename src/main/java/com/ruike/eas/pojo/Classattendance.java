@@ -17,8 +17,6 @@ public class Classattendance implements Serializable {
     }
 
     private Integer grade;
-
-
     /*
         班级出勤率主键
          */

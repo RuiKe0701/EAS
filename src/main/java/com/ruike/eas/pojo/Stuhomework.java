@@ -13,6 +13,51 @@ public class Stuhomework {
     private Integer zongfen;
     private Integer stsid;
     private Integer chw_id;
+    private String stuname;
+    private String classname;
+    private Integer caozuo;
+    private Integer fen;
+    private String rasname;
+
+    public String getRasname() {
+        return rasname;
+    }
+
+    public void setRasname(String rasname) {
+        this.rasname = rasname;
+    }
+
+    public Integer getFen() {
+        return fen;
+    }
+
+    public void setFen(Integer fen) {
+        this.fen = fen;
+    }
+
+    public Integer getCaozuo() {
+        return caozuo;
+    }
+
+    public void setCaozuo(Integer caozuo) {
+        this.caozuo = caozuo;
+    }
+    public String getClassname() {
+        return classname;
+    }
+
+    public void setClassname(String classname) {
+        this.classname = classname;
+    }
+
+    public String getStuname() {
+
+        return stuname;
+    }
+
+    public void setStuname(String stuname) {
+        this.stuname = stuname;
+    }
 
     public Integer getChw_id() {
         return chw_id;

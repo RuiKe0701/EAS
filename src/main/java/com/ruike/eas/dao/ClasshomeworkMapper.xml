@@ -7,6 +7,31 @@
         select * from classhomework where chw_classid=#{chw_classid}
         order by chw_number DESC limit 0,1
     </select>
+    <resultMap id="rm" type="com.ruike.eas.pojo.Classhomework">
+        <result column="classname" property="classname"></result>
+
+    </resultMap>
+
+    <select id="selectClassworkByclasswork" resultMap="rm">
+        select ch.*,cs.class_name as classname
+        from classhomework as ch,class as cs
+          <where>
+              cs.class_id=ch.chw_classid
+              <if test="chw_classid !=null ">
+                  and ch.chw_classid=#{chw_classid}
+              </if>
+              <if test="startdate != null">
+                  AND ch.chw_caddate &gt;=#{startdate}
+              </if>
+              <if test="stopdate != null">
+                  and ch.chw_caddate &lt;=#{stopdate}
+              </if>
+          </where>
+        <if test="tiao!=null">
+            order by chw_number DESC limit 0,50
+        </if>
+
+    </select>
 
     <insert id="insertclasshomework" useGeneratedKeys="true" keyProperty="chw_id" parameterType="com.ruike.eas.pojo.Classhomework">
         INSERT into classhomework(`chw_name`,`chw_number`,`chw_caddate`,`chw_classid`,`chw_rate`)

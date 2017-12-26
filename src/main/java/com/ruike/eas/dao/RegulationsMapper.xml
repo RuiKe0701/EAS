@@ -5,7 +5,7 @@
 <mapper namespace="com.ruike.eas.dao.RegulationsMapper">
     <insert id="InsertRegulation">
         INSERT into regulations(ras_name,ras_fraction,ras_way,rast_id,ras_createday,ras_createby)
-VALUES(#{ras_name},#{ras_fraction},#{ras_way},#{rast_id},#{ras_createday},#{ras_createby});
+       VALUES(#{ras_name},#{ras_fraction},#{ras_way},#{rast_id},#{ras_createday},#{ras_createby});
     </insert>
     <resultMap id="rl" type="com.ruike.eas.pojo.Regulations">
         <result property="restname" column="restname"></result>

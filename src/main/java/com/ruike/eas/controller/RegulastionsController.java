@@ -77,6 +77,7 @@ public class RegulastionsController {
             Regulations regulations=new Regulations();
             regulations.setRas_name(rasname);
             regulations.setRas_createby((Integer) request.getSession().getAttribute("th"));
+            System.out.println((Integer) request.getSession().getAttribute("th")+"sssssssssssssssssssssssssssssssssss");
             regulations.setRas_way(way);
             regulations.setRast_id(typeid);
             regulations.setRas_fraction(rasfraction);

@@ -56,7 +56,46 @@
 
 <!--main content start-->
 <section style="width: 96.8%;margin-left: 1.6%;margin-top: 1.6%">
+    <div class="modal inmodal" id="myModal0" tabindex="-1" role="dialog" aria-hidden="true" style="border-radius: 5px">
+        <div class="modal-dialog"  style="border-radius: 5px">
+            <div class="modal-content animated bounceInRight"  style="border-radius: 5px">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="names">20170701班第27次考勤情况</h3>
+                    <small class="font-bold">
+                    </small>
+                </div>
+                <div class="modal-body" style="padding:16px;padding-top: 0px;padding-bottom: 0px" id="modalbody">
+                    <div class="row">
+                        <div class="panel-body " id="sss" style="background-color: white">
+                            <div >
+                                <table id="datatabless" class="table table-striped dt-responsive nowrap" style="border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>出勤</th>
+                                        <th>评分</th>
+                                    </tr>
+                                    </thead>
+                                    <tr class="gradeX">
 
+                                        <td>zqk</td>
+                                        <td><span class="label label-warning">正常</span></td>
+                                        <td>+1</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" id="guanbixiang" data-dismiss="modal">关闭</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" style="border-radius: 5px">
@@ -116,6 +155,7 @@
 
     </div>
     <button type="" style="display: none" id="showstuneedwork" data-toggle="modal" data-target="#myModal21"></button>
+    <button type="" style="display: none" id="showstuneedworkinfo" data-toggle="modal" data-target="#myModal0"></button>
     <!--page header start-->
 
     <!--page header end-->
@@ -170,7 +210,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-1" style="padding-top: 8px">
                             <button class="btn" id="addhomework">新增记录</button>
                         </div>
                     </div>
@@ -314,16 +354,16 @@
                             <tbody id="showstu">
 
 
-                            <c:forEach items="${classattendances}" var="catd">
+                            <c:forEach items="${classhomeworkList}" var="ch">
                                 <tr class="gradeX">
-                                    <td>${catd.classname}</td>
-                                    <td>${catd.cad_dates}</td>
-                                    <td>${catd.cad_name}</td>
-                                    <td>${catd.cad_number}</td>
-                                    <td>${catd.cad_rate}%</td>
+                                    <td>${ch.classname}</td>
+                                    <td>${ch.chw_caddates}</td>
+                                    <td>${ch.chw_name}</td>
+                                    <td>${ch.chw_number}</td>
+                                    <td>${ch.chw_rate}%</td>
                                     <td class="center">
-                                        <input value="${catd.cad_id}" type="hidden" class="cadid">
-                                        <button class="xiangqing btn-success btn btn-xs"  type="button" style="padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white" onclick="xiangqing(${catd.cad_id})"  data-toggle="modal" data-target="#myModal">查看</button></td>
+                                        <input value="${ch.chw_id}" type="hidden" class="cadid">
+                                        <button class="xiangqing btn-success btn btn-xs"  type="button" style="padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white" onclick="xiangqing(${ch.chw_id})"  >查看</button></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -335,6 +375,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" value="${classid}" id="classid">
     <!--end page content-->
 
 
@@ -377,7 +418,6 @@
     function selelctbyclassanddaybyth() {
 
         $("#selectindatebydateteach").click(function () {
-
             var startday=$("#startday").val();
             var stopday=$("#stopday").val();
             var newclass=$("#classes").val();
@@ -477,9 +517,9 @@
                                 "                            <tr>\n" +
                                 "                                <th>班级名</th>\n" +
                                 "                                <th>日期</th>\n" +
-                                "                                <th>出勤统计名</th>\n" +
+                                "                                <th>作业名称</th>\n" +
                                 "                                <th>次数</th>\n" +
-                                "                                <th>出勤率</th>\n" +
+                                "                                <th>合格率</th>\n" +
                                 "                                <th>操作</th>\n" +
                                 "                            </tr>\n" +
                                 "                            </thead>\n" +
@@ -547,14 +587,14 @@
         $("#modalbody").html("");
         $.ajax({
             type: "post",
-            url: "/dostuattendancerecord",
-            data:{"cadid":cadid},
+            url: "/doseleclasshomeworkinfo.do",
+            data:{"chwid":cadid},
             dataType: "json",
             success: function (data) {
                 var str="<div class=\"row\">\n" +
                     "                                    <div class=\"panel-body \" id=\"tables\" style=\"background-color: white\">\n" +
                     "                                        <div >\n" +
-                    "                                            <table id=\"datatables\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                    "                                            <table id=\"datatablesi\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
                     "                                                <thead>\n" +
                     "                                                <tr>\n" +
                     "                                                    <th>姓名</th>\n" +
@@ -572,15 +612,12 @@
                         caozuo="-"+item.fen;
                     }
                     str+="<td>"+item.stuname+"</td>"
-                    if(item.ss_id==1){
-                        str+="  <td><span class=\"label label-info\">"+item.ssname+"</span></td>"
-                    }else if(item.ss_id==2){
-
-                        str+="  <td><span class=\"label label-success\">"+item.ssname+"</span></td>"
-                    }else if(item.ss_id==3){
-                        str+=" <td><span class=\"label label-primary\">"+item.ssname+"</span></td>"
-                    }else if(item.ss_id==4){
-                        str+=" <td><span class=\"label label-warning\">"+item.ssname+"</span></td>"
+                    if(item.ras_id==1){
+                        str+="  <td><span class=\"label label-info\">"+item.rasname+"</span></td>"
+                    }else if(item.ras_id==2){
+                        str+="  <td><span class=\"label label-warning\">"+item.rasname+"</span></td>"
+                    }else {
+                        str+="  <td><span class=\"label label-indigo\">"+item.rasname+"</span></td>"
                     }
                     str+="<td>"+caozuo+"</td>";
                     str+="</tr>"
@@ -591,7 +628,8 @@
                     "                                    </div>\n" +
                     "                                </div>"
                 $("#modalbody").append(str);
-                $('#datatables').dataTable();
+                $('#datatablesi').dataTable();
+                $('#showstuneedworkinfo').click();
             },
             error: function () {
                 alert("系统异常，请稍后重试！");
@@ -601,6 +639,7 @@
 
     }
     function selectmyclass(classid,cc) {
+        alert(classid)
         if(cc==1){
             $("#oldclass").val(0);
             $("#old1").find(".filter-option").text("历史班级")
@@ -616,10 +655,11 @@
         selectclassatd(classid,startday,stopday)
     }
     function selectclassatd(classid,startday,stopday,classname) {
+        alert(classid)
         $.ajax({
             type: "post",
-            url: "/doselectclassatdss",
-            data:{"classsid":classid,"startday":startday,"stopday":stopday,"classname":classname},
+            url: "/selectclasshomeworkbyclassidand.do",
+            data:{"classsid":classid,"startdate":startday,"stopdate":stopday,"classname":classname},
             dataType: "json",
             success: function (data) {
                 if(data==-1){
@@ -638,9 +678,9 @@
                         "                            <tr>\n" +
                         "                                <th>班级名</th>\n" +
                         "                                <th>日期</th>\n" +
-                        "                                <th>出勤统计名</th>\n" +
+                        "                                <th>作业名称</th>\n" +
                         "                                <th>次数</th>\n" +
-                        "                                <th>出勤率</th>\n" +
+                        "                                <th>合格率</th>\n" +
                         "                                <th>操作</th>\n" +
                         "                            </tr>\n" +
                         "                            </thead>\n" +
@@ -648,19 +688,19 @@
                     $.each(data, function (i, item) {
 
                         str+="   <tr>   <td>"+item.classname+"</td>\n" +
-                            "                                    <td>"+item.cad_dates+"</td>\n" +
-                            "                                    <td>"+item.cad_name+"</td>\n" +
-                            "                                    <td>"+item.cad_number+"</td>"
-                        if(item.cad_rate>=80){
-                            str+="  <td><span class=\"label label-info\">"+item.cad_rate+"%</span></td>"
-                        }else if((item.cad_rate>=60)){
-                            str+="  <td><span class=\"label label-success\">"+item.cad_rate+"%</span></td>"
-                        }else if((item.cad_rate<=60)){
-                            str+="  <td><span class=\"label label-warning\">"+item.cad_rate+"%</span></td>"
+                            "                                    <td>"+item.chw_caddates+"</td>\n" +
+                            "                                    <td>"+item.chw_name+"</td>\n" +
+                            "                                    <td>"+item.chw_number+"</td>"
+                        if(item.chw_rate>=80){
+                            str+="  <td><span class=\"label label-info\">"+item.chw_rate+"%</span></td>"
+                        }else if((item.chw_rate>=60)){
+                            str+="  <td><span class=\"label label-success\">"+item.chw_rate+"%</span></td>"
+                        }else if((item.chw_rate<=60)){
+                            str+="  <td><span class=\"label label-warning\">"+item.chw_rate+"%</span></td>"
                         }
                         str+=" <td class=\"center\">\n" +
-                            "                                        <input value=\""+item.cad_id+"\" type=\"hidden\" class=\"cadid\">\n" +
-                            "                                        <button class=\"xiangqing btn-success btn btn-xs\"  type=\"button\" style=\"padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white\" onclick=\"xiangqing("+item.cad_id+")\"  data-toggle=\"modal\" data-target=\"#myModal\">查看</button></td>\n" +
+                            "                                        <input value=\""+item.chw_id+"\" type=\"hidden\" class=\"cadid\">\n" +
+                            "                                        <button class=\"xiangqing btn-success btn btn-xs\"  type=\"button\" style=\"padding-top: 2px;padding-bottom: 5px;height: 22px;background-color: #24c6c8;color: white\" onclick=\"xiangqing("+item.chw_id+")\"  data-toggle=\"modal\" data-target=\"#myModal\">查看</button></td>\n" +
                             "                                </tr>";
 
                     })
@@ -802,6 +842,7 @@
             }
         })
     }
+
     function tijiao() {
         $("#addstuhomeworkbao").click(function () {
             var cadnumber=parseInt($("#atdno").val())+1;
@@ -859,7 +900,14 @@
         })
 
     }
+
+
+
+
+
+
     $(function () {
+        $("#classes").val($("#classid").val());
 
         xinzengwork();
         tijiao();

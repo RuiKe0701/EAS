@@ -10,4 +10,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             (#{item.ras_id},#{item.stu_id},#{item.class_id},#{item.chw_id},#{item.work_date})
         </foreach>
     </insert>
+
+
+    <resultMap id="stuwork" type="com.ruike.eas.pojo.Stuhomework">
+        <result property="stuname" column="stuname"></result>
+        <result property="classname" column="classname"></result>
+        <result column="caozuo" property="caozuo"></result>
+        <result property="fen" column="fen"></result>
+        <result property="rasname" column="rasname"/>
+    </resultMap>
+
+    <select id="selectStuhomeworkbystuhomework" resultMap="stuwork">
+        select sh.*,s.stu_name as stuname,cs.class_name as classname,re.ras_way as caozuo,re.ras_fraction as fen , re.ras_name as rasname from homework as sh ,stu as s,class as cs,regulations as re
+         <where>
+             sh.stu_id=s.stu_id and cs.class_id=sh.class_id and re.ras_id = sh.ras_id
+             <if test="chw_id!=null">
+                and sh.chw_id = #{chw_id}
+             </if>
+         </where>
+    </select>
 </mapper>
