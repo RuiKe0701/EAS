@@ -27,24 +27,105 @@ public class HomeWorkController {
     private StutotalscoreService stutotalscoreService;
     @Resource
     private RegulationsService regulationsService;
-
+    @Resource
+    private StuattendanceService stuattendanceService;
+    /*
+    学生的个人详细历史记录
+     */
     @RequestMapping("/stuhomework.do")
     public String HomeWork(HttpServletRequest request){
-        Integer a=(Integer) request.getSession().getAttribute("thtype");
-        Classteacher classteacher = new Classteacher();
+        Classteacher classteacher=new Classteacher();
         Integer thid=(Integer) request.getSession().getAttribute("th");
         classteacher.setTeacher_id(thid);
-        List<Classteacher> classteacherList = attendanceRecordService.classteacherlist(classteacher);
+        List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
+        List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
+        Classstu classstu=new Classstu();
+        Integer classid=0;
+        if(classteacherList.size()>0){
+           classid= classteacherList.get(0).getClass_id();
+        }
+        classstu.setClass_id(classid);
+        List<Classstu> classstus=stuattendanceService.selectClassstubyclassid(classstu);
+        request.setAttribute("oldclassteacherList",classteacherList1);
+        request.setAttribute("classstus",classstus);
+        request.setAttribute("classteacherList",classteacherList);
+        request.setAttribute("zhuang",0);
+        request.setAttribute("classid", classid);
+        Integer stuid=0;
+        if (classstus.size()>0){
+            stuid=classstus.get(0).getStu_id();
+        }
+        request.setAttribute("stuid",stuid);
+
+        Stuattendance stuattendance=new Stuattendance();
+        Stuhomework stuhomework=new Stuhomework();
+        stuhomework.setClass_id(classid);
+        stuhomework.setStu_id(stuid);
+
+        List<Stuhomework> stuhomeworkList=new ArrayList<Stuhomework>();
+        stuhomeworkList=homeworkService.selectStuhomeworkbystuhomework(stuhomework);
+        request.setAttribute("stuhomeworkList",stuhomeworkList);
+        request.setAttribute("xq",0);
+        return "stuhomework";
+    }
+    /*
+        查询学生个人信息
+ */
+    @RequestMapping("/stuhomeworkinfobystuid.do")
+    public String HomeWorks(Integer classid,Integer stuid,String l,Integer zhuang,HttpServletRequest request){
+        Classteacher classteacher=new Classteacher();
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
+        List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
         List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
 
-        request.setAttribute("oldclassteacherList",classteacherList1);
-        Integer classid = -1;
-        if (classteacherList.size() > 0) {
-            request.setAttribute("classteacherList", classteacherList);
-            classid = classteacherList.get(0).getClass_id();
-        }
+        Classstu classstu=new Classstu();
 
+        classstu.setClass_id(classid);
+        List<Classstu> classstus=stuattendanceService.selectClassstubyclassid(classstu);
+        request.setAttribute("oldclassteacherList",classteacherList1);
+        request.setAttribute("classstus",classstus);
+        request.setAttribute("classteacherList",classteacherList);
+        request.setAttribute("zhuang",zhuang);
+        request.setAttribute("classid", classid);
+        if(stuid==null||stuid<=0){
+            stuid=0;
+            if(classstus.size()>0){
+                stuid=classstus.get(0).getStu_id();
+            }
+        }
+        request.setAttribute("stuid",stuid);
+
+        Stuattendance stuattendance=new Stuattendance();
+        Stuhomework stuhomework=new Stuhomework();
+        stuhomework.setClass_id(classid);
+        stuhomework.setStu_id(stuid);
+
+        List<Stuhomework> stuhomeworkList=new ArrayList<Stuhomework>();
+        stuhomeworkList=homeworkService.selectStuhomeworkbystuhomework(stuhomework);
+        request.setAttribute("stuhomeworkList",stuhomeworkList);
+        request.setAttribute("xq",0);
         return "stuhomework";
+    }
+    /*
+    根据学员id获取学员记录
+     */
+    @RequestMapping("/selectstuworkbystuid.do")
+    public void SelectStuadtByStuid(PrintWriter printWriter,Integer stuid,Integer classid){
+        Stuattendance stuattendance=new Stuattendance();
+        Stuhomework stuhomework=new Stuhomework();
+        stuhomework.setClass_id(classid);
+        stuhomework.setStu_id(stuid);
+
+        List<Stuhomework> stuhomeworkList=new ArrayList<Stuhomework>();
+        stuhomeworkList=homeworkService.selectStuhomeworkbystuhomework(stuhomework);
+
+
+        String jsonString = JSON.toJSONString(stuhomeworkList);
+        System.out.println(jsonString);
+        printWriter.print(jsonString);
+        printWriter.flush();
+        printWriter.close();
     }
     //班级作业情况
     @RequestMapping("/classhomework.do")
@@ -184,5 +265,35 @@ public class HomeWorkController {
         printWriter.write(jsonString);
         printWriter.flush();
         printWriter.close();
+    }
+    /*
+    查看学员个人作业详情
+     */
+    @RequestMapping("/selectstuhomeworkbystuid")
+    public String Stuattsbystu(Integer classid,Integer stuid,String l,Integer zhuang,HttpServletRequest request){
+        Classteacher classteacher=new Classteacher();
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
+        List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
+        List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
+        Stuhomework stuhomework=new Stuhomework();
+        stuhomework.setClass_id(classid);
+        List<Stuhomework> stuhomeworkList=homeworkService.selectStuhomeworkbystuhomework(stuhomework);
+        request.setAttribute("oldclassteacherList",classteacherList1);
+        request.setAttribute("stuhomeworkList",stuhomeworkList);
+        request.setAttribute("classteacherList",classteacherList);
+        request.setAttribute("classid",classid);
+        request.setAttribute("zhuang",zhuang);
+        request.setAttribute("stuid",stuid);
+        System.out.println(zhuang);
+        Stuattendance stuattendance=new Stuattendance();
+        stuattendance.setStu_id(stuid);
+        stuattendance.setClass_id(classid);
+        List<Stuattendance> stuattendanceList=new ArrayList<Stuattendance>();
+        stuattendanceList=attendanceRecordService.selectstuatdlist(stuattendance);
+        request.setAttribute("stuattendanceList",stuattendanceList);
+        request.setAttribute("xq",0);
+        System.out.println(classid+"+++++++++++++++"+stuid);
+        return "stuattebcercorerecord";
     }
 }

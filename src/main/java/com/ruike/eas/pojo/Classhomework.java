@@ -24,7 +24,6 @@ public class Classhomework {
     }
     public void setStartdate(String  startdate) {
         this.startdate =  startdate != null ? DateUtil.dateFormat(startdate,"yyyy-MM-dd") : null;
-
     }
     public void setStopdate(String  stopdate) {
         this.stopdate =  stopdate != null ? DateUtil.dateFormat(stopdate,"yyyy-MM-dd") : null;

@@ -72,7 +72,7 @@
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
 
                     <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
-                        <select id="class" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
+                        <select id="classes" class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
                             <optgroup label="test" data-subtext="optgroup subtext">
                                 <option value="0">正在班级</option>
                                 <c:forEach items="${classteacherList}" var="ct">
@@ -146,20 +146,22 @@
                                 <tr>
                                     <th>班级名称</th>
                                     <th>学员姓名</th>
-                                    <th>考勤日期</th>
-                                    <th>考勤情况</th>
+                                    <th>作业名称</th>
+                                    <th>检查日期</th>
+                                    <th>检查情况</th>
                                     <th>分数操作</th>
                                     <th>分数</th>
 
                                 </tr>
                                 </thead>
                                 <tbody id="showstu">
-                                <c:forEach items="${stuattendanceList}" var="sttdl">
+                                <c:forEach items="${stuhomeworkList}" var="sttdl">
                                     <tr class="gradeX">
                                         <td class="leaveclassnamexian">${sttdl.classname}</td>
                                         <td class="leavestunamexian">${sttdl.stuname}</td>
-                                        <td class="leaveremarksxian">${sttdl.sad_recorddates}</td>
-                                        <td class="leaveremarksxian">${sttdl.ssname}&nbsp;</td>
+                                        <td class="leavestunamexian">${sttdl.chwname}</td>
+                                        <td class="leaveremarksxian">${sttdl.work_dates}</td>
+                                        <td class="leaveremarksxian">${sttdl.rasname}&nbsp;</td>
                                         <c:if test="${sttdl.caozuo==1}">
                                             <td class="leaveremarksxian"><span class="label label-primary">加分</span>&nbsp;</td>
                                         </c:if>
@@ -276,13 +278,13 @@
         alert("这是子页面的方法！");
     }
     function aa() {
-        $("#class").change(function () {
+        $("#classes").change(function () {
             classid=$(this).val();
             if(classid!=0){
                 alert(classid)
                 var xq=$("#xq").val();
                 alert(xq)
-                window.location.href="selectstubyclassids?classid="+classid+"&zhuang=0&xq="+xq;
+                window.location.href="/stuhomeworkinfobystuid.do?classid="+classid+"&zhuang=0&xq="+xq;
             }})
         $("#oldclass").change(function () {
             classid=$(this).val();
@@ -290,7 +292,7 @@
                 alert(classid)
                 var xq=$("#xq").val();
                 alert(xq)
-                window.location.href = "selectstubyclassids?classid=" + classid + "&zhuang=1&xq="+xq;
+                window.location.href = "/stuhomeworkinfobystuid.do?classid=" + classid + "&zhuang=1&xq="+xq;
             }
         })
     }
@@ -298,7 +300,7 @@
         $("#classstu").change(function () {
             var stuid=$("#classstu").val();
             if(stuid!=0){
-                classs=$("#class").val();
+                classs=$("#classes").val();
                 alert(classs)
                 oldclass=$("#oldclass").val();
                 var classs;
@@ -323,7 +325,7 @@
     function selectstuadtbystu(classid,stuid) {
         $.ajax({
             type: "post",
-            url: "/selectstuadtbystuid",
+            url: "/selectstuworkbystuid.do",
             data:{"classid":classid,"stuid":stuid},
             dataType: "json",
             success: function (data) {
@@ -337,25 +339,22 @@
                     "                                <th>考勤情况</th>\n" +
                     "                                <th>分数操作</th>\n" +
                     "                                <th>分数</th>\n" +
-                    "                                <th>操作</th>\n" +
+
                     "                            </tr>\n" +
                     "                            </thead>\n" +
                     "                            <tbody id=\"showstu\">"
                 $.each(data, function (i, item) {
                     var c="";
                     if(item.caozuo==1){
-                        c="<td class=\"leaveremarksxian\"><span class=\"label label-primary\">减分</span>&nbsp;</td>\n"
+                        c="<td class=\"leaveremarksxian\"><span class=\"label label-primary\">加分</span>&nbsp;</td>\n"
                     }else {
                         c="<td class=\"leaveremarksxian\"><span class=\"label label-warning\">减分</span>&nbsp;</td>\n"
                     }
                     str+=" <tr class=\"gradeX\">\n" +
                         "                                <td class=\"leaveclassnamexian\">"+item.classname+"</td>\n" +
                         "                                <td class=\"leavestunamexian\">"+item.stuname+"</td>\n" +
-                        "                                <td class=\"leaveremarksxian\">"+item.sad_recorddates+"</td>\n" +
-                        "                                <td class=\"leaveremarksxian\">"+item.ssname+"&nbsp;</td>\n" +c+ " <td class=\"leaveremarksxian\">"+item.fen+"&nbsp;</td>\n" +
-                        "                                <td>\n" +
-                        "                                    <button class=\"btn btn-xs btn-indigo\">修改</button>\n" +
-                        "                                </td>\n" +
+                        "                                <td class=\"leaveremarksxian\">"+item.work_dates+"</td>\n" +
+                        "                                <td class=\"leaveremarksxian\">"+item.rasname+"&nbsp;</td>\n" +c+ " <td class=\"leaveremarksxian\">"+item.fen+"&nbsp;</td>\n" +
                         "                            </tr>"
                 })
                 str+="  </tbody></table>";
@@ -372,7 +371,7 @@
             if(lei==0){
                 if($("#as").val()!=""){
                     var a=$("#as").val();
-                    $("#class").val(a);
+                    $("#classes").val(a);
                 }
             }else if(lei==1){
                 if($("#as").val()!=""){
