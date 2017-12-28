@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -122,10 +124,46 @@ public class StudentController {
         printWriter.flush();
         printWriter.close();
     }
+    @RequestMapping("/updateByidinfo.do")
+    @ResponseBody
+    public String updateByidinfo(HttpServletRequest request,Integer id){
+            Stu stu=new Stu();
+            stu.setStu_id(id);
+            Stu stu1=studentService.selectStudentByStu(stu);
+            String json=JSON.toJSONString(stu1);
+            return json;
+    }
 
     @RequestMapping("/ddd")
     public String dianming(){
         return  "aa";
+    }
+
+
+    @RequestMapping("/updatestuinfo.do")
+    public void updatestuInfo(String s ,PrintWriter printWriter) {
+        Date date=new Date();
+        Stu stu =  JSON.parseObject(s,Stu.class);
+
+        System.out.println(s);
+
+        System.out.println(stu.getStu_name());
+        System.out.println(stu.getStu_id());
+        System.out.println(stu.getCrateday());
+        System.out.println(stu.getStu_birthday());
+        System.out.println(stu.getStu_address());
+        System.out.println("sssssssss");
+        int count =studentService.updateStuInfo(stu);
+        System.out.println(count);
+        String json="";
+        if(count>0){
+            json=JSON.toJSONString(1);
+        }else {
+            json=JSON.toJSONString(0);
+        }
+        printWriter.write(json);
+        printWriter.flush();
+        printWriter.close();
     }
 
     @RequestMapping("/addstuinfo")
