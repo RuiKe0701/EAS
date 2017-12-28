@@ -83,4 +83,12 @@ public class HomeworkServiceImpl implements HomeworkService {
 
 
     }
+
+    public List<Classhomework> selectClassworkByclasswork(Classhomework classhomework) {
+        return classhomeworkMapper.selectClassworkByclasswork(classhomework);
+    }
+
+    public List<Stuhomework> selectStuhomeworkbystuhomework(Stuhomework stuhomework) {
+        return stuhomeworkMapper.selectStuhomeworkbystuhomework(stuhomework);
+    }
 }

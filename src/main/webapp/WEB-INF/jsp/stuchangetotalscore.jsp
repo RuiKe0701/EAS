@@ -91,6 +91,7 @@
                             </optgroup>
                         </select>
                     </div>
+
                     <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
                         <select id="classstu"  class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
                             <optgroup label="test" data-subtext="optgroup subtext">
@@ -102,8 +103,12 @@
                             </optgroup>
                         </select>
                     </div>
+                    <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
+                        <button class="btn btn-primary" style="background-color: #1b6d85"id="zuoye">作业</button>
+                        <button class="btn btn-primary"  id="kaoqin">考勤</button>
 
-
+                        <input id="jilu" type="hidden" value="2">
+                    </div>
                     <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
                         <c:if test="${xq==0}">
                             <button class="btn btn-success " id="xiangxi" style="display: block">详细查询</button>
@@ -171,8 +176,10 @@
                                             <td class="leaveremarksxian"><span class="label label-warning">减分</span>&nbsp;</td>
                                         </c:if>
                                         <td class="leaveremarksxian">${sttdl.fen}&nbsp;</td>
+
                                     </tr>
                                 </c:forEach>
+
                                 </tbody></table>
                         </c:if>
                         <c:if test="${xq==1}">
@@ -185,6 +192,7 @@
                                     <th>考勤情况</th>
                                     <th>分数操作</th>
                                     <th>分数</th>
+
                                 </tr>
                                 </thead>
                                 <tbody id="showstus">
@@ -255,7 +263,63 @@
     });
 </script>
 <script type="text/javascript">
-    //类型企业换
+    function leixn() {
+        $("#kaoqin").click(function () {
+            $("#jilu").val(1);
+            $(this).css({"background-color":"#1b6d85"})
+            $("#zuoye").css({"background-color":"#24c6c8"})
+            selectbylei();
+        })
+        $("#zuoye").click(function () {
+            $("#jilu").val(2);
+            $(this).css({"background-color":"#1b6d85"})
+            $("#kaoqin").css({"background-color":"#24c6c8"})
+            selectbylei();
+        })
+    }
+    function selectbylei() {
+        var ss=$("#jilu").val();
+        alert(ss)
+        var stuid=$("#classstu").val();
+        if(stuid!=0){
+            var classs=$("#class").val();
+            oldclass=$("#oldclass").val();
+            if(classs!=0){
+                if(ss==1){
+                    selectstuadtbystu2(classs,stuid);
+                }else if(ss==2){
+                    selectstuadtbystu(classs,stuid);
+                }
+            }else if(oldclass!=0){
+                if(ss==1){
+                    selectstuadtbystu2(classs,stuid);
+                }else if(ss==2){
+                    selectstuadtbystu(classs,stuid);
+                }
+            }else {
+                swal({
+                    title: "Sorry!",
+                    text: "对不起！请选择班级",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonClass: 'btn-secondary ',
+                    confirmButtonClass: 'btn-warning  ',
+                    confirmButtonText: '确定!'
+                });
+            }
+        }else {
+            swal({
+                title: "Sorry!",
+                text: "对不起！请选择学员",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonClass: 'btn-secondary ',
+                confirmButtonClass: 'btn-warning  ',
+                confirmButtonText: '确定!'
+            });
+        }
+    }
+
 
     //详细查询和普通查询切换
     function xiangxi() {
@@ -264,6 +328,7 @@
             $("#xq").val(1);
             $("#putong").css({"display":"block"});
             $("#xiangxi").css({"display":"none"});
+
         })
         $("#putong").click(function () {
             $("#xiang").css({"display":"none"});
@@ -298,16 +363,25 @@
     }
     function classstu() {
         $("#classstu").change(function () {
+            var ss=$("#jilu").val();
+            alert(ss)
             var stuid=$("#classstu").val();
             if(stuid!=0){
                 classs=$("#classes").val();
-                alert(classs)
                 oldclass=$("#oldclass").val();
                 var classs;
                 if(classs!=0){
-                    selectstuadtbystu(classs,stuid);
+                    if(ss==1){
+                        selectstuadtbystu2(classs,stuid);
+                    }else if(ss==2){
+                        selectstuadtbystu(classs,stuid);
+                    }
                 }else if(oldclass!=0){
-                    selectstuadtbystu(oldclass,stuid);
+                    if(ss==1){
+                        selectstuadtbystu2(classs,stuid);
+                    }else if(ss==2){
+                        selectstuadtbystu(classs,stuid);
+                    }
                 }else {
                     swal({
                         title: "Sorry!",
@@ -322,7 +396,54 @@
             }
         })
     }
+    function selectstuadtbystu2(classid,stuid) {
+        $.ajax({
+            type: "post",
+            url: "/selectstuadtbystuid",
+            data:{"classid":classid,"stuid":stuid},
+            dataType: "json",
+            success: function (data) {
+                $("#classatd").html("");
+                var str="<table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                    "                            <thead>\n" +
+                    "                            <tr>\n" +
+                    "                                <th>班级名称</th>\n" +
+                    "                                <th>学员姓名</th>\n" +
+                    "                                <th>考勤名称</th>\n" +
+                    "                                <th>考勤日期</th>\n" +
+                    "                                <th>考勤情况</th>\n" +
+                    "                                <th>分数操作</th>\n" +
+                    "                                <th>分数</th>\n" +
+
+                    "                            </tr>\n" +
+                    "                            </thead>\n" +
+                    "                            <tbody id=\"showstu\">"
+                $.each(data, function (i, item) {
+                    var c="";
+                    if(item.caozuo==1){
+                        c="<td class=\"leaveremarksxian\"><span class=\"label label-primary\">加分</span>&nbsp;</td>\n"
+                    }else {
+                        c="<td class=\"leaveremarksxian\"><span class=\"label label-warning\">减分</span>&nbsp;</td>\n"
+                    }
+                    str+=" <tr class=\"gradeX\">\n" +
+                        "                                <td class=\"leaveclassnamexian\">"+item.classname+"</td>\n" +
+                        "                                <td class=\"leavestunamexian\">"+item.stuname+"</td>\n" +
+                        "                                <td class=\"leavestunamexian\">"+item.cadname+"</td>\n" +
+                        "                                <td class=\"leaveremarksxian\">"+item.sad_recorddates+"</td>\n" +
+                        "                                <td class=\"leaveremarksxian\">"+item.ssname+"&nbsp;</td>\n" +c+ " <td class=\"leaveremarksxian\">"+item.fen+"&nbsp;</td>\n" +
+
+                        "                            </tr>"
+                })
+                str+="  </tbody></table>";
+                $("#classatd").append(str);
+                $('#datatable').dataTable();
+            } , error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+        })
+    }
     function selectstuadtbystu(classid,stuid) {
+
         $.ajax({
             type: "post",
             url: "/selectstuworkbystuid.do",
@@ -390,8 +511,8 @@
         xiangxi();
         aa();
         classs();
-        leixn();
         classstu();
+        leixn();
     })
 </script>
 

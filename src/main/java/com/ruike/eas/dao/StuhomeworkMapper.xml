@@ -10,4 +10,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             (#{item.ras_id},#{item.stu_id},#{item.class_id},#{item.chw_id},#{item.work_date})
         </foreach>
     </insert>
+
+
+    <resultMap id="stuwork" type="com.ruike.eas.pojo.Stuhomework">
+        <result property="stuname" column="stuname"></result>
+        <result property="classname" column="classname"></result>
+        <result column="caozuo" property="caozuo"></result>
+        <result property="fen" column="fen"></result>
+        <result property="rasname" column="rasname"/>
+        <result property="work_date" column="work_date"></result>
+        <result property="chwname" column="chwname"></result>
+    </resultMap>
+
+    <select id="selectStuhomeworkbystuhomework" resultMap="stuwork">
+        select sh.*,s.stu_name as stuname,cs.class_name as classname,re.ras_way as caozuo,re.ras_fraction as fen ,
+        re.ras_name as rasname,cl.chw_caddate as work_date,cl.chw_name as chwname
+        from homework as sh ,stu as s,class as cs,regulations as re,classhomework as cl
+         <where>
+             sh.stu_id=s.stu_id and cs.class_id=sh.class_id and re.ras_id = sh.ras_id and sh.chw_id=cl.chw_id
+             <if test="chw_id!=null">
+                and sh.chw_id = #{chw_id}
+             </if>
+             <if test="class_id!=null">
+                 AND sh.class_id=#{class_id}
+             </if>
+             <if test="stu_id !=null">
+                AND sh.stu_id =#{stu_id}
+             </if>
+         </where>
+    </select>
 </mapper>

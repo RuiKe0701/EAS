@@ -114,6 +114,7 @@
                         <li><a class="J_menuItem" href="/addatd" >学员考勤卡</a></li>
                         <li><a class="J_menuItem" href="/attendancerecord" id="sww">班级考勤管理</a></li>
                         <li><a class="J_menuItem xuechu" href="/stuattebcercorerecord" id="stuattebcercorerecord" >学生出勤详情</a></li>
+
                         <li><a class="J_menuItem" href="/classstuattencercord" >班级学员出勤</a></li>
                     </ul>
                 </li>
@@ -124,7 +125,7 @@
                         </li>
                         <li><a class="J_menuItem" href="/tzscoreexam" >校级考试安排管理</a></li>
                         </li>
-
+                        <li><a class="J_menuItem xuechu" href="/selctstutotalbyclassidandstuid.do"  >学生分数变更</a></li>
                         <li><a class="J_menuItem" href="/regulastions.do" id="regulastions">评分规章管理</a></li>
                         </li>
                         <li><a class="J_menuItem" href="/stuhomework.do" id="">学员作业</a></li>
@@ -134,8 +135,12 @@
                         <li><a class="J_menuItem" href="/anotherstudentinfo.do" >学生档案（教导主任权限）</a></li>
                         </li>
                         <li><a class="J_menuItem" href="/tzstuscoreinfo.do" id="studentScores" >学生成绩</a></li>
-                        </li>
+                        <li><a class="J_menuItem" href="/stutatolscoreye.do" id="sssw" >学员总分</a></li>
                         <li><a class="J_menuItem" href="/tzteacherinfos.do" id="teacherinfos" >老师信息</a></li>
+                        </li>
+
+                        <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
+                            <span class="label label-danger pull-right">推荐</span></a>
                         </li>
                     </ul>
                 </li>
@@ -713,6 +718,15 @@
         $("#stuattebcercorerecord").attr('href', url)
         alert($("#stuattebcercorerecord").attr('href'))
         cc=url;
+        $("#stuattebcercorerecord").click();
+    }
+    var ww=""
+    window.stutotalscorechange = function(a,b,d){
+        aa(ww);
+        var url = '/stuattebcercorerecordbystu?classid=' + a+ "&stuid=" + b + "&zhuang="+d+"&l=" + 1;
+        $("#stuattebcercorerecord").attr('href', url)
+        alert($("#stuattebcercorerecord").attr('href'))
+        ww=url;
         $("#stuattebcercorerecord").click();
     }
     window.oneStuScore = function(class_id,ce_id){

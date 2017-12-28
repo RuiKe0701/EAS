@@ -1039,7 +1039,6 @@
     }
     function xiugaixianshi() {
         $("body").on("click",".xiugai",function(){
-
             var leaveid=$(this).parent().find(".leaveidxian").val();
             $.ajax({
                 type: "post",

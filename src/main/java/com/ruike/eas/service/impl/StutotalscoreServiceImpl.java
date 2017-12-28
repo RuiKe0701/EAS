@@ -14,12 +14,13 @@ public class StutotalscoreServiceImpl implements StutotalscoreService{
     public Integer insertStustses(List<Stutotalscore> stutotalscoreList) {
         return null;
     }
-
     public Integer updatestusts(List<Stutotalscore> stutotalscoreList) {
         return null;
     }
-
     public List<Stutotalscore> selectStusts(Stutotalscore stutotalscore) {
         return stutotalscoreMapper.selectStusts(stutotalscore);
+    }
+    public List<Stutotalscore> selectStustsbystus(Stutotalscore stutotalscore) {
+        return stutotalscoreMapper.selectStustsbystus(stutotalscore);
     }
 }

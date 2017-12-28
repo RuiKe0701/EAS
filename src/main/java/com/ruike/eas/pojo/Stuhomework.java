@@ -1,5 +1,7 @@
 package com.ruike.eas.pojo;
 
+import com.ruike.eas.util.DateUtil;
+
 import java.util.Date;
 
 public class Stuhomework {
@@ -13,6 +15,60 @@ public class Stuhomework {
     private Integer zongfen;
     private Integer stsid;
     private Integer chw_id;
+    private String stuname;
+    private String classname;
+    private Integer caozuo;
+    private Integer fen;
+    private String rasname;
+    private String chwname;
+
+    public String getChwname() {
+        return chwname;
+    }
+
+    public void setChwname(String chwname) {
+        this.chwname = chwname;
+    }
+
+    public String getRasname() {
+        return rasname;
+    }
+
+    public void setRasname(String rasname) {
+        this.rasname = rasname;
+    }
+
+    public Integer getFen() {
+        return fen;
+    }
+
+    public void setFen(Integer fen) {
+        this.fen = fen;
+    }
+
+    public Integer getCaozuo() {
+        return caozuo;
+    }
+
+    public void setCaozuo(Integer caozuo) {
+        this.caozuo = caozuo;
+    }
+    public String getClassname() {
+        return classname;
+    }
+
+    public void setClassname(String classname) {
+        this.classname = classname;
+    }
+
+    public String getStuname() {
+
+        return stuname;
+    }
+
+    public void setStuname(String stuname) {
+        this.stuname = stuname;
+    }
 
     public Integer getChw_id() {
         return chw_id;
@@ -64,6 +120,9 @@ public class Stuhomework {
 
     public Date getWork_date() {
         return work_date;
+    }
+    public String getWork_dates() {
+        return this.getWork_date() != null ? DateUtil.dateFormat(this.getWork_date(),"yyyy-MM-dd") : "";
     }
 
     public void setWork_date(Date work_date) {

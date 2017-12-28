@@ -227,7 +227,7 @@ public class StuadtController {
             if(stuleaveList!=null&&stuleaveList.size()>0){
                 Stuleave stuleave1=stuleaveList.get(0);
                 String jsonString = JSON.toJSONString(stuleave1);
-                printWriter.write(jsonString);
+                printWriter.print(jsonString);
                 printWriter.flush();
                 printWriter.close();
             }else {

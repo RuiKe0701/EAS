@@ -41,4 +41,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </update>
 
+    <resultMap id="stses2" type="com.ruike.eas.pojo.Stutotalscore">
+        <result column="stuname" property="stuname"/>
+        <result column="sex" property="sex"/>
+        <result column="stuno" property="stuno"/>
+        <result column="classname" property="classname"></result>
+    </resultMap>
+    <select id="selectStustsbystus" parameterType="com.ruike.eas.pojo.Stutotalscore" resultMap="stses">
+        SELECT sts.*,st.stu_name as stuname,cs.class_name as classname,st.stu_no as stuno,st.stu_sex as sex from `stutotalscore` sts ,stu st,class as cs
+        <where>
+            sts.stu_id = st.stu_id and cs.class_id=st.class_id
+            <if test="class_id!=null and class_id>0">
+                and sts.class_id = #{class_id}
+            </if>
+        </where>
+    </select>
+
 </mapper>
