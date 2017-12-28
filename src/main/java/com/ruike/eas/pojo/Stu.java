@@ -12,6 +12,7 @@ public class Stu extends Page{
   private String stu_name;
   private String stu_no;
   private Integer stu_sex;
+  @DateTimeFormat(pattern="yyyy-MM-dd")
   private Date stu_birthday;
   private String stu_phone;
   private String stu_address;

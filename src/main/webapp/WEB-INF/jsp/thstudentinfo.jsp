@@ -93,7 +93,7 @@
                                             <label class="col-sm-2 control-label">出生日期</label>
                                             <div class="input-group col-sm-9">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input type="date"  value="" name="stu_birthdays"  class="form-control" id="stu_birthday" >
+                                                <input type="date"  value="" name="stu_birthday"  class="form-control" id="stu_birthday" >
 
                                             </div>
                                         </div>
@@ -116,7 +116,7 @@
                                             <label class="col-sm-2 control-label">入学日期</label>
                                             <div class="input-group col-sm-9">
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input type="date" name="stu_startdays" class="form-control" id="stu_startday" >
+                                                <input type="date" name="stu_startday" class="form-control" id="stu_startday" >
 
                                             </div>
                                         </div>
@@ -156,7 +156,16 @@
                                                     <select name="class_id" class="selectpicker btn-success btn-xs" style="height: 26px;padding-right: 14px;width:130px;font-size: 14px">
                                                         <option value="-1" style="background-color: white;color: #0F769F;height: 26px;padding-top: 5px">请选择班级</option>
                                                         <c:forEach items="${requestScope.ct}" var="ct">
-                                                            <option value="${ct.classes.class_id}" style="background-color: white;color: #0F769F;height: 26px;padding-top: 5px">${ct.classes.class_name}</option>
+                                                            <c:choose>
+                                                                <c:when test="stu.class.class_id==ct.classes.class_id">
+                                                                    <option value="${ct.classes.class_id}" style="background-color: white;color: #0F769F;height: 26px;padding-top: 5px">${ct.classes.class_name}</option>
+                                                                </c:when>
+                                                                <c:when test="stu.class.class_id!=ct.classes.class_id">
+
+
+                                                                    <option value="${stu.classes.class_id}" style="background-color: white;color: #0F769F;height: 26px;padding-top: 5px">${stu.classes.class_name}</option>
+                                                                </c:when>
+                                                            </c:choose>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
@@ -180,7 +189,146 @@
             </div>
         </div>
     </div>
+    <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight" style="border-radius: 5px">
 
+                <div class="modal-header">
+
+                    <h6 class="modal-title">修改新学员</h6>
+                    <small class="font-bold">
+                    </small>
+                </div>
+                <div class="modal-body" style="padding:16px;padding-top: 0px;padding-bottom: 0px">
+                    <div class="row" style="padding-top: 20px">
+                        <div class="col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+
+                                </div>
+                                <div class="ibox-content">
+                                    <form id="addstus" class="form-horizontal">
+                                        <input type="hidden" id="studentid">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">姓名</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control " name="stu_name" id="stu_ids" placeholder="请填写学员姓名">
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">学号</label>
+                                            <div class="col-sm-9">
+                                                <input type="number" name="stu_no"  class="form-control" id="stu_nos" placeholder="请填写学员学号">
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">性别
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <div class="radio i-checks">
+                                                    <label>
+                                                        <input type="radio" name="stu_sex" class="stu_sexssss" id="nan"  value="1"> <i></i> 男</label>
+                                                    <label>
+                                                        <input type="radio" name="stu_sex" id="nv" class="stu_sexssss" value="0"> <i></i> 女</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group" >
+                                            <label class="col-sm-2 control-label">出生日期</label>
+                                            <div class="input-group col-sm-9">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="date"  value="" name="stu_birthday"  class="form-control" id="stu_birthdays" >
+
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">手机号</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="stu_phone" placeholder="请填写学员手机号" id="stu_phones" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">地址</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="stu_address" placeholder="请填写学员地址" id="stu_addresss" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group" id="data_2s">
+                                            <label class="col-sm-2 control-label">入学日期</label>
+                                            <div class="input-group col-sm-9">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="date" name="stu_startday" class="form-control" id="stu_startdays" >
+
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">家长电话</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="stu_parentphone" placeholder="请填写学员家长电话" id="stu_parentphones" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">身份证</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="stu_carde" placeholder="请填写学员身份证" id="stu_cardes" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">学历</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="stu_education" placeholder="请填写学员学历" id="stu_educations" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">邮箱</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="stu_email" placeholder="请填写学员邮箱" id="stu_emails" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">班级选择：</label>
+                                            <div class="col-sm-2" style="margin-top: -5px">
+                                                <div id="classidas"  style="padding-left: 0px;padding-top: 8px">
+                                                    <select name="class_id" id="classwww" class="selectpicker btn-success btn-xs" style="height: 26px;padding-right: 14px;width:130px;font-size: 14px">
+                                                        <option value="-1" style="background-color: white;color: #0F769F;height: 26px;padding-top: 5px">请选择班级</option>
+                                                        <c:forEach items="${requestScope.ct}" var="ct">
+                                                            <option value="${ct.classes.class_id}" style="background-color: white;color: #0F769F;height: 26px;padding-top: 5px">${ct.classes.class_name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4 col-sm-offset-2">
+                                                <button class="btn btn-primary" type="button" id="insertss" onclick="updateByStudent()">保存学员</button>
+                                                <button class="btn btn-white" data-dismiss="modal" id="guanbi" type="button">取消</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+<button style="display: none" data-toggle="modal" data-target="#myModal2" id="xiu"></button>
     <!--page header start-->
 
     <!--page header end-->
@@ -274,6 +422,7 @@
                                 <td> <div class="btn-group open">
                                     <input type="hidden" value="${stus.stu_id}" class="stuids">
                                     <button type="button" class="btn btn-primary btn-xs studentinfos">查看详情</button>
+                                    <button type="button" class="btn btn-indigo btn-xs xiugais">修改</button>
                                 </div>
                                 </td>
                             </tr>
@@ -317,6 +466,9 @@
     });
 </script>
 <script type="text/javascript">
+    function ssssss() {
+        alert("sssss");
+    }
     function insert() {
         var stuid;
         $("#insert").click(function () {
@@ -488,6 +640,85 @@
             window.location.href='/showstudents?stuid='+aas;
         })
     }
+    //修改学生信息
+    function xiugais() {
+        $("body").on("click", ".xiugais", function () {
+            aas=$(this).parent().find(".stuids").val();
+
+            $.ajax({
+                url: "/updateByidinfo.do",
+                method: "post",
+                data: {id:aas},
+                dataType:"json",
+                success: function (data) {
+                    if (null != data) {
+                        $("#stu_ids").val(data.stu_name);
+                        $("#stu_nos").val(data.stu_no);
+                        var man=$("#nan").val();
+                        var gril=$("#nv").val();
+                        var sex= data.stu_sex;
+                       if (sex==man){
+                           $("#nan").attr("checked","checked");
+                       }
+                       if (sex==gril){
+                            $("#nv").attr("checked","checked");
+                       }
+                        $("#studentid").val(data.stu_id);
+                        $("#stu_birthdays").val(data.stu_birthdays);
+                       $("#stu_phones").val(data.stu_phone);
+                       $("#stu_addresss").val(data.stu_address);
+                       $("#stu_startdays").val(data.stu_startdays);
+                       $("#stu_parentphones").val(data.stu_parentphone);
+                       $("#stu_cardes").val(data.stu_carde);
+                       $("#stu_educations").val(data.stu_education);
+                       $("#stu_emails").val(data.stu_email);
+                       $("#classwww").val(data.class_id);
+                    }
+                }, error: function () {
+                    alert("error");
+                }
+            });
+
+            $("#xiu").click();
+
+
+        })
+    }
+    //根据条件查询取值修改
+    function  updateByStudent() {
+
+        var stuleave=new Object();
+            stuleave.stu_id=$("#studentid").val(),
+            stuleave.stu_name=$("#stu_ids").val(),
+            stuleave.stu_no=$("#stu_nos").val(),
+            stuleave.stu_sex==$(".stu_sexssss").val(),
+            stuleave.stu_birthday=$("#stu_birthdays").val(),
+            stuleave.stu_phone=$("#stu_phones").val(),
+            stuleave.stu_address=$("#stu_addresss").val(),
+            stuleave.stu_startdays=$("#stu_startdays").val(),
+            stuleave.stu_parentphone=$("#stu_parentphones").val(),
+            stuleave.stu_carde=$("#stu_cardes").val(),
+            stuleave.stu_education=$("#stu_educations").val(),
+            stuleave.stu_email=$("#stu_emails").val()
+
+        var stuleaves=JSON.stringify(stuleave);
+        $.ajax({
+            url:"/updatestuinfo.do",
+            data:{"s":stuleaves},
+            type:"post",
+            dataType:"json",
+            success:function (data) {
+                if (data==1){
+                    alert("修改成功！");
+                    $("#guanbi").click();
+                }else {
+                   alert("修改失败！");
+                }
+            },error: function () {
+                alert("系统异常，请稍后重试！");
+            }
+        })
+    }
     //根据条件查询学生信息
     function selectByStudent(classname,stuname,status) {
         $.ajax({
@@ -526,7 +757,8 @@
                             "                        <td class=\"center\">" + item.stu_parentphone + "</td>\n" +
                             "                        <td><input type=\"hidden\" value="+item.stu_id+" class=\"stuids\">" +
                             "                        <button type=\"button\" class=\"btn btn-primary btn-xs studentinfos\">查看详情</button>\n" +
-                            "                        </td>\n" +
+                            "                               <button type=\"button\" class=\"btn btn-indigo btn-xs xiugais\">修改</button>"+
+                        "</td>\n" +
                             "                        </tr>"
                     })
                     strs += "</tbody></table>"
@@ -637,6 +869,7 @@
         });
     }
     $(function () {
+        xiugais();
         selectclasssname();
         addstu();
         yanzheng();
@@ -646,7 +879,6 @@
         $("#an").click();
         selectByclassid();
 
-        selctByclassid();
         showstudentinfos();
         $("body").on("click",".showstudentinfos",function(){
             alert("sds")
