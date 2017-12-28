@@ -135,8 +135,7 @@
                         </li>
                         <li><a class="J_menuItem" href="/tzstuscoreinfo.do" id="studentScores" >学生成绩</a></li>
                         </li>
-                        <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
-                            <span class="label label-danger pull-right">推荐</span></a>
+                        <li><a class="J_menuItem" href="/tzteacherinfos.do" id="teacherinfos" >老师信息</a></li>
                         </li>
                     </ul>
                 </li>

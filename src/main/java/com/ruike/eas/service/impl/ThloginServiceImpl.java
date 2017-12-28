@@ -8,6 +8,8 @@ import com.ruike.eas.service.ThloginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("thloginService")
 public class ThloginServiceImpl implements ThloginService{
     @Autowired
@@ -20,4 +22,8 @@ public class ThloginServiceImpl implements ThloginService{
     }
 
     public Teacher TeacherInfo(Teacher teacher){return teacherMapper.SelectTeacherBythid(teacher);}
+
+    public List<Thlogin> selectThloginAndTeacherInfo(Thlogin thlogin) {
+        return thloginMapper.selectThlogin(thlogin);
+    }
 }

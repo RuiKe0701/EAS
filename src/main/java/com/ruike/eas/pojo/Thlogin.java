@@ -46,4 +46,24 @@ public class Thlogin {
     public void setTy_id(Integer ty_id) {
         this.ty_id = ty_id;
     }
+
+    //老师对象
+    private Teacher teacher;
+    //职位名称
+    private String ty_name;
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public String getTy_name() {
+        return ty_name;
+    }
+
+    public void setTy_name(String ty_name) {
+        this.ty_name = ty_name;
+    }
 }

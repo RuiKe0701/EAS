@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.ThloginMapper">
-    
+
     <select id="selectbynumberandpwd"  resultType="com.ruike.eas.pojo.Thlogin">
         SELECT * FROM thlogin
         <where>
@@ -15,4 +15,42 @@
             </if>
         </where>
     </select>
+
+    <resultMap id="tlogin" type="com.ruike.eas.pojo.Thlogin">
+        <result property="thl_id" column="thl_id" />
+        <result property="thl_number" column="thl_number" />
+        <result property="thl_password" column="thl_password" />
+        <result property="ty_id" column="ty_id" />
+        <result column="ty_name" property="ty_name"/>
+        <result column="th_id" property="th_id"/>
+        <association property="teacher" column="th_id" javaType="com.ruike.eas.pojo.Teacher">
+            <result property="th_id" column="th_id"/>
+            <result property="th_name" column="th_name"/>
+            <result property="th_type" column="th_type"/>
+            <result property="th_entrydate" column="th_entrydate"/>
+            <result property="th_status" column="th_status"/>
+            <result property="status" column="status"/>
+        </association>
+    </resultMap>
+    <select id="selectThlogin"  resultMap="tlogin">
+        SELECT t.*,g.*,y.ty_name FROM thlogin g
+        LEFT JOIN teacher t on t.th_id = g.th_id
+        inner JOIN thtype y on g.ty_id = y.ty_id
+        <where>
+            t.th_id = g.th_id and g.ty_id = y.ty_id
+            <if test="teacher!=null and teacher.th_status != null">
+                AND t.th_status = #{teacher.th_status}
+            </if>
+            <if test="th_id != null">
+                AND t.th_id = #{th_id}
+            </if>
+            <if test="ty_id != null">
+                AND g.ty_id = #{ty_id}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertThlogin">
+        INSERT INTO thlogin VALUES (DEFAULT ,#{th_id},#{thl_number},#{thl_password},#{ty_id});
+    </insert>
 </mapper>

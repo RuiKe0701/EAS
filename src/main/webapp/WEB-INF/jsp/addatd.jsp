@@ -1041,13 +1041,13 @@
         $("body").on("click",".xiugai",function(){
 
             var leaveid=$(this).parent().find(".leaveidxian").val();
-
             $.ajax({
                 type: "post",
                 url: "/selectstubystuleaveid",
                 data:{"stuleaveid":leaveid},
                 dataType: "json",
                 success: function (data) {
+                    alert(data)
                     if(data==0||data==1){
                         swal({
                             title: "Sorry!",

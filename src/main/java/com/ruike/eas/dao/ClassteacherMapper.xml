@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <result column="th_id" property="th_id"/>
             <result column="th_name" property="th_name"/>
             <result column="th_type" property="th_type"/>
+            <result column="thstatus" property="status"/>
         </association>
         <association property="classes" column="class_id" javaType="com.ruike.eas.pojo.Class">
             <result column="class_id" property="class_id"/>
@@ -30,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="classte">
-        SELECT ch.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.status as csta,c.class_state as class_states,t.* FROM classteacher ch,class c,teacher t
+        SELECT ch.*,c.class_name,c.class_startday,c.class_stopday,c.grade_id,c.status as csta,c.class_state as class_states,t.th_id,t.th_name,t.th_type,t.th_status,t.status as thstatus FROM classteacher ch,class c,teacher t
         <where>
             ch.class_id = c.class_id and t.th_id = ch.teacher_id
             <if test="class_id != null and class_id > 0">
