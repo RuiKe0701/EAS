@@ -157,7 +157,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>
             c.class_id=cs.class_id      and  cs.class_state =0
             <if test="teacher_id !=null and teacher_id>0">
-            and c.teacher_id=#{teacher_id}
+            and c.teacher_id
+                =#{teacher_id}
             </if>
 
         </where>

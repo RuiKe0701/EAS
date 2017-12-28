@@ -50,6 +50,15 @@ public class Stuattendance implements Serializable{
     学生名称
      */
     private String stuname;
+    private String cadname;
+
+    public String getCadname() {
+        return cadname;
+    }
+
+    public void setCadname(String cadname) {
+        this.cadname = cadname;
+    }
 
     public Integer getClassattendancetime() {
         return classattendancetime;

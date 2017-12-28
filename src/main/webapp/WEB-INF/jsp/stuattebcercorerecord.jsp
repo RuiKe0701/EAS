@@ -298,10 +298,9 @@
         $("#classstu").change(function () {
             var stuid=$("#classstu").val();
             if(stuid!=0){
-                classs=$("#class").val();
+                var classs=$("#class").val();
                 alert(classs)
                 oldclass=$("#oldclass").val();
-                var classs;
                 if(classs!=0){
                     selectstuadtbystu(classs,stuid);
                 }else if(oldclass!=0){

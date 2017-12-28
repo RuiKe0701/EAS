@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.ruike.eas.pojo.Classstu;
 import com.ruike.eas.pojo.Classteacher;
 import com.ruike.eas.pojo.Stuattendance;
+import com.ruike.eas.pojo.Stuhomework;
 import com.ruike.eas.service.AttendanceRecordService;
 import com.ruike.eas.service.StuattendanceService;
 import org.springframework.stereotype.Controller;
@@ -88,7 +89,38 @@ public class StuattendanceController {
     学生详细考勤页面
      */
     @RequestMapping("/stuattebcercorerecord")
-    public String Stuatt(){
+    public String Stuatt(HttpServletRequest request){
+        Classteacher classteacher=new Classteacher();
+        Integer thid=(Integer) request.getSession().getAttribute("th");
+        classteacher.setTeacher_id(thid);
+        List<Classteacher> classteacherList=attendanceRecordService.classteacherlist(classteacher);
+        List<Classteacher> classteacherList1=attendanceRecordService.selectoldclassbytecaherid(classteacher);
+        Classstu classstu=new Classstu();
+        Integer classid=0;
+        if(classteacherList.size()>0){
+            classid= classteacherList.get(0).getClass_id();
+        }
+        classstu.setClass_id(classid);
+        List<Classstu> classstus=stuattendanceService.selectClassstubyclassid(classstu);
+        request.setAttribute("oldclassteacherList",classteacherList1);
+        request.setAttribute("classstus",classstus);
+        request.setAttribute("classteacherList",classteacherList);
+        request.setAttribute("zhuang",0);
+        request.setAttribute("classid", classid);
+        Integer stuid=0;
+        if (classstus.size()>0){
+            stuid=classstus.get(0).getStu_id();
+        }
+        request.setAttribute("stuid",stuid);
+
+        Stuattendance stuattendance=new Stuattendance();
+        stuattendance.setStu_id(stuid);
+        stuattendance.setClass_id(classid);
+        List<Stuattendance> stuattendanceList=new ArrayList<Stuattendance>();
+        stuattendanceList=attendanceRecordService.selectstuatdlist(stuattendance);
+        request.setAttribute("stuattendanceList",stuattendanceList);
+        request.setAttribute("xq",0);
+
         return "stuattebcercorerecord";
     }
     /*

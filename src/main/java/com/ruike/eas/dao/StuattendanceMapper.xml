@@ -27,11 +27,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="ssname" column="ssname"/>
         <result property="stuname" column="stuname"/>
         <result property="classname" column="classname"/>
+        <result property="cadname" column="cadname"/>
     </resultMap>
     <select id="stuattendancesbystuatd" resultMap="sss">
-        select s.*,ssd.ss_way as caozuo,ssd.ss_fraction as fen,ssd.ss_name as ssname,a.stu_name as stuname,c.class_name as classname
-        from  stuattendance as s ,scoringstandard as ssd,stu as a,class as c
-        where  s.class_id=c.class_id and ssd.ss_id =s.ss_id and a.stu_id =s.stu_id
+        select s.*,ssd.ss_way as caozuo,cat.cad_name as cadname,ssd.ss_fraction as fen,ssd.ss_name as ssname,a.stu_name as stuname,c.class_name as classname
+        from  stuattendance as s ,scoringstandard as ssd,stu as a,class as c,classattendance as cat
+        where  s.class_id=c.class_id and ssd.ss_id =s.ss_id and a.stu_id =s.stu_id and cat.cad_id=s.cad_id
         <if test="class_id!=null">
             and s.class_id=#{class_id}
         </if>

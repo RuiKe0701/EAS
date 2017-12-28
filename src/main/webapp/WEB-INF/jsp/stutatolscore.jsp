@@ -92,19 +92,6 @@
                         </select>
                     </div>
                     <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
-                        <select id="classstu"  class="selectpicker show-tick form-control" style="height: 20px;padding-top: 2px;padding-bottom: 2px;font-size: 12px" data-live-search="true">
-                            <optgroup label="test" data-subtext="optgroup subtext">
-                                <option value="0">学员选择
-                                </option>
-                                <c:forEach items="${classstus}" var="oc">
-                                    <option value="${oc.stu_id}">${oc.stuname}</option>
-                                </c:forEach>
-                            </optgroup>
-                        </select>
-                    </div>
-
-
-                    <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
                         <c:if test="${xq==0}">
                             <button class="btn btn-success " id="xiangxi" style="display: block">详细查询</button>
                             <button class="btn btn-default" id="putong" style="display: none">普通查询</button>
@@ -148,11 +135,8 @@
                                 <tr>
                                     <th>班级名称</th>
                                     <th>学员姓名</th>
-                                    <th>作业名称</th>
-                                    <th>检查日期</th>
-                                    <th>检查情况</th>
-                                    <th>分数操作</th>
                                     <th>分数</th>
+                                    <th>操作</th>
 
                                 </tr>
                                 </thead>
@@ -161,16 +145,8 @@
                                     <tr class="gradeX">
                                         <td class="leaveclassnamexian">${sttdl.classname}</td>
                                         <td class="leavestunamexian">${sttdl.stuname}</td>
-                                        <td class="leavestunamexian">${sttdl.chwname}</td>
-                                        <td class="leaveremarksxian">${sttdl.work_dates}</td>
-                                        <td class="leaveremarksxian">${sttdl.rasname}&nbsp;</td>
-                                        <c:if test="${sttdl.caozuo==1}">
-                                            <td class="leaveremarksxian"><span class="label label-primary">加分</span>&nbsp;</td>
-                                        </c:if>
-                                        <c:if test="${sttdl.caozuo==0}">
-                                            <td class="leaveremarksxian"><span class="label label-warning">减分</span>&nbsp;</td>
-                                        </c:if>
-                                        <td class="leaveremarksxian">${sttdl.fen}&nbsp;</td>
+                                        <td class="leaveremarksxian">${sttdl.stu_totalscore}&nbsp;</td>
+                                        <td><button class="btn-primary btn btn-xs">分数变更</button></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody></table>
@@ -185,6 +161,7 @@
                                     <th>考勤情况</th>
                                     <th>分数操作</th>
                                     <th>分数</th>
+
                                 </tr>
                                 </thead>
                                 <tbody id="showstus">
@@ -225,6 +202,46 @@
 
         <!--end footer-->
 
+        <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="border-radius: 5px">
+            <div class="modal-dialog"  style="border-radius: 5px">
+                <div class="modal-content animated bounceInRight"  style="border-radius: 5px">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="name">20170701班第27次考勤情况</h3>
+                        <small class="font-bold">
+                        </small>
+                    </div>
+                    <div class="modal-body" style="padding:16px;padding-top: 0px;padding-bottom: 0px" id="modalbody">
+                        <div class="row">
+                            <div class="panel-body " id="tables" style="background-color: white">
+                                <div >
+                                    <table id="datatables" class="table table-striped dt-responsive nowrap" style="border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro">
+                                        <thead>
+                                        <tr>
+                                            <th>姓名</th>
+                                            <th>出勤</th>
+                                            <th>评分</th>
+                                        </tr>
+                                        </thead>
+                                        <tr class="gradeX">
+
+                                            <td>zqk</td>
+                                            <td><span class="label label-warning">正常</span></td>
+                                            <td>+1</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </section>
 <!--end main content-->
 
@@ -255,7 +272,6 @@
     });
 </script>
 <script type="text/javascript">
-    //类型企业换
 
     //详细查询和普通查询切换
     function xiangxi() {
@@ -274,9 +290,7 @@
     }
 
 
-    function childtest() {
-        alert("这是子页面的方法！");
-    }
+
     function aa() {
         $("#classes").change(function () {
             classid=$(this).val();
@@ -284,7 +298,7 @@
                 alert(classid)
                 var xq=$("#xq").val();
                 alert(xq)
-                window.location.href="/stuhomeworkinfobystuid.do?classid="+classid+"&zhuang=0&xq="+xq;
+                selectstuadtbystu(classid)
             }})
         $("#oldclass").change(function () {
             classid=$(this).val();
@@ -292,41 +306,15 @@
                 alert(classid)
                 var xq=$("#xq").val();
                 alert(xq)
-                window.location.href = "/stuhomeworkinfobystuid.do?classid=" + classid + "&zhuang=1&xq="+xq;
+                selectstuadtbystu(classid)
             }
         })
     }
-    function classstu() {
-        $("#classstu").change(function () {
-            var stuid=$("#classstu").val();
-            if(stuid!=0){
-                classs=$("#classes").val();
-                alert(classs)
-                oldclass=$("#oldclass").val();
-                var classs;
-                if(classs!=0){
-                    selectstuadtbystu(classs,stuid);
-                }else if(oldclass!=0){
-                    selectstuadtbystu(oldclass,stuid);
-                }else {
-                    swal({
-                        title: "Sorry!",
-                        text: "对不起！系统繁忙稍后再试",
-                        type: "warning",
-                        showCancelButton: true,
-                        cancelButtonClass: 'btn-secondary ',
-                        confirmButtonClass: 'btn-warning  ',
-                        confirmButtonText: '确定!'
-                    });
-                }
-            }
-        })
-    }
-    function selectstuadtbystu(classid,stuid) {
+    function selectstuadtbystu(classid) {
         $.ajax({
             type: "post",
-            url: "/selectstuworkbystuid.do",
-            data:{"classid":classid,"stuid":stuid},
+            url: "/selectstutatolscorebyclassid.do",
+            data:{"classid":classid},
             dataType: "json",
             success: function (data) {
                 $("#classatd").html("");
@@ -335,29 +323,19 @@
                     "                            <tr>\n" +
                     "                                <th>班级名称</th>\n" +
                     "                                <th>学员姓名</th>\n" +
-                    "                                <th>作业名称</th>\n" +
-                    "                                <th>检查日期</th>\n" +
-                    "                                <th>作业状况</th>\n" +
-                    "                                <th>分数操作</th>\n" +
                     "                                <th>分数</th>\n" +
-
+                    "                                <th>操作</th>\n" +
                     "                            </tr>\n" +
                     "                            </thead>\n" +
                     "                            <tbody id=\"showstu\">"
                 $.each(data, function (i, item) {
-                    var c="";
-                    if(item.caozuo==1){
-                        c="<td class=\"leaveremarksxian\"><span class=\"label label-primary\">加分</span>&nbsp;</td>\n"
-                    }else {
-                        c="<td class=\"leaveremarksxian\"><span class=\"label label-warning\">减分</span>&nbsp;</td>\n"
-                    }
+
                     str+=" <tr class=\"gradeX\">\n" +
                         "                                <td class=\"leaveclassnamexian\">"+item.classname+"</td>\n" +
                         "                                <td class=\"leavestunamexian\">"+item.stuname+"</td>\n" +
-                        "                                <td class=\"leavestunamexian\">"+item.chwname+"</td>\n" +
-                        "                                <td class=\"leaveremarksxian\">"+item.work_dates+"</td>\n" +
-                        "                                <td class=\"leaveremarksxian\">"+item.rasname+"&nbsp;</td>\n" +c+ " <td class=\"leaveremarksxian\">"+item.fen+"&nbsp;</td>\n" +
-                        "                            </tr>"
+                        "                                <td class=\"leaveremarksxian\">"+item.stu_totalscore+"</td>\n" +
+                            " <td><button class=\"btn-primary btn btn-xs\">分数变更</button></td>"
+
                 })
                 str+="  </tbody></table>";
                 $("#classatd").append(str);
@@ -367,6 +345,7 @@
             }
         })
     }
+
     function classs() {
         var lei=$("#zhuang").val();
         if(lei!=""){
@@ -386,12 +365,91 @@
             $("#classstu").val($("#stuids").val());
         }
     }
+    function  xiangqing(xiangqing) {
+
+        var stuid=xiangqing;
+        var newclass=$("#classes").val();
+        var oldclass=$("#oldclass").val();
+        var classid=0;
+
+        if(newclass!=0){
+            classid=newclass;
+        }else if(oldclass!=0){
+            classid=oldclass;
+        }else {
+            swal({
+                title: "",
+                text: "SORRY!请选择班级后再查询",
+                type: "error",
+                showCancelButton: true,
+                cancelButtonClass: 'btn-secondary',
+                confirmButtonClass: 'btn-danger',
+                confirmButtonText: '确定!'
+            });
+        }
+        if(classid!=0){
+            $("#modalbody").html("");
+            $.ajax({
+                type: "post",
+                url: "/selctstutotalbyclassidandstuid.do",
+                data:{"stuid":stuid,"classid":classid},
+                dataType: "json",
+                success: function (data) {
+                    var str="<div class=\"row\">\n" +
+                        "                                    <div class=\"panel-body \" id=\"tables\" style=\"background-color: white\">\n" +
+                        "                                        <div >\n" +
+                        "                                            <table id=\"datatables\" class=\"table table-striped dt-responsive nowrap\" style=\"border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro\">\n" +
+                        "                                                <thead>\n" +
+                        "                                                <tr>\n" +
+                        "                                                    <th>姓名</th>\n" +
+                        "                                                    <th>出勤</th>\n" +
+                        "                                                    <th>评分</th>\n" +
+                        "                                                </tr>\n" +
+                        "                                                </thead>\n" +
+                        "                                                <tbody>\n"
+                    $.each(data, function (i, item) {
+                        str+="<tr>"
+                        var caozuo="";
+                        if(item.caozuo==1){
+                            caozuo="+"+item.fen;
+                        }else if(item.caozuo==0){
+                            caozuo="-"+item.fen;
+                        }
+                        str+="<td>"+item.stuname+"</td>"
+                        if(item.ss_id==1){
+                            str+="  <td><span class=\"label label-info\">"+item.ssname+"</span></td>"
+                        }else if(item.ss_id==2){
+
+                            str+="  <td><span class=\"label label-success\">"+item.ssname+"</span></td>"
+                        }else if(item.ss_id==3){
+                            str+=" <td><span class=\"label label-primary\">"+item.ssname+"</span></td>"
+                        }else if(item.ss_id==4){
+                            str+=" <td><span class=\"label label-warning\">"+item.ssname+"</span></td>"
+                        }
+                        str+="<td>"+caozuo+"</td>";
+                        str+="</tr>"
+                    })
+                    str+="               </tbody>\n" +
+                        "                                            </table>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>"
+                    $("#modalbody").append(str);
+                    $('#datatables').dataTable();
+                },
+                error: function () {
+                    alert("系统异常，请稍后重试！");
+                }
+            })
+        }
+
+    }
     $(function(){
+        xiangqing();
         xiangxi();
         aa();
         classs();
-        leixn();
-        classstu();
+
     })
 </script>
 
