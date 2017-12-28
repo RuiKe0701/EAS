@@ -39,6 +39,7 @@ public class LoginController {
                 Teacher teacher1=thloginService.TeacherInfo(teacher);
                 request.setAttribute("teachers",teacher1);
                 System.out.println(teacher1.getTh_name());
+                request.setAttribute("type",thlogin1.getTy_id());
                 return "teacher";
             }
         }

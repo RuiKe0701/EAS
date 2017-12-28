@@ -298,6 +298,8 @@
     }
     function classstu() {
         $("#classstu").change(function () {
+            alert($("#classstu").val())
+
             var stuid=$("#classstu").val();
             if(stuid!=0){
                 classs=$("#classes").val();
@@ -390,7 +392,7 @@
         xiangxi();
         aa();
         classs();
-        leixn();
+
         classstu();
     })
 </script>

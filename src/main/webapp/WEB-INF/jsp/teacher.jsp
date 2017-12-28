@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -58,33 +59,61 @@
                     <div class="logo-element">H+
                     </div>
                 </li>
-                <li id="dsds">
-                    <a href="#">
-                        <i class="fa fa-home"></i>
-                        <span class="nav-label">主页</span>
-                        <span class="fa arrow"></span>
-                    </a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a class="J_menuItem" href="index_v1.html" data-index="0">主页示例一</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="index_v2.html">主页示例二</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="index_v3.html">主页示例三</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="index_v4.html">主页示例四</a>
-                        </li>
-                        <li>
-                            <a href="index_v5.html" target="_blank">主页示例五</a>
-                        </li>
-                    </ul>
+                <c:if test="${type==1}">
+                    <li>
+                        <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">考试成绩</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/tzclassexam.do" >班级考试</a></li>
+                            </li>
+                            <li><a class="J_menuItem" href="/tzstuscore.do" >班级成绩</a></li>
+                            <li><a class="J_menuItem" href="/tzstuscoreinfo.do" id="studentScores" >学生成绩</a></li>
+                        </ul>
+                    </li>
 
-                </li>
-
-
+                    <li>
+                        <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员作业</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/stuhomework.do" >学员作业</a></li>
+                            <li><a class="J_menuItem" href="/classhomework.do" >班级作业</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+                <c:if test="${type==0}">
+                    <li>
+                        <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员档案</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/thstudentinfo" style="color: white">基本信息档案</a></li>
+                            <li><a class="J_menuItem" href="/jumpupgraded" >学生升班</a></li>
+                            <li><a class="J_menuItem" href="/tiaoaddclass" >添加班级</a></li>
+                            <li><a class="J_menuItem" href="/jump" >学员批量导入</a></li>
+                            <li><a class="J_menuItem" href="/showclasst" id="sss1">班级老师管理</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员总分数</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/stutatolscoreye.do" id="sssw" >学员总分</a></li>
+                            <li><a class="J_menuItem xuechu" href="/selctstutotalbyclassidandstuid.do"  >学生分数变更</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">班级出勤</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/addatd" >学员考勤卡</a></li>
+                            <li><a class="J_menuItem" href="/attendancerecord" id="sww">班级考勤管理</a></li>
+                            <li><a class="J_menuItem xuechu" href="/stuattebcercorerecord" id="stuattebcercorerecord" >学生出勤详情</a></li>
+                            <li><a class="J_menuItem" href="/classstuattencercord" >班级学员出勤</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员作业</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="/stuhomework.do" >学员作业</a></li>
+                            <li><a class="J_menuItem" href="/classhomework.do" >班级作业</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+                <c:if test="${type==2||type==3}">
                 <li>
                     <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">考试成绩</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -114,36 +143,43 @@
                         <li><a class="J_menuItem" href="/addatd" >学员考勤卡</a></li>
                         <li><a class="J_menuItem" href="/attendancerecord" id="sww">班级考勤管理</a></li>
                         <li><a class="J_menuItem xuechu" href="/stuattebcercorerecord" id="stuattebcercorerecord" >学生出勤详情</a></li>
-
                         <li><a class="J_menuItem" href="/classstuattencercord" >班级学员出勤</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员作业</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/stuhomework.do" id="">学员作业</a></li>
+                        <li><a class="J_menuItem" href="/classhomework.do" >班级作业</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">学员总分数</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                                <li><a class="J_menuItem" href="/stutatolscoreye.do" id="sssws" >学员总分</a></li>
+                                <li><a class="J_menuItem xuechu" href="/selctstutotalbyclassidandstuid.do"  >学生分数变更</a></li>
+                        </ul>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-folder-open-o"></i> <span class="nav-label">主任</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/scoringstandardinfo" id="addstud">考勤规章管理</a></li>
                         </li>
-                        <li><a class="J_menuItem" href="/tzscoreexam" >校级考试安排管理</a></li>
-                        </li>
-                        <li><a class="J_menuItem xuechu" href="/selctstutotalbyclassidandstuid.do"  >学生分数变更</a></li>
-                        <li><a class="J_menuItem" href="/regulastions.do" id="regulastions">评分规章管理</a></li>
-                        </li>
-                        <li><a class="J_menuItem" href="/stuhomework.do" id="">学员作业</a></li>
-                        </li>
-                        <li><a class="J_menuItem" href="/classhomework.do" >班级作业</a></li>
-                        </li>
-                        <li><a class="J_menuItem" href="/anotherstudentinfo.do" >学生档案（教导主任权限）</a></li>
-                        </li>
-                        <li><a class="J_menuItem" href="/tzstuscoreinfo.do" id="studentScores" >学生成绩</a></li>
-                        <li><a class="J_menuItem" href="/stutatolscoreye.do" id="sssw" >学员总分</a></li>
-                        <li><a class="J_menuItem" href="/tzteacherinfos.do" id="teacherinfos" >老师信息</a></li>
+                        <li><a class="J_menuItem" href="/tzscoreexam" >考试</a></li>
                         </li>
 
+                        <li><a class="J_menuItem" href="/regulastions.do" id="regulastions">评分规章管理</a></li>
+                        <li><a class="J_menuItem" href="/anotherstudentinfo.do" >学生档案（教导主任权限）</a></li>
+                        <li><a class="J_menuItem" href="/tzstuscoreinfo.do" id="studentScores" >学生成绩</a></li>
+                        <li><a class="J_menuItem" href="/tzteacherinfos.do" id="teacherinfos" >老师信息</a></li>
                         <li><a class="J_menuItem" href="studentinfo.html">Bootstrap Table
                             <span class="label label-danger pull-right">推荐</span></a>
                         </li>
                     </ul>
                 </li>
+
+                </c:if>
+
             </ul>
         </div>
     </nav>

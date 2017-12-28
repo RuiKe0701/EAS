@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             and s.stu_id=#{stu_id}
         </if>
         <if test="cad_id!=null">
-            and cad_id=#{cad_id}
+            and s.cad_id=#{cad_id}
         </if>
     </select>
 

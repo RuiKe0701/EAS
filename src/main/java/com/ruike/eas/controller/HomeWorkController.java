@@ -116,11 +116,8 @@ public class HomeWorkController {
         Stuhomework stuhomework=new Stuhomework();
         stuhomework.setClass_id(classid);
         stuhomework.setStu_id(stuid);
-
         List<Stuhomework> stuhomeworkList=new ArrayList<Stuhomework>();
         stuhomeworkList=homeworkService.selectStuhomeworkbystuhomework(stuhomework);
-
-
         String jsonString = JSON.toJSONString(stuhomeworkList);
         System.out.println(jsonString);
         printWriter.print(jsonString);
