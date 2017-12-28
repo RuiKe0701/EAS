@@ -3,11 +3,34 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruike.eas.dao.TeacherMapper">
-    
+
     <select id="selectTeacher" parameterType="com.ruike.eas.pojo.Teacher" resultType="com.ruike.eas.pojo.Teacher">
         SELECT * FROM teacher
+        <where>
+            <if test="th_name != null">
+                AND  th_name = #{th_name}
+            </if>
+            <if test="th_status != null">
+                AND  th_status = #{th_status}
+            </if>
+        </where>
     </select>
     <select id="SelectTeacherBythid" resultType="com.ruike.eas.pojo.Teacher">
         SELECT * from teacher where th_id =#{th_id}
     </select>
+
+    <update id="updateTeacher">
+        UPDATE teacher
+        <trim prefix="set" suffixOverrides=",">
+            <if test="th_status!=null">th_status=#{th_status},</if>
+            <if test="th_name!=null">th_name=#{th_name},</if>
+        </trim>
+        <where>
+            th_id = #{th_id}
+        </where>
+    </update>
+
+    <insert id="inserTeacher" useGeneratedKeys="true" keyProperty="th_id" >
+        INSERT INTO teacher VALUES (DEFAULT,#{th_name},#{th_type},#{th_entrydate},#{th_status},0)
+    </insert>
 </mapper>
