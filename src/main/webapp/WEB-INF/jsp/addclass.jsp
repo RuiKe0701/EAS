@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <button class="btn btn-primary btn-xs" type="button" id="insert">修改学员</button>
+                                <button class="btn btn-primary btn-xs" type="button" id="insert">保存学员</button>
                                 <button class="btn-xs btn btn-white" type="submit">取消</button>
                             </div>
                         </div>
