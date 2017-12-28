@@ -24,7 +24,8 @@
     <!--template css-->
     <link href="table/css/style.css" rel="stylesheet">
 
-
+    <link href="table/css/sweet-alert.css" rel="stylesheet">
+    <script src="table/js/sweet-alert.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,10 +62,16 @@
                     <div class="col-md-12" style="border-bottom: 1px solid gainsboro;padding-bottom: 5px">
 
                         <div id="classid" class="col-md-2" style="padding-left: 0px;padding-top: 8px">
-                            <select class="selectpicker btn-success btn-xs" style="height: 26px;padding-right: 14px;width:130px;font-size: 14px">
-                                <c:forEach var="cla" items="${requestScope.classcs}">
-                                    <option value="${cla.classes.class_id}" style="background-color: white;color: #0F769F;height: 26px;padding-top: 5px">${cla.classes.class_name}</option>
-                                </c:forEach>
+                            <select id="cla" class="selectpicker btn-success btn-xs" style="height: 26px;padding-right: 14px;width:130px;font-size: 14px">
+                                <c:if test="${requestScope.classcs == null}">
+                                    <option value="-100" style="background-color: white;color: #0F769F;height: 26px;padding-top: 5px">暂无班级</option>
+                                </c:if>
+                                <c:if test="${requestScope.classcs != null}">
+                                    <c:forEach var="cla" items="${requestScope.classcs}">
+                                        <option value="${cla.classes.class_id}" style="background-color: white;color: #0F769F;height: 26px;padding-top: 5px">${cla.classes.class_name}</option>
+                                    </c:forEach>
+                                </c:if>
+
                             </select>
                         </div>
 
@@ -176,7 +183,11 @@
 <script>
     $(function () {
         $("#seletclassid").click(function () {
-            window.location.href='/addclassteacher?classid='+$("#pageclassid").val()+'&classname='+$("#pageclassname").val();
+            if ($("#cla").val() == -100){
+                sw('error',"对不起,您暂无班级!");
+            }else {
+                window.location.href='/addclassteacher?classid='+$("#pageclassid").val()+'&classname='+$("#pageclassname").val();
+            }
         });
         $('#datatable').dataTable();
         $("#classid").change(function () {
@@ -195,7 +206,17 @@
             }
         });
     });
-    
+    function sw(type ,text) {
+        swal({
+            title: "",
+            text: text,
+            type: type,
+            showCancelButton: false,
+            cancelButtonClass: 'btn-secondary ',
+            confirmButtonClass: 'btn-success  ',
+            confirmButtonText: '确定!'
+        });
+    }
     function endSub(ctid) {
         $.ajax({
             type:"post",
@@ -224,7 +245,6 @@
             success: function (data) {
                 var aaa=eval(data);
                 $("#tables").html("");
-                $("#pageclassid").val(aaa[0].class_id)
                 var strs="<table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\"\n" +
                     "                           style=\"border-top: solid 1px gainsboro;margin-top: 5px\">\n" +
                     "                        <thead>\n" +
@@ -242,6 +262,7 @@
                     "                        <tbody id=\"showstu\">";
 
                 if (aaa != 0) {
+                    $("#pageclassid").val(aaa[0].class_id)
                     $.each(aaa, function (i, item) {
                         var typename = "";
                         if (item.ct_type == 0) {
@@ -267,14 +288,14 @@
 
                     })
                 }else {
-                    alert("您查找的班级没有记录或者您没有权限查看此班级");
+                    sw('info',"您查找的班级没有记录或者您没有权限查看此班级")
                 }
                 strs+="</tbody> </table>\n"
                 $("#tables").append(strs);
                 $('#datatable').dataTable();
             },
             error: function (data) {
-                alert("系统异常，请稍后重试！");
+                sw('error','系统异常,请稍后再试!')
             }
         })
     }

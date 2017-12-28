@@ -275,8 +275,10 @@
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 3px;">
                     <form id="classexam">
                         <div class="col-md-1" style="padding-left: 0px;padding-top: 15px">
-                            <button type="button" class="btn-xs btn btn-primary" id="addstuleave" data-toggle="modal"
-                                    data-target="#myModal2">新增考试
+                            <button style="display: none" type="button" class="btn-xs btn btn-primary" data-toggle="modal"
+                                    data-target="#myModal2">
+                            </button>
+                            <button  type="button" class="btn-xs btn btn-primary" id="addstuleave" >新增考试
                             </button>
                             <button type="" style="display: none" id="addstuleave2" data-toggle="modal"
                                     data-target="#myModal2"></button>
@@ -442,6 +444,22 @@
             var se_Id = $(this).val();
 
         });
+
+        $("#addstuleave").click(function () {
+           if ($("#class_Id").val() == "null"){
+                $(this).prev().click();
+           }else {
+               swal({
+                   title: "ERROR",
+                   text: "您没有班级!!",
+                   type: "error",
+                   showCancelButton: false,
+                   cancelButtonClass: 'btn-secondary',
+                   confirmButtonClass: 'btn-danger',
+                   confirmButtonText: '确定!'
+               })
+           }
+        });
     });
 
     
@@ -582,20 +600,22 @@
                     "                            </tr>\n" +
                     "                            </thead>\n" +
                     "                            <tbody id=\"showstu\">";
-                $.each(da, function (i, item) {
-                    str += "<tr class=\"gradeX\">\n" +
-                        "                                    <td class=\"leaveclassnamexian\">" + item.class_name + "</td>\n" +
-                        "                                    <td class=\"leavestunamexian\">" + item.ce_Name + "</td>\n" +
-                        "                                    <td class=\"leaveremarksxian\"><span>" + item.ce_Eday + "</span></td>\n" +
-                        "                                    <td class=\"leaveremarksxian\">" + item.se_name + "</td>\n" +
-                        "                                    <td class=\"leaveremarksxian\">" + item.ce_Remarks + "</td>\n" +
-                        "                                    <td>\n" +
-                        "                                        <input value=\"" + item.ce_Id + "\" type=\"hidden\" class=\"leaveidxian\">\n" +
-                        "                                        <button class=\"btn btn-xs btn-primary classscore\">班级成绩</button>\n" +
-                        "                                        <button class=\"btn btn-xs btn-indigo classupdate\">修改</button>\n" +
-                        "                                    </td>\n" +
-                        "                                </tr>\n";
-                });
+                if (da != -1){
+                    $.each(da, function (i, item) {
+                        str += "<tr class=\"gradeX\">\n" +
+                            "                                    <td class=\"leaveclassnamexian\">" + item.class_name + "</td>\n" +
+                            "                                    <td class=\"leavestunamexian\">" + item.ce_Name + "</td>\n" +
+                            "                                    <td class=\"leaveremarksxian\"><span>" + item.ce_Eday + "</span></td>\n" +
+                            "                                    <td class=\"leaveremarksxian\">" + item.se_name + "</td>\n" +
+                            "                                    <td class=\"leaveremarksxian\">" + item.ce_Remarks + "</td>\n" +
+                            "                                    <td>\n" +
+                            "                                        <input value=\"" + item.ce_Id + "\" type=\"hidden\" class=\"leaveidxian\">\n" +
+                            "                                        <button class=\"btn btn-xs btn-primary classscore\">班级成绩</button>\n" +
+                            "                                        <button class=\"btn btn-xs btn-indigo classupdate\">修改</button>\n" +
+                            "                                    </td>\n" +
+                            "                                </tr>\n";
+                    });
+                }
                 str += "</tbody> </table>\n"
                 $("#classatd").html(str);
                 $('#datatable').dataTable();

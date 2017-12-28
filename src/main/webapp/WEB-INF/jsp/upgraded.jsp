@@ -19,9 +19,10 @@
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
     <link rel="stylesheet" href="table/css/metismenu.min.css">
-    <link href="table/css/sweet-alert.css" rel="stylesheet">
-    <!--template css-->
     <link href="table/css/style.css" rel="stylesheet">
+    <link href="table/css/sweet-alert.css" rel="stylesheet">
+    <script src="table/js/sweet-alert.min.js"></script>
+    <!--template css-->
     <style type="text/css">
         .ldivwai{
             float: left;margin-right: 17px;margin-top: 20px;border: 2px solid #ffffff;border-radius: 3px;background-color: #ffffff;
@@ -111,9 +112,14 @@
                     <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 15px;">
                         <div class="col-md-1" style="padding-left: 0px;padding-top: 8px">
                             <select style="background-color: #7c86cb;height: 35px;color: white;border-radius: 5px" id="myclass" >
-                                <c:forEach var="ct" items="${requestScope.classteachers}">
-                                    <option style="background-color: white;color: darkslategray" value="${ct.class_id}">${ct.classes.class_name}</option>
-                                </c:forEach>
+                                <c:if test="${requestScope.classteachers != null}">
+                                    <c:forEach var="ct" items="${requestScope.classteachers}">
+                                        <option style="background-color: white;color: darkslategray" value="${ct.class_id}">${ct.classes.class_name}</option>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${requestScope.classteachers == null}">
+                                    <option style="background-color: white;color: darkslategray" value="-100">没有班级</option>
+                                </c:if>
                             </select>
                         </div>
                         <div class="col-md-2" style="padding-left: 0px;padding-top: 8px">
@@ -164,15 +170,15 @@
     </div>
 <script src="table/js/jquery.min.js"></script>
 <script src="table/js/bootstrap.min.js"></script>
-<script src="table/js/sweet-alert.min.js"></script>
-<script src="table/js/sweet-alert.min.js"></script>
 
 <script src="js/bootstrap-select.js"></script>
     <script>
         alert("注意选择学生是否离校状态!")
-        var s = ${requestScope.stuList};
+        <c:if test="${requestScope.stuList == null}">
+            var s = 1;
+        </c:if>
         $(function () {
-            if (s.length == 0){
+            if (s == 1){
                 $("#stude h5").html("此班级没有学生!");
             }
             classChange();
@@ -271,23 +277,35 @@
         }
         function upclass() {
             $("#upclass").click(function () {
-                if ($(".ldivwai").length > 0){
-                    swal({
-                        title: "",
-                        text: "您是否确定以下学员进行升班?",
-                        type: "warning",
-                        showCancelButton: true,
-                        cancelButtonClass: 'btn-secondary ',
-                        confirmButtonClass: 'btn-warning',
-                        confirmButtonText: "确定!",
-                        closeOnConfirm: false
-                    }, function () {
-                        $("#tan").click();
-                    });
+                if ( $("#myclass").val()!= -100){
+                    if ($(".ldivwai").length > 0){
+                        swal({
+                            title: "",
+                            text: "您是否确定以下学员进行升班?",
+                            type: "warning",
+                            showCancelButton: true,
+                            cancelButtonClass: 'btn-secondary ',
+                            confirmButtonClass: 'btn-warning',
+                            confirmButtonText: "确定!",
+                            closeOnConfirm: false
+                        }, function () {
+                            $("#tan").click();
+                        });
+                    }else {
+                        swal({
+                            title: "",
+                            text: "这个班级没有学生!",
+                            type: "error",
+                            showCancelButton: false,
+                            cancelButtonClass: 'btn-secondary ',
+                            confirmButtonClass: 'btn-success  ',
+                            confirmButtonText: '确定!'
+                        });
+                    }
                 }else {
                     swal({
                         title: "",
-                        text: "这个班级没有学生!",
+                        text: "您并没有班级!",
                         type: "error",
                         showCancelButton: false,
                         cancelButtonClass: 'btn-secondary ',

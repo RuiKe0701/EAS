@@ -44,26 +44,28 @@ public class ClassTeacherOperating {
         c.setStatus(0);
         //查询此老师在校的班级
         List<Classteacher> cs = classteacherService.selectClassteacher(classteacher);
-        List<Classteacher> classteachers = new ArrayList<Classteacher>();
-        for (Classteacher cl : cs) {
-            //信息状态 (0当前档案，其他为备份状态)
-            if (cl.getStatus()==0) {
-                classteachers.add(cl);
+        if (cs != null && cs.size() > 0){
+            List<Classteacher> classteachers = new ArrayList<Classteacher>();
+            for (Classteacher cl : cs) {
+                //信息状态 (0当前档案，其他为备份状态)
+                if (cl.getStatus()==0) {
+                    classteachers.add(cl);
+                }
             }
+            Classteacher classte =  new Classteacher();
+            //放入第一个班级的id
+            classte.setClass_id(classteachers.get(0).getClass_id());
+            //默认查找第一个班级的信息
+            List<Classteacher> ccc = classteacherService.selectClassteacher(classte);
+            //对状态进行排序 当前的档案在上面
+            Collections.sort(ccc, new Comparator<Classteacher>() {
+                public int compare(Classteacher o1, Classteacher o2) {
+                    return o1.getStatus().compareTo(o2.getStatus());
+                }
+            });
+            request.setAttribute("classcs",classteachers);
+            request.setAttribute("clate",ccc);
         }
-        Classteacher classte =  new Classteacher();
-        //放入第一个班级的id
-        classte.setClass_id(classteachers.get(0).getClass_id());
-        //默认查找第一个班级的信息
-        List<Classteacher> ccc = classteacherService.selectClassteacher(classte);
-        //对状态进行排序 当前的档案在上面
-        Collections.sort(ccc, new Comparator<Classteacher>() {
-            public int compare(Classteacher o1, Classteacher o2) {
-                return o1.getStatus().compareTo(o2.getStatus());
-            }
-        });
-        request.setAttribute("classcs",classteachers);
-        request.setAttribute("clate",ccc);
         return "classmanagement";
     }
 

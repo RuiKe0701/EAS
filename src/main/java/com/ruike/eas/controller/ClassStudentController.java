@@ -125,34 +125,36 @@ public class ClassStudentController {
         //查询此老师在校的班级
         classteacher.setStatus(0);
         List<Classteacher> cs = classteacherService.selectClassteacher(classteacher);
-        List<Classteacher> classteacherList = new ArrayList<Classteacher>();
-        for (Classteacher cc : cs) {
-            if (cc.getClasses().getGrade_id()==1 || cc.getClasses().getGrade_id()==2 ){
-                classteacherList.add(cc);
+        if (cs != null && cs.size() > 0){
+            List<Classteacher> classteacherList = new ArrayList<Classteacher>();
+            for (Classteacher cc : cs) {
+                if (cc.getClasses().getGrade_id()==1 || cc.getClasses().getGrade_id()==2 ){
+                    classteacherList.add(cc);
+                }
             }
+            Collections.sort(classteacherList, new Comparator<Classteacher>() {
+                public int compare(Classteacher o1, Classteacher o2) {
+                    return o1.getCt_startday().compareTo(o2.getCt_startday());
+                }
+            });
+
+            Stu stu = new Stu();
+            Class c = new Class();
+            //默认查询第一个班级的学生
+            c.setClass_id(classteacherList.get(0).getClass_id());
+            stu.setClasses(c);
+            //根据班级id查询对应的学生
+            List<Stu> stuList = studentService.selectByStudent(stu);
+
+            Teacher teacher = new Teacher();
+            //放入要查找的老师的类型(0为班主任)
+            teacher.setTh_type(0);
+            //调用带条件查找老师
+            List<Teacher> teachers = teacherService.selectTeacher(teacher);
+            request.setAttribute("classteachers",classteacherList);
+            request.setAttribute("teachers",teachers);
+            request.setAttribute("stuList",stuList);
         }
-        Collections.sort(classteacherList, new Comparator<Classteacher>() {
-            public int compare(Classteacher o1, Classteacher o2) {
-                return o1.getCt_startday().compareTo(o2.getCt_startday());
-            }
-        });
-
-        Stu stu = new Stu();
-        Class c = new Class();
-        //默认查询第一个班级的学生
-        c.setClass_id(classteacherList.get(0).getClass_id());
-        stu.setClasses(c);
-        //根据班级id查询对应的学生
-        List<Stu> stuList = studentService.selectByStudent(stu);
-
-        Teacher teacher = new Teacher();
-        //放入要查找的老师的类型(0为班主任)
-        teacher.setTh_type(0);
-        //调用带条件查找老师
-        List<Teacher> teachers = teacherService.selectTeacher(teacher);
-        request.setAttribute("classteachers",classteacherList);
-        request.setAttribute("teachers",teachers);
-        request.setAttribute("stuList",stuList);
         return "upgraded";
     }
 }

@@ -122,7 +122,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/scoringstandardinfo" id="addstud">考勤规章管理</a></li>
                         </li>
-                        <li><a class="J_menuItem" href="/tzscoreexam" >考试</a></li>
+                        <li><a class="J_menuItem" href="/tzscoreexam" >校级考试安排管理</a></li>
                         </li>
 
                         <li><a class="J_menuItem" href="/regulastions.do" id="regulastions">评分规章管理</a></li>
@@ -139,9 +139,6 @@
                         </li>
                     </ul>
                 </li>
-
-
-
             </ul>
         </div>
     </nav>

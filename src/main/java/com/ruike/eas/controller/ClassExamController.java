@@ -47,9 +47,11 @@ public class ClassExamController {
         c.setStatus(0);
         //查询此老师在校的班级
         List<Classteacher> cs = classteacherService.selectClassteacher(classteacher);
-        classExam.setClass_Id(cs.get(0).getClass_id());
-        List<ClassExam> classExams = classExamService.selectClassExam(classExam);
-        request.setAttribute("classExams",classExams);
+        if (cs != null && cs.size() > 0) {
+            classExam.setClass_Id(cs.get(0).getClass_id());
+            List<ClassExam> classExams = classExamService.selectClassExam(classExam);
+            request.setAttribute("classExams",classExams);
+        }
         request.setAttribute("cs",cs);
         return "classexam";
     }
@@ -57,10 +59,14 @@ public class ClassExamController {
     @RequestMapping("/ajaxselectclassexam.do")
     @ResponseBody
     public void ajaxSelectClassExam(ClassExam classExam ,String ce_Examdays ,String stopDates ,PrintWriter printWriter){
-        classExam.setCe_Examday(ce_Examdays != null && ce_Examdays.length() > 0 ? DateUtil.dateFormat(ce_Examdays,"yyyy-MM-dd") : null);
-        classExam.setStopDate(stopDates != null && stopDates.length() > 0 ? DateUtil.dateFormat(stopDates,"yyyy-MM-dd") : null);
-        List<ClassExam> classExams = classExamService.selectClassExam(classExam);
-        printWriter.print(JSON.toJSONString(classExams));
+        if (classExam.getClass_Id() != null) {
+            classExam.setCe_Examday(ce_Examdays != null && ce_Examdays.length() > 0 ? DateUtil.dateFormat(ce_Examdays, "yyyy-MM-dd") : null);
+            classExam.setStopDate(stopDates != null && stopDates.length() > 0 ? DateUtil.dateFormat(stopDates, "yyyy-MM-dd") : null);
+            List<ClassExam> classExams = classExamService.selectClassExam(classExam);
+            printWriter.print(JSON.toJSONString(classExams));
+        }else {
+            printWriter.print(-1);
+        }
         printWriter.flush();
         printWriter.close();
     }

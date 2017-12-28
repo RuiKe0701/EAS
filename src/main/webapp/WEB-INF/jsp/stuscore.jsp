@@ -129,76 +129,76 @@
         </div>
     </div>
 
-    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="border-radius: 5px">
-        <div class="modal-dialog" style="border-radius: 5px">
-            <div class="modal-content animated bounceInRight" style="border-radius: 5px">
-                <div class="modal-header">
+    <%--<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="border-radius: 5px">--%>
+        <%--<div class="modal-dialog" style="border-radius: 5px">--%>
+            <%--<div class="modal-content animated bounceInRight" style="border-radius: 5px">--%>
+                <%--<div class="modal-header">--%>
 
-                    <h3 class="modal-title" id="name">20170701班第27次考勤情况</h3>
-                    <small class="font-bold">
-                    </small>
-                </div>
-                <div class="modal-body" style="padding:16px;padding-top: 0px;padding-bottom: 0px" id="modalbody">
+                    <%--<h3 class="modal-title" id="name">20170701班第27次考勤情况</h3>--%>
+                    <%--<small class="font-bold">--%>
+                    <%--</small>--%>
+                <%--</div>--%>
+                <%--<div class="modal-body" style="padding:16px;padding-top: 0px;padding-bottom: 0px" id="modalbody">--%>
 
 
-                    <div class="row">
-                        <div class="panel-body " id="tables" style="background-color: white">
-                            <div>
-                                <table id="datatables" class="table table-striped dt-responsive nowrap"
-                                       style="border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro">
-                                    <thead>
-                                    <tr>
+                    <%--<div class="row">--%>
+                        <%--<div class="panel-body " id="tables" style="background-color: white">--%>
+                            <%--<div>--%>
+                                <%--<table id="datatables" class="table table-striped dt-responsive nowrap"--%>
+                                       <%--style="border-top: solid 1px gainsboro;margin-top: 5px;border-bottom: 1px solid gainsboro">--%>
+                                    <%--<thead>--%>
+                                    <%--<tr>--%>
 
-                                        <th>班级名</th>
-                                        <th>笔试平均分</th>
-                                        <th>机式平均分</th>
-                                        <th>整体平均分</th>
-                                    </tr>
-                                    </thead>
+                                        <%--<th>班级名</th>--%>
+                                        <%--<th>笔试平均分</th>--%>
+                                        <%--<th>机式平均分</th>--%>
+                                        <%--<th>整体平均分</th>--%>
+                                    <%--</tr>--%>
+                                    <%--</thead>--%>
 
-                                    <tr class="ldivwai">
+                                    <%--<tr class="ldivwai">--%>
 
-                                        <td>副学研<input type="hidden" value="3" class="stuid">
-                                            <input type="hidden" value="80" class="stutotalscore"></td>
-                                        <td><span class="label label-warning">2020</span></td>
-                                        <td><span class="label label-warning">2020</span></td>
-                                        <td><span class="label label-warning">2020</span></td>
-                                    </tr>
+                                        <%--<td>副学研<input type="hidden" value="3" class="stuid">--%>
+                                            <%--<input type="hidden" value="80" class="stutotalscore"></td>--%>
+                                        <%--<td><span class="label label-warning">2020</span></td>--%>
+                                        <%--<td><span class="label label-warning">2020</span></td>--%>
+                                        <%--<td><span class="label label-warning">2020</span></td>--%>
+                                    <%--</tr>--%>
 
-                                    <tr class="ldivwai">
+                                    <%--<tr class="ldivwai">--%>
 
-                                        <td>副学研<input type="hidden" value="3" class="stuid">
-                                            <input type="hidden" value="80" class="stutotalscore"></td>
-                                        <td><span class="label label-warning">2020</span></td>
-                                        <td><span class="label label-warning">2020</span></td>
-                                        <td><span class="label label-warning">2020</span></td>
-                                    </tr>
+                                        <%--<td>副学研<input type="hidden" value="3" class="stuid">--%>
+                                            <%--<input type="hidden" value="80" class="stutotalscore"></td>--%>
+                                        <%--<td><span class="label label-warning">2020</span></td>--%>
+                                        <%--<td><span class="label label-warning">2020</span></td>--%>
+                                        <%--<td><span class="label label-warning">2020</span></td>--%>
+                                    <%--</tr>--%>
 
-                                    <tr class="ldivwai">
+                                    <%--<tr class="ldivwai">--%>
 
-                                        <td>副学研<input type="hidden" value="3" class="stuid">
-                                            <input type="hidden" value="80" class="stutotalscore"></td>
-                                        <td><span class="label label-warning">2020</span></td>
-                                        <td><span class="label label-warning">2020</span></td>
-                                        <td><span class="label label-warning">2020</span></td>
-                                    </tr>
+                                        <%--<td>副学研<input type="hidden" value="3" class="stuid">--%>
+                                            <%--<input type="hidden" value="80" class="stutotalscore"></td>--%>
+                                        <%--<td><span class="label label-warning">2020</span></td>--%>
+                                        <%--<td><span class="label label-warning">2020</span></td>--%>
+                                        <%--<td><span class="label label-warning">2020</span></td>--%>
+                                    <%--</tr>--%>
 
-                                    </tbody>
+                                    <%--</tbody>--%>
 
-                                </table>
+                                <%--</table>--%>
 
-                            </div>
-                        </div>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="guanbi" class="btn btn-white" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="tijiao">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="modal-footer">--%>
+                    <%--<button type="button" id="guanbi" class="btn btn-white" data-dismiss="modal">关闭</button>--%>
+                    <%--<button type="button" class="btn btn-primary" id="tijiao">保存</button>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
 
 
     <!--page header start-->
@@ -209,8 +209,6 @@
     <!--start page content-->
 
     <div class="row">
-
-
         <div class="col-md-12">
             <div class="" style="background-color: white;border: 0.1px solid gainsboro">
                 <div class="row" style="padding-left:30px;padding-right:30px;padding-top: 5px;padding-bottom: 0px;">
@@ -220,13 +218,13 @@
                     <div class="col-md-2" style="padding-left: 0px;padding-top: 15px">
                         <div class="col-sm-5">
                             <button class="btn-xs btn btn-primary" id="addstuleave" data-toggle="modal"
-                                    data-target="#myModal2">录入成绩
+                                    data-target="#myModal1">录入成绩
                             </button>
                             <button type="" style="display: none" id="addstuleave2" data-toggle="modal"
-                                    data-target="#myModal2"></button>
+                                    data-target="#myModal1"></button>
                         </div>
                         <div class="col-sm-5">
-                            <button class="btn-xs btn btn-success" data-toggle="modal" data-target="#myModal2">导入成绩
+                            <button class="btn-xs btn btn-success" id="export">导入成绩
                             </button>
                             <button type="" style="display: none" id="" data-toggle="modal"
                                     data-target="#myModal2"></button>
@@ -235,10 +233,18 @@
                     <div class="col-md-1" style="padding-left: 15px;padding-top: 15px">
                         <select id="classid" class="btn-indigo"
                                 style="height:26px;padding-left: 10px;color: white;border-radius: 5px">
-                            <c:forEach var="cla" items="${requestScope.cs}">
+                            <c:if test="${requestScope.cs == null}">
                                 <option style="background-color: white;color: #2b303a"
-                                        value="${cla.classes.class_id}">${cla.classes.class_name}</option>
-                            </c:forEach>
+                                        value="-100">没有班级</option>
+                            </c:if>
+                            <c:if test="${requestScope.cs != null}">
+                                <c:forEach var="cla" items="${requestScope.cs}">
+                                    <option style="background-color: white;color: #2b303a"
+                                            value="${cla.classes.class_id}">${cla.classes.class_name}</option>
+                                </c:forEach>
+                            </c:if>
+
+
                         </select>
                     </div>
 
@@ -352,7 +358,23 @@
             var ce_id = $(this).prev().prev().val();
             parent.oneStuScore(classid,ce_id);
         });
-
+        
+        $("#export").click(function () {
+            var class_id = $("#classid").val()
+            if (class_id != -100){
+                 $(this).next().click();
+            }else {
+                swal({
+                    title: "ERROR",
+                    text: "对不起您没有班级!",
+                    type: "error",
+                    showCancelButton: false,
+                    cancelButtonClass: 'btn-secondary',
+                    confirmButtonClass: 'btn-danger',
+                    confirmButtonText: '确定!'
+                })
+            }
+        })
     });
     
     function ajaxSelectScoreInfo(class_id) {

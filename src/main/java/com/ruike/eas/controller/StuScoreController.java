@@ -56,12 +56,14 @@ public class StuScoreController {
         //查询此老师在校的班级
         List<Classteacher> cs = classteacherService.selectClassteacher(classteacher);
         //取出第一个班级id
-        Integer class_id = cs.get(0).getClass_id();
-        ClassScore classScore = new ClassScore();
-        classScore.setClass_id(class_id);
-        List<ClassScore> classScores = classScoreService.selectClassScoreByClass(classScore);
-        request.setAttribute("cs",cs);
-        request.setAttribute("classScores",classScores);
+        if (cs !=  null && cs.size() > 0) {
+            Integer class_id = cs.get(0).getClass_id();
+            ClassScore classScore = new ClassScore();
+            classScore.setClass_id(class_id);
+            List<ClassScore> classScores = classScoreService.selectClassScoreByClass(classScore);
+            request.setAttribute("classScores",classScores);
+            request.setAttribute("cs",cs);
+        }
         return "stuscore";
     }
 
